@@ -166,7 +166,27 @@
       <canvas id="trendChart"></canvas>
     </div>
   </div>
-
+  <!-- 🆕 Layer 3: 자동 분석 내러티브 (Causal Chain) -->
+  <div class="card" style="background: #f0f4f8; border-left: 5px solid var(--primary); margin-top: 20px;">
+    <h3>💡 Market Analysis</h3>
+    <p style="font-size: 1.05em; line-height: 1.7;">
+      Over the past 5 years, 
+      
+        home values in <strong>Harlan County</strong> have grown at an average annual rate of <strong>7.26%</strong>.
+      
+      
+      
+        During the same period, the population has 
+        
+          <strong style="color: #c0392b;">decreased by 16.63%</strong>. 
+          This combination of rising prices and shrinking population may indicate housing affordability pressures or climate-related out-migration.
+        
+      
+    </p>
+    <p style="font-size: 0.85em; color: #666; margin-top: 10px;">
+      <em>*Note: Correlation does not imply causation. Analysis based on ACS 5-Year Estimates (2019-2024).</em>
+    </p>
+  </div>
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       const ctx = document.getElementById('trendChart').getContext('2d');
