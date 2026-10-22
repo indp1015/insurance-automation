@@ -52,21 +52,28 @@ document.addEventListener("DOMContentLoaded", async function() {
     
     const points = [];
     Object.values(data.counties).forEach(c => {
-      // 위험 점수와 보험료 부담률, 인구 데이터가 모두 있는 카운티만 필터링
-      if (c.raw.fema_risk_score != null && c.raw.insurance_burden != null && c.raw.population) {
-        // 인구수에 따라 버블 크기 조절 (제곱근을 사용하여 너무 커지지 않게 함)
-        const radius = Math.sqrt(c.raw.population) / 80;
+      // 🔍 디버깅: 만약 데이터가 없다면 화면에 띄워줌
+      if (!c.raw.population) {
+          console.warn("Missing population for:", c.county_name);
+      }
+
+      // 데이터가 유효한 것만 필터링
+      if (c.raw.fema_risk_score != null && c.raw.insurance_burden != null) {
+        // 인구 데이터가 없으면 기본 크기(5)로 설정
+        const pop = c.raw.population || 10000; 
+        const radius = Math.sqrt(pop) / 80;
         
         points.push({
           x: c.raw.fema_risk_score,
-          y: c.raw.insurance_burden * 100, // 백분율(%)로 변환
-          r: Math.max(2, Math.min(radius, 30)), // 버블 최소/최대 크기 제한
+          y: c.raw.insurance_burden * 100, 
+          r: Math.max(3, Math.min(radius, 30)),
           name: `${c.county_name}, ${c.state_abbr}`,
-          pop: c.raw.population.toLocaleString(),
-          premium: c.raw.annual_premium
+          pop: c.raw.population ? c.raw.population.toLocaleString() : 'N/A',
         });
       }
     });
+
+    console.log("Total points loaded:", points.length); // 콘솔에서 확인 가능
 
     const ctx = document.getElementById('correlationChart').getContext('2d');
     new Chart(ctx, {
@@ -75,7 +82,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         datasets: [{
           label: 'U.S. Counties',
           data: points,
-          backgroundColor: 'rgba(26, 61, 92, 0.4)', // 반투명 네이비
+          backgroundColor: 'rgba(26, 61, 92, 0.4)',
           borderColor: 'rgba(26, 61, 92, 0.8)',
           borderWidth: 1
         }]
@@ -106,6 +113,7 @@ document.addEventListener("DOMContentLoaded", async function() {
           y: {
             title: { display: true, text: 'Insurance Burden (% of Median Income)' },
             beginAtZero: true,
+            suggestedMax: 5, // 🆕 Y축 최대값을 5%로 넉넉하게 설정
             ticks: {
               callback: function(value) { return value + '%'; }
             }
