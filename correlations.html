@@ -29,22 +29,46 @@
 
 <main class="container">
 
-<div class="hero">
+<div class="hero" style="margin-bottom: 20px;">
   <h1>Correlation Map: Risk vs. Cost</h1>
-  <p>Does higher climate risk lead to higher insurance burdens? X-axis: FEMA Risk Score (higher is worse). Y-axis: Insurance Burden % of Income.</p>
+  <p>Does higher climate risk lead to higher insurance burdens?</p>
+</div>
+
+<!-- 🆕 인사이트 카드 (일반인용 해석) -->
+<div class="card" style="background: #f0f4f8; border-left: 5px solid var(--primary); margin-bottom: 20px;">
+  <h2 style="margin-top: 0; color: var(--primary);">💡 What does this chart tell us?</h2>
+  <p>Counties in the <strong>top-right corner</strong> face a <strong>"double threat"</strong>: high climate risk and a high insurance burden. Notice the dense cluster of large bubbles (high population) in this zone—particularly in states like <strong>Florida and Louisiana</strong>—indicating that millions of Americans are facing rising insurance costs due to climate risks.</p>
+  <p style="font-size: 0.85em; color: #666; margin-bottom: 0;">
+    <em>*Note: Insurance burden is based on state-level average premiums, which is why counties within the same state align horizontally (forming the visible stripes).</em>
+  </p>
 </div>
 
 <div class="card">
+  <!-- 🆕 주(State) 하이라이트 필터 -->
+  <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 20px; gap: 10px;">
+    <label for="stateFilter" style="font-weight: bold; color: var(--primary);">Highlight a State:</label>
+    <select id="stateFilter" style="padding: 8px 12px; border-radius: 6px; border: 1px solid #ccc; font-size: 1em; cursor: pointer;">
+      <option value="ALL">Show All Counties</option>
+      <option value="FL">Florida (High Risk)</option>
+      <option value="LA">Louisiana</option>
+      <option value="CA">California</option>
+      <option value="TX">Texas</option>
+      <option value="NY">New York</option>
+    </select>
+  </div>
+
   <div style="position: relative; height: 600px; width: 100%;">
     <canvas id="correlationChart"></canvas>
   </div>
+  
   <p style="font-size: 0.85em; color: #666; margin-top: 15px; text-align: center;">
     * Bubble size represents county population. Hover over a bubble to see county details.
   </p>
 </div>
 
-<!-- Chart.js 로직 -->
 <script>
+let chartInstance = null;
+
 document.addEventListener("DOMContentLoaded", async function() {
   try {
     const res = await fetch('/static/counties_insurance.json');
@@ -52,14 +76,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     
     const points = [];
     Object.values(data.counties).forEach(c => {
-      // 🔍 디버깅: 만약 데이터가 없다면 화면에 띄워줌
-      if (!c.raw.population) {
-          console.warn("Missing population for:", c.county_name);
-      }
-
-      // 데이터가 유효한 것만 필터링
       if (c.raw.fema_risk_score != null && c.raw.insurance_burden != null) {
-        // 인구 데이터가 없으면 기본 크기(5)로 설정
         const pop = c.raw.population || 10000; 
         const radius = Math.sqrt(pop) / 80;
         
@@ -68,21 +85,20 @@ document.addEventListener("DOMContentLoaded", async function() {
           y: c.raw.insurance_burden * 100, 
           r: Math.max(3, Math.min(radius, 30)),
           name: `${c.county_name}, ${c.state_abbr}`,
+          state_abbr: c.state_abbr, // 🆕 주 필터링용 데이터 추가
           pop: c.raw.population ? c.raw.population.toLocaleString() : 'N/A',
         });
       }
     });
 
-    console.log("Total points loaded:", points.length); // 콘솔에서 확인 가능
-
     const ctx = document.getElementById('correlationChart').getContext('2d');
-    new Chart(ctx, {
+    chartInstance = new Chart(ctx, {
       type: 'bubble',
       data: {
         datasets: [{
           label: 'U.S. Counties',
           data: points,
-          backgroundColor: 'rgba(26, 61, 92, 0.4)',
+          backgroundColor: 'rgba(26, 61, 92, 0.4)', // 기본: 반투명 네이비
           borderColor: 'rgba(26, 61, 92, 0.8)',
           borderWidth: 1
         }]
@@ -113,14 +129,36 @@ document.addEventListener("DOMContentLoaded", async function() {
           y: {
             title: { display: true, text: 'Insurance Burden (% of Median Income)' },
             beginAtZero: true,
-            suggestedMax: 5, // 🆕 Y축 최대값을 5%로 넉넉하게 설정
-            ticks: {
-              callback: function(value) { return value + '%'; }
-            }
+            suggestedMax: 5,
+            ticks: { callback: function(value) { return value + '%'; } }
           }
         }
       }
     });
+
+    // 🆕 필터 이벤트 리스너 추가
+    document.getElementById('stateFilter').addEventListener('change', function(e) {
+      const selectedState = e.target.value;
+      const dataset = chartInstance.data.datasets[0];
+      
+      // 점들의 색상을 상태에 따라 변경
+      dataset.backgroundColor = dataset.data.map(p => {
+        if (selectedState === 'ALL') return 'rgba(26, 61, 92, 0.4)'; // 전체보기
+        return p.state_abbr === selectedState 
+          ? 'rgba(230, 126, 34, 0.8)' // 선택된 주: 진한 오렌지색
+          : 'rgba(200, 200, 200, 0.1)'; // 나머지: 투명한 회색
+      });
+
+      dataset.borderColor = dataset.data.map(p => {
+        if (selectedState === 'ALL') return 'rgba(26, 61, 92, 0.8)';
+        return p.state_abbr === selectedState 
+          ? 'rgba(230, 126, 34, 1)' 
+          : 'rgba(200, 200, 200, 0.1)';
+      });
+
+      chartInstance.update();
+    });
+
   } catch(e) {
     console.error("Failed to load chart data", e);
   }
