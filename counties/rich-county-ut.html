@@ -196,6 +196,8 @@
       const years = ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"];
       const homeValues = [173500.0, 169800.0, 160400.0, 192200.0, 202500.0, 205300.0, 227300.0, 272900.0, 291200.0, 334600.0];
       const populations = [2292.0, 2284.0, 2307.0, 2350.0, 2389.0, 2415.0, 2507.0, 2543.0, 2588.0, 2631.0];
+// 🆕 전국 보험료 지수
+      const premiumIndex = [100.0, 102.2, 102.7, 104.0, 105.6, 107.1, 108.5, 109.7, 114.4, 125.6];
 
       if (!ctx) return;
 
@@ -207,7 +209,7 @@
             {
               label: 'Median Home Value ($)',
               data: homeValues,
-              borderColor: '#1a3d5c',
+              borderColor: '#1a3d5c', // 네이비
               backgroundColor: 'rgba(26, 61, 92, 0.1)',
               yAxisID: 'y',
               tension: 0.3,
@@ -216,11 +218,22 @@
             {
               label: 'Population',
               data: populations,
-              borderColor: '#e67e22',
+              borderColor: '#e67e22', // 오렌지
               backgroundColor: 'rgba(230, 126, 34, 0.1)',
               yAxisID: 'y1',
               tension: 0.3,
               borderDash: [5, 5]
+            },
+            // 🆕 전국 보험료 지수 데이터셋
+            {
+              label: 'National Premium Index (2015=100)',
+              data: premiumIndex,
+              borderColor: '#8e44ad', // 보라색
+              backgroundColor: 'transparent',
+              borderWidth: 2,
+              pointRadius: 0, // 점은 숨기고 선만 표시
+              yAxisID: 'y2',
+              tension: 0.3
             }
           ]
         },
@@ -261,7 +274,19 @@
               display: true,
               position: 'right',
               title: { display: true, text: 'Population', color: '#e67e22' },
-              grid: { drawOnChartArea: false } // 격자선 겹침 방지
+              grid: { drawOnChartArea: false }
+            },
+            // 🆕 y2 축 (전국 보험료 지수)
+            y2: {
+              type: 'linear',
+              display: true,
+              position: 'right',
+              title: { display: true, text: 'Premium Index', color: '#8e44ad' },
+              grid: { drawOnChartArea: false },
+              ticks: {
+                color: '#8e44ad',
+                callback: function(value) { return value; }
+              }
             }
           }
         }
