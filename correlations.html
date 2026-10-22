@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Insurance Risk Correlation Map | Insurance Data Hub</title>
+  <meta name="description" content="Visualizing the relationship between climate risk, insurance burden, and population across U.S. counties.">
+  
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%231a3d5c'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='white' font-family='Arial,sans-serif' font-weight='bold'%3EI%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/static/style.css">
+  <!-- 🆕 Chart.js 차트 라이브러리 추가 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <div class="header-top">
+      <a href="/" class="logo">Insurance Data Hub</a>
+      <a href="https://dataindp.com" class="hub-btn">Go Data in DP ↗</a>
+    </div>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/correlations.html">Correlation Map</a> <!-- 🆕 추가 -->
+      <a href="/rankings.html">Rankings</a>
+      <a href="/about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+
+<div class="hero">
+  <h1>Correlation Map: Risk vs. Cost</h1>
+  <p>Does higher climate risk lead to higher insurance burdens? X-axis: FEMA Risk Score (higher is worse). Y-axis: Insurance Burden % of Income.</p>
+</div>
+
+<div class="card">
+  <div style="position: relative; height: 600px; width: 100%;">
+    <canvas id="correlationChart"></canvas>
+  </div>
+  <p style="font-size: 0.85em; color: #666; margin-top: 15px; text-align: center;">
+    * Bubble size represents county population. Hover over a bubble to see county details.
+  </p>
+</div>
+
+<!-- Chart.js 로직 -->
+<script>
+document.addEventListener("DOMContentLoaded", async function() {
+  try {
+    const res = await fetch('/static/counties_insurance.json');
+    const data = await res.json();
+    
+    const points = [];
+    Object.values(data.counties).forEach(c => {
+      // 위험 점수와 보험료 부담률, 인구 데이터가 모두 있는 카운티만 필터링
+      if (c.raw.fema_risk_score != null && c.raw.insurance_burden != null && c.raw.population) {
+        // 인구수에 따라 버블 크기 조절 (제곱근을 사용하여 너무 커지지 않게 함)
+        const radius = Math.sqrt(c.raw.population) / 80;
+        
+        points.push({
+          x: c.raw.fema_risk_score,
+          y: c.raw.insurance_burden * 100, // 백분율(%)로 변환
+          r: Math.max(2, Math.min(radius, 30)), // 버블 최소/최대 크기 제한
+          name: `${c.county_name}, ${c.state_abbr}`,
+          pop: c.raw.population.toLocaleString(),
+          premium: c.raw.annual_premium
+        });
+      }
+    });
+
+    const ctx = document.getElementById('correlationChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bubble',
+      data: {
+        datasets: [{
+          label: 'U.S. Counties',
+          data: points,
+          backgroundColor: 'rgba(26, 61, 92, 0.4)', // 반투명 네이비
+          borderColor: 'rgba(26, 61, 92, 0.8)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const p = context.raw;
+                return [
+                  p.name,
+                  `Risk Score: ${p.x.toFixed(1)}`,
+                  `Insurance Burden: ${p.y.toFixed(2)}%`,
+                  `Population: ${p.pop}`
+                ];
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            title: { display: true, text: 'FEMA Risk Score (Higher = More Hazardous)' },
+            min: 0, max: 100
+          },
+          y: {
+            title: { display: true, text: 'Insurance Burden (% of Median Income)' },
+            beginAtZero: true,
+            ticks: {
+              callback: function(value) { return value + '%'; }
+            }
+          }
+        }
+      }
+    });
+  } catch(e) {
+    console.error("Failed to load chart data", e);
+  }
+});
+</script>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>&copy; 2026 Insurance Data Hub. All rights reserved.</p>
+    
+    <!-- 🆕 법적 고지 페이지 네비게이션 추가 -->
+    <p style="margin: 15px 0; font-size: 1em;">
+      <a href="/about.html" style="color: var(--primary); text-decoration: none; margin: 0 10px; font-weight: bold;">About</a> |
+      <a href="/privacy.html" style="color: var(--primary); text-decoration: none; margin: 0 10px; font-weight: bold;">Privacy Policy</a> |
+      <a href="/terms.html" style="color: var(--primary); text-decoration: none; margin: 0 10px; font-weight: bold;">Terms of Service</a> |
+      <a href="/contact.html" style="color: var(--primary); text-decoration: none; margin: 0 10px; font-weight: bold;">Contact Us</a>
+    </p>
+
+    <p class="disclaimer" style="font-size: 0.8em; color: #888; margin-top: 20px;">
+      Climate data: FEMA National Risk Index (Public Domain).<br>
+      Demographics: U.S. Census Bureau ACS 5-Year Estimates (CC0).<br>
+      Insurance premiums: Statewide averages cited from Triple-I / NAIC reports.
+    </p>
+  </div>
+</footer>
+</body>
+</html>
