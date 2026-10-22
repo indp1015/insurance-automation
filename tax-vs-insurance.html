@@ -35,12 +35,11 @@
   <p>In many U.S. counties, rising insurance premiums now exceed property taxes. Explore the reversal.</p>
 </div>
 
-<!-- 🆕 인사이트 카드: 인구 이동 상관관계 분석 -->
+<!-- 인사이트 카드 -->
 <div class="card" style="background: #f0f4f8; border-left: 5px solid #e67e22; margin-bottom: 20px;">
   <h2 style="margin-top: 0; color: #e67e22;">💡 The Hidden Cost Reversal</h2>
-  <p>Traditionally, property taxes were the largest recurring cost of homeownership after the mortgage. However, climate risks and inflation have driven insurance premiums so high that in many counties, <strong>insurance now costs more than property taxes.</strong></p>
+  <p>Traditionally, property taxes were the largest recurring cost of homeownership. However, climate risks have driven insurance premiums so high that in many counties (especially in Louisiana), <strong>insurance now costs 15-20x more than property taxes.</strong></p>
   
-  <!-- 🆕 동적 인구 분석 텍스트 -->
   <div style="background: #fff; padding: 15px; border-radius: 6px; margin-top: 15px; border: 1px solid #ddd;">
     <h3 style="margin-top: 0; font-size: 1.1em;">📉 Impact on Population (Top 100 Counties)</h3>
     <p style="margin-bottom: 0;">
@@ -52,16 +51,39 @@
   </div>
 </div>
 
-<!-- 🆕 가로 막대 차트 (Top 10) -->
-<div class="card" style="margin-bottom: 20px;">
-  <h2>Top 10 Counties: Insurance vs. Tax</h2>
-  <div style="position: relative; height: 400px; width: 100%;">
-    <canvas id="taxChart"></canvas>
+<!-- 🆕 2단 차트 영역 (Top 10 vs Bottom 10) -->
+<div class="interactive-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+  
+  <!-- Top 10 차트 -->
+  <div class="card">
+    <h2 style="color: #c0392b;">🔥 Top 10: Insurance > Tax</h2>
+    <p style="font-size: 0.85em; color: #666;">Where insurance premiums vastly exceed property taxes (e.g., Louisiana).</p>
+    <div style="position: relative; height: 350px; width: 100%;">
+      <canvas id="topChart"></canvas>
+    </div>
   </div>
+
+  <!-- Bottom 10 차트 -->
+  <div class="card">
+    <h2 style="color: #2980b9;">🧊 Bottom 10: Tax > Insurance</h2>
+    <p style="font-size: 0.85em; color: #666;">Where property taxes are the dominant cost (e.g., Texas, New Jersey).</p>
+    <div style="position: relative; height: 350px; width: 100%;">
+      <canvas id="bottomChart"></canvas>
+    </div>
+  </div>
+
 </div>
 
+<!-- 표 영역 (탭 전환) -->
 <div class="card">
-  <h2>Top 100 Counties (Insurance > Property Tax)</h2>
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+    <h2 style="margin: 0;">County Rankings</h2>
+    <div>
+      <button id="btnTop" onclick="showTable('top')" style="padding: 8px 16px; background: #c0392b; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Top 100</button>
+      <button id="btnBottom" onclick="showTable('bottom')" style="padding: 8px 16px; background: #ddd; color: #333; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; margin-left: 5px;">Bottom 100</button>
+    </div>
+  </div>
+
   <div style="overflow-x:auto;">
     <table class="data-table">
       <thead>
@@ -73,876 +95,78 @@
           <th>Insurance / Tax Ratio</th>
         </tr>
       </thead>
-      <tbody>
-        
-        <tr>
-          <td>1</td>
-          <td><a href="/counties/west-carroll-parish-la.html">West Carroll Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$199</td>
-          <td><strong style="color: #c0392b;">22.61x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>2</td>
-          <td><a href="/counties/tensas-parish-la.html">Tensas Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$221</td>
-          <td><strong style="color: #c0392b;">20.36x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>3</td>
-          <td><a href="/counties/avoyelles-parish-la.html">Avoyelles Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$249</td>
-          <td><strong style="color: #c0392b;">18.07x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>4</td>
-          <td><a href="/counties/allen-parish-la.html">Allen Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$267</td>
-          <td><strong style="color: #c0392b;">16.85x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>5</td>
-          <td><a href="/counties/east-carroll-parish-la.html">East Carroll Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$277</td>
-          <td><strong style="color: #c0392b;">16.25x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>6</td>
-          <td><a href="/counties/bienville-parish-la.html">Bienville Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$301</td>
-          <td><strong style="color: #c0392b;">14.95x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>7</td>
-          <td><a href="/counties/madison-parish-la.html">Madison Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$313</td>
-          <td><strong style="color: #c0392b;">14.38x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>8</td>
-          <td><a href="/counties/winn-parish-la.html">Winn Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$325</td>
-          <td><strong style="color: #c0392b;">13.85x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>9</td>
-          <td><a href="/counties/catahoula-parish-la.html">Catahoula Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$325</td>
-          <td><strong style="color: #c0392b;">13.85x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>10</td>
-          <td><a href="/counties/east-feliciana-parish-la.html">East Feliciana Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$339</td>
-          <td><strong style="color: #c0392b;">13.27x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>11</td>
-          <td><a href="/counties/franklin-parish-la.html">Franklin Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$351</td>
-          <td><strong style="color: #c0392b;">12.82x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>12</td>
-          <td><a href="/counties/jackson-parish-la.html">Jackson Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$352</td>
-          <td><strong style="color: #c0392b;">12.78x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>13</td>
-          <td><a href="/counties/claiborne-parish-la.html">Claiborne Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$356</td>
-          <td><strong style="color: #c0392b;">12.64x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>14</td>
-          <td><a href="/counties/evangeline-parish-la.html">Evangeline Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$362</td>
-          <td><strong style="color: #c0392b;">12.43x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>15</td>
-          <td><a href="/counties/choctaw-county-al.html">Choctaw County, AL</a></td>
-          <td>$2,480</td>
-          <td>$207</td>
-          <td><strong style="color: #c0392b;">11.98x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>16</td>
-          <td><a href="/counties/concordia-parish-la.html">Concordia Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$384</td>
-          <td><strong style="color: #c0392b;">11.72x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>17</td>
-          <td><a href="/counties/richland-parish-la.html">Richland Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$401</td>
-          <td><strong style="color: #c0392b;">11.22x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>18</td>
-          <td><a href="/counties/st-landry-parish-la.html">St. Landry Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$411</td>
-          <td><strong style="color: #c0392b;">10.95x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>19</td>
-          <td><a href="/counties/webster-parish-la.html">Webster Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$412</td>
-          <td><strong style="color: #c0392b;">10.92x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>20</td>
-          <td><a href="/counties/caldwell-parish-la.html">Caldwell Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$415</td>
-          <td><strong style="color: #c0392b;">10.84x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>21</td>
-          <td><a href="/counties/mcmullen-county-tx.html">McMullen County, TX</a></td>
-          <td>$4,200</td>
-          <td>$400</td>
-          <td><strong style="color: #c0392b;">10.5x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>22</td>
-          <td><a href="/counties/jefferson-davis-parish-la.html">Jefferson Davis Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$442</td>
-          <td><strong style="color: #c0392b;">10.18x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>23</td>
-          <td><a href="/counties/crockett-county-tx.html">Crockett County, TX</a></td>
-          <td>$4,200</td>
-          <td>$416</td>
-          <td><strong style="color: #c0392b;">10.1x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>24</td>
-          <td><a href="/counties/oglala-lakota-county-sd.html">Oglala Lakota County, SD</a></td>
-          <td>$2,000</td>
-          <td>$199</td>
-          <td><strong style="color: #c0392b;">10.05x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>25</td>
-          <td><a href="/counties/holmes-county-fl.html">Holmes County, FL</a></td>
-          <td>$6,000</td>
-          <td>$600</td>
-          <td><strong style="color: #c0392b;">10.0x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>26</td>
-          <td><a href="/counties/jackson-county-fl.html">Jackson County, FL</a></td>
-          <td>$6,000</td>
-          <td>$609</td>
-          <td><strong style="color: #c0392b;">9.85x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>27</td>
-          <td><a href="/counties/st-helena-parish-la.html">St. Helena Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$469</td>
-          <td><strong style="color: #c0392b;">9.59x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>28</td>
-          <td><a href="/counties/acadia-parish-la.html">Acadia Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$483</td>
-          <td><strong style="color: #c0392b;">9.32x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>29</td>
-          <td><a href="/counties/sabine-parish-la.html">Sabine Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$484</td>
-          <td><strong style="color: #c0392b;">9.3x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>30</td>
-          <td><a href="/counties/borden-county-tx.html">Borden County, TX</a></td>
-          <td>$4,200</td>
-          <td>$460</td>
-          <td><strong style="color: #c0392b;">9.13x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>31</td>
-          <td><a href="/counties/lamar-county-al.html">Lamar County, AL</a></td>
-          <td>$2,480</td>
-          <td>$274</td>
-          <td><strong style="color: #c0392b;">9.05x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>32</td>
-          <td><a href="/counties/red-river-parish-la.html">Red River Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$506</td>
-          <td><strong style="color: #c0392b;">8.89x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>33</td>
-          <td><a href="/counties/washington-parish-la.html">Washington Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$507</td>
-          <td><strong style="color: #c0392b;">8.88x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>34</td>
-          <td><a href="/counties/cimarron-county-ok.html">Cimarron County, OK</a></td>
-          <td>$3,500</td>
-          <td>$395</td>
-          <td><strong style="color: #c0392b;">8.86x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>35</td>
-          <td><a href="/counties/perry-county-al.html">Perry County, AL</a></td>
-          <td>$2,480</td>
-          <td>$281</td>
-          <td><strong style="color: #c0392b;">8.83x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>36</td>
-          <td><a href="/counties/union-parish-la.html">Union Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$518</td>
-          <td><strong style="color: #c0392b;">8.69x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>37</td>
-          <td><a href="/counties/morehouse-parish-la.html">Morehouse Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$530</td>
-          <td><strong style="color: #c0392b;">8.49x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>38</td>
-          <td><a href="/counties/lasalle-parish-la.html">LaSalle Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$532</td>
-          <td><strong style="color: #c0392b;">8.46x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>39</td>
-          <td><a href="/counties/de-soto-parish-la.html">De Soto Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$540</td>
-          <td><strong style="color: #c0392b;">8.33x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>40</td>
-          <td><a href="/counties/bibb-county-al.html">Bibb County, AL</a></td>
-          <td>$2,480</td>
-          <td>$298</td>
-          <td><strong style="color: #c0392b;">8.32x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>41</td>
-          <td><a href="/counties/st-mary-parish-la.html">St. Mary Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$545</td>
-          <td><strong style="color: #c0392b;">8.26x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>42</td>
-          <td><a href="/counties/marion-county-al.html">Marion County, AL</a></td>
-          <td>$2,480</td>
-          <td>$301</td>
-          <td><strong style="color: #c0392b;">8.24x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>43</td>
-          <td><a href="/counties/calhoun-county-fl.html">Calhoun County, FL</a></td>
-          <td>$6,000</td>
-          <td>$734</td>
-          <td><strong style="color: #c0392b;">8.17x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>44</td>
-          <td><a href="/counties/assumption-parish-la.html">Assumption Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$552</td>
-          <td><strong style="color: #c0392b;">8.15x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>45</td>
-          <td><a href="/counties/iberville-parish-la.html">Iberville Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$556</td>
-          <td><strong style="color: #c0392b;">8.09x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>46</td>
-          <td><a href="/counties/taylor-county-fl.html">Taylor County, FL</a></td>
-          <td>$6,000</td>
-          <td>$750</td>
-          <td><strong style="color: #c0392b;">8.0x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>47</td>
-          <td><a href="/counties/pointe-coupee-parish-la.html">Pointe Coupee Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$565</td>
-          <td><strong style="color: #c0392b;">7.96x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>48</td>
-          <td><a href="/counties/coosa-county-al.html">Coosa County, AL</a></td>
-          <td>$2,480</td>
-          <td>$315</td>
-          <td><strong style="color: #c0392b;">7.87x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>49</td>
-          <td><a href="/counties/beauregard-parish-la.html">Beauregard Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$576</td>
-          <td><strong style="color: #c0392b;">7.81x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>50</td>
-          <td><a href="/counties/wilcox-county-al.html">Wilcox County, AL</a></td>
-          <td>$2,480</td>
-          <td>$319</td>
-          <td><strong style="color: #c0392b;">7.77x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>51</td>
-          <td><a href="/counties/jackson-county-co.html">Jackson County, CO</a></td>
-          <td>$3,200</td>
-          <td>$416</td>
-          <td><strong style="color: #c0392b;">7.69x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>52</td>
-          <td><a href="/counties/vermilion-parish-la.html">Vermilion Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$589</td>
-          <td><strong style="color: #c0392b;">7.64x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>53</td>
-          <td><a href="/counties/iberia-parish-la.html">Iberia Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$593</td>
-          <td><strong style="color: #c0392b;">7.59x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>54</td>
-          <td><a href="/counties/washington-county-fl.html">Washington County, FL</a></td>
-          <td>$6,000</td>
-          <td>$792</td>
-          <td><strong style="color: #c0392b;">7.58x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>55</td>
-          <td><a href="/counties/clay-county-al.html">Clay County, AL</a></td>
-          <td>$2,480</td>
-          <td>$331</td>
-          <td><strong style="color: #c0392b;">7.49x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>56</td>
-          <td><a href="/counties/conecuh-county-al.html">Conecuh County, AL</a></td>
-          <td>$2,480</td>
-          <td>$331</td>
-          <td><strong style="color: #c0392b;">7.49x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>57</td>
-          <td><a href="/counties/bullock-county-al.html">Bullock County, AL</a></td>
-          <td>$2,480</td>
-          <td>$332</td>
-          <td><strong style="color: #c0392b;">7.47x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>58</td>
-          <td><a href="/counties/king-county-tx.html">King County, TX</a></td>
-          <td>$4,200</td>
-          <td>$564</td>
-          <td><strong style="color: #c0392b;">7.45x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>59</td>
-          <td><a href="/counties/dixie-county-fl.html">Dixie County, FL</a></td>
-          <td>$6,000</td>
-          <td>$813</td>
-          <td><strong style="color: #c0392b;">7.38x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>60</td>
-          <td><a href="/counties/lowndes-county-al.html">Lowndes County, AL</a></td>
-          <td>$2,480</td>
-          <td>$337</td>
-          <td><strong style="color: #c0392b;">7.36x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>61</td>
-          <td><a href="/counties/hamilton-county-fl.html">Hamilton County, FL</a></td>
-          <td>$6,000</td>
-          <td>$816</td>
-          <td><strong style="color: #c0392b;">7.35x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>62</td>
-          <td><a href="/counties/harding-county-nm.html">Harding County, NM</a></td>
-          <td>$2,200</td>
-          <td>$305</td>
-          <td><strong style="color: #c0392b;">7.21x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>63</td>
-          <td><a href="/counties/cochran-county-tx.html">Cochran County, TX</a></td>
-          <td>$4,200</td>
-          <td>$583</td>
-          <td><strong style="color: #c0392b;">7.2x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>64</td>
-          <td><a href="/counties/tillman-county-ok.html">Tillman County, OK</a></td>
-          <td>$3,500</td>
-          <td>$500</td>
-          <td><strong style="color: #c0392b;">7.0x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>65</td>
-          <td><a href="/counties/fayette-county-al.html">Fayette County, AL</a></td>
-          <td>$2,480</td>
-          <td>$355</td>
-          <td><strong style="color: #c0392b;">6.99x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>66</td>
-          <td><a href="/counties/walker-county-al.html">Walker County, AL</a></td>
-          <td>$2,480</td>
-          <td>$356</td>
-          <td><strong style="color: #c0392b;">6.97x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>67</td>
-          <td><a href="/counties/lafayette-county-fl.html">Lafayette County, FL</a></td>
-          <td>$6,000</td>
-          <td>$863</td>
-          <td><strong style="color: #c0392b;">6.95x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>68</td>
-          <td><a href="/counties/sumter-county-al.html">Sumter County, AL</a></td>
-          <td>$2,480</td>
-          <td>$359</td>
-          <td><strong style="color: #c0392b;">6.91x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>69</td>
-          <td><a href="/counties/lee-county-ar.html">Lee County, AR</a></td>
-          <td>$2,400</td>
-          <td>$349</td>
-          <td><strong style="color: #c0392b;">6.88x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>70</td>
-          <td><a href="/counties/butler-county-al.html">Butler County, AL</a></td>
-          <td>$2,480</td>
-          <td>$362</td>
-          <td><strong style="color: #c0392b;">6.85x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>71</td>
-          <td><a href="/counties/grant-county-ok.html">Grant County, OK</a></td>
-          <td>$3,500</td>
-          <td>$513</td>
-          <td><strong style="color: #c0392b;">6.82x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>72</td>
-          <td><a href="/counties/pickens-county-al.html">Pickens County, AL</a></td>
-          <td>$2,480</td>
-          <td>$364</td>
-          <td><strong style="color: #c0392b;">6.81x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>73</td>
-          <td><a href="/counties/washington-county-al.html">Washington County, AL</a></td>
-          <td>$2,480</td>
-          <td>$365</td>
-          <td><strong style="color: #c0392b;">6.79x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>74</td>
-          <td><a href="/counties/jefferson-county-ok.html">Jefferson County, OK</a></td>
-          <td>$3,500</td>
-          <td>$517</td>
-          <td><strong style="color: #c0392b;">6.77x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>75</td>
-          <td><a href="/counties/pushmataha-county-ok.html">Pushmataha County, OK</a></td>
-          <td>$3,500</td>
-          <td>$518</td>
-          <td><strong style="color: #c0392b;">6.76x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>76</td>
-          <td><a href="/counties/choctaw-county-ok.html">Choctaw County, OK</a></td>
-          <td>$3,500</td>
-          <td>$520</td>
-          <td><strong style="color: #c0392b;">6.73x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>77</td>
-          <td><a href="/counties/crenshaw-county-al.html">Crenshaw County, AL</a></td>
-          <td>$2,480</td>
-          <td>$369</td>
-          <td><strong style="color: #c0392b;">6.72x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>78</td>
-          <td><a href="/counties/mccurtain-county-ok.html">McCurtain County, OK</a></td>
-          <td>$3,500</td>
-          <td>$528</td>
-          <td><strong style="color: #c0392b;">6.63x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>79</td>
-          <td><a href="/counties/prowers-county-co.html">Prowers County, CO</a></td>
-          <td>$3,200</td>
-          <td>$487</td>
-          <td><strong style="color: #c0392b;">6.57x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>80</td>
-          <td><a href="/counties/winston-county-al.html">Winston County, AL</a></td>
-          <td>$2,480</td>
-          <td>$380</td>
-          <td><strong style="color: #c0392b;">6.53x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>81</td>
-          <td><a href="/counties/harmon-county-ok.html">Harmon County, OK</a></td>
-          <td>$3,500</td>
-          <td>$537</td>
-          <td><strong style="color: #c0392b;">6.52x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>82</td>
-          <td><a href="/counties/monroe-county-al.html">Monroe County, AL</a></td>
-          <td>$2,480</td>
-          <td>$381</td>
-          <td><strong style="color: #c0392b;">6.51x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>83</td>
-          <td><a href="/counties/amite-county-ms.html">Amite County, MS</a></td>
-          <td>$2,500</td>
-          <td>$386</td>
-          <td><strong style="color: #c0392b;">6.48x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>84</td>
-          <td><a href="/counties/gadsden-county-fl.html">Gadsden County, FL</a></td>
-          <td>$6,000</td>
-          <td>$927</td>
-          <td><strong style="color: #c0392b;">6.47x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>85</td>
-          <td><a href="/counties/greer-county-ok.html">Greer County, OK</a></td>
-          <td>$3,500</td>
-          <td>$545</td>
-          <td><strong style="color: #c0392b;">6.42x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>86</td>
-          <td><a href="/counties/dallas-county-al.html">Dallas County, AL</a></td>
-          <td>$2,480</td>
-          <td>$392</td>
-          <td><strong style="color: #c0392b;">6.33x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>87</td>
-          <td><a href="/counties/clarke-county-al.html">Clarke County, AL</a></td>
-          <td>$2,480</td>
-          <td>$396</td>
-          <td><strong style="color: #c0392b;">6.26x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>88</td>
-          <td><a href="/counties/kiowa-county-ok.html">Kiowa County, OK</a></td>
-          <td>$3,500</td>
-          <td>$560</td>
-          <td><strong style="color: #c0392b;">6.25x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>89</td>
-          <td><a href="/counties/okfuskee-county-ok.html">Okfuskee County, OK</a></td>
-          <td>$3,500</td>
-          <td>$560</td>
-          <td><strong style="color: #c0392b;">6.25x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>90</td>
-          <td><a href="/counties/covington-county-al.html">Covington County, AL</a></td>
-          <td>$2,480</td>
-          <td>$397</td>
-          <td><strong style="color: #c0392b;">6.25x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>91</td>
-          <td><a href="/counties/madison-county-fl.html">Madison County, FL</a></td>
-          <td>$6,000</td>
-          <td>$965</td>
-          <td><strong style="color: #c0392b;">6.22x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>92</td>
-          <td><a href="/counties/san-augustine-county-tx.html">San Augustine County, TX</a></td>
-          <td>$4,200</td>
-          <td>$676</td>
-          <td><strong style="color: #c0392b;">6.21x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>93</td>
-          <td><a href="/counties/st-martin-parish-la.html">St. Martin Parish, LA</a></td>
-          <td>$4,500</td>
-          <td>$725</td>
-          <td><strong style="color: #c0392b;">6.21x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>94</td>
-          <td><a href="/counties/claiborne-county-ms.html">Claiborne County, MS</a></td>
-          <td>$2,500</td>
-          <td>$403</td>
-          <td><strong style="color: #c0392b;">6.2x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>95</td>
-          <td><a href="/counties/bent-county-co.html">Bent County, CO</a></td>
-          <td>$3,200</td>
-          <td>$517</td>
-          <td><strong style="color: #c0392b;">6.19x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>96</td>
-          <td><a href="/counties/cottle-county-tx.html">Cottle County, TX</a></td>
-          <td>$4,200</td>
-          <td>$680</td>
-          <td><strong style="color: #c0392b;">6.18x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>97</td>
-          <td><a href="/counties/latimer-county-ok.html">Latimer County, OK</a></td>
-          <td>$3,500</td>
-          <td>$567</td>
-          <td><strong style="color: #c0392b;">6.17x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>98</td>
-          <td><a href="/counties/otero-county-co.html">Otero County, CO</a></td>
-          <td>$3,200</td>
-          <td>$520</td>
-          <td><strong style="color: #c0392b;">6.15x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>99</td>
-          <td><a href="/counties/adair-county-ok.html">Adair County, OK</a></td>
-          <td>$3,500</td>
-          <td>$569</td>
-          <td><strong style="color: #c0392b;">6.15x</strong></td>
-        </tr>
-        
-        <tr>
-          <td>100</td>
-          <td><a href="/counties/crowley-county-co.html">Crowley County, CO</a></td>
-          <td>$3,200</td>
-          <td>$521</td>
-          <td><strong style="color: #c0392b;">6.14x</strong></td>
-        </tr>
-        
+      <tbody id="tableBody">
+        <!-- JS가 채워줍니다 -->
       </tbody>
     </table>
   </div>
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-  // 파이썬에서 넘겨준 Top 10 데이터 (Jinja2 tojson 필터)
-  const top10 = [{"axes": {"climate_safety": 67.8, "housing_affordability": 90.8, "insurance_affordability": 2.3, "resilience": 15.0, "social_resilience": 41.0, "stability": 57.7}, "axis_coverage": 6, "composite": 45.9, "county_fips": "22123", "county_name": "West Carroll Parish", "rank_national": 1877, "raw": {"annual_premium": 4500, "annual_property_tax": 199.0, "effective_tax_rate": 0.0021, "fema_risk_score": 32.13490295895641, "home_value_2019": 90300.0, "home_value_2024": 94400.0, "home_value_cagr_5y": 0.89, "insurance_burden": 0.0916, "insurance_vs_tax_ratio": 22.61, "p2i": 1.921, "pop_change_pct_5y": -14.28}, "slug": "west-carroll-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 69.1, "housing_affordability": 76.9, "insurance_affordability": 0.3, "resilience": 13.7, "social_resilience": 27.7, "stability": 47.6}, "axis_coverage": 6, "composite": 41.2, "county_fips": "22107", "county_name": "Tensas Parish", "rank_national": 2143, "raw": {"annual_premium": 4500, "annual_property_tax": 221.0, "effective_tax_rate": 0.0026, "fema_risk_score": 30.862233534839323, "home_value_2019": 66400.0, "home_value_2024": 86300.0, "home_value_cagr_5y": 5.38, "insurance_burden": 0.1229, "insurance_vs_tax_ratio": 20.36, "p2i": 2.357, "pop_change_pct_5y": -13.73}, "slug": "tensas-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 20.4, "housing_affordability": 42.7, "insurance_affordability": 0.5, "resilience": 45.4, "social_resilience": 7.2, "stability": 28.6}, "axis_coverage": 6, "composite": 20.8, "county_fips": "22009", "county_name": "Avoyelles Parish", "rank_national": 3046, "raw": {"annual_premium": 4500, "annual_property_tax": 249.0, "effective_tax_rate": 0.002, "fema_risk_score": 79.54183900731785, "home_value_2019": 104200.0, "home_value_2024": 122400.0, "home_value_cagr_5y": 3.27, "insurance_burden": 0.1144, "insurance_vs_tax_ratio": 18.07, "p2i": 3.113, "pop_change_pct_5y": -4.34}, "slug": "avoyelles-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 35.8, "housing_affordability": 81.3, "insurance_affordability": 1.7, "resilience": 30.8, "social_resilience": 27.6, "stability": 46.3}, "axis_coverage": 6, "composite": 33.8, "county_fips": "22003", "county_name": "Allen Parish", "rank_national": 2584, "raw": {"annual_premium": 4500, "annual_property_tax": 267.0, "effective_tax_rate": 0.0026, "fema_risk_score": 64.04708876869233, "home_value_2019": 97500.0, "home_value_2024": 104500.0, "home_value_cagr_5y": 1.4, "insurance_burden": 0.0968, "insurance_vs_tax_ratio": 16.85, "p2i": 2.249, "pop_change_pct_5y": -12.26}, "slug": "allen-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 61.6, "housing_affordability": 46.5, "insurance_affordability": 0.0, "resilience": 5.1, "social_resilience": 3.3, "stability": 5.5}, "axis_coverage": 6, "composite": 26.8, "county_fips": "22035", "county_name": "East Carroll Parish", "rank_national": 2887, "raw": {"annual_premium": 4500, "annual_property_tax": 277.0, "effective_tax_rate": 0.0028, "fema_risk_score": 38.27553293032135, "home_value_2019": 76800.0, "home_value_2024": 100500.0, "home_value_cagr_5y": 5.53, "insurance_burden": 0.135, "insurance_vs_tax_ratio": 16.25, "p2i": 3.014, "pop_change_pct_5y": -0.34}, "slug": "east-carroll-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 66.4, "housing_affordability": 54.5, "insurance_affordability": 0.1, "resilience": 17.1, "social_resilience": 5.7, "stability": 29.2}, "axis_coverage": 6, "composite": 33.3, "county_fips": "22013", "county_name": "Bienville Parish", "rank_national": 2610, "raw": {"annual_premium": 4500, "annual_property_tax": 301.0, "effective_tax_rate": 0.003, "fema_risk_score": 33.56665606108813, "home_value_2019": 75900.0, "home_value_2024": 99500.0, "home_value_cagr_5y": 5.56, "insurance_burden": 0.1285, "insurance_vs_tax_ratio": 14.95, "p2i": 2.842, "pop_change_pct_5y": -6.83}, "slug": "bienville-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 48.5, "housing_affordability": 61.2, "insurance_affordability": 0.1, "resilience": 24.3, "social_resilience": 0.2, "stability": 2.7}, "axis_coverage": 6, "composite": 26.5, "county_fips": "22065", "county_name": "Madison Parish", "rank_national": 2900, "raw": {"annual_premium": 4500, "annual_property_tax": 313.0, "effective_tax_rate": 0.0033, "fema_risk_score": 51.415844734330264, "home_value_2019": 78100.0, "home_value_2024": 96200.0, "home_value_cagr_5y": 4.26, "insurance_burden": 0.1269, "insurance_vs_tax_ratio": 14.38, "p2i": 2.713, "pop_change_pct_5y": -15.86}, "slug": "madison-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 77.8, "housing_affordability": 82.4, "insurance_affordability": 2.2, "resilience": 37.9, "social_resilience": 28.7, "stability": 33.2}, "axis_coverage": 6, "composite": 46.2, "county_fips": "22127", "county_name": "Winn Parish", "rank_national": 1857, "raw": {"annual_premium": 4500, "annual_property_tax": 325.0, "effective_tax_rate": 0.003, "fema_risk_score": 22.144447979637288, "home_value_2019": 77700.0, "home_value_2024": 108500.0, "home_value_cagr_5y": 6.91, "insurance_burden": 0.0921, "insurance_vs_tax_ratio": 13.85, "p2i": 2.22, "pop_change_pct_5y": -5.91}, "slug": "winn-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 68.2, "housing_affordability": 88.3, "insurance_affordability": 2.5, "resilience": 28.5, "social_resilience": 17.8, "stability": 69.5}, "axis_coverage": 6, "composite": 45.9, "county_fips": "22025", "county_name": "Catahoula Parish", "rank_national": 1876, "raw": {"annual_premium": 4500, "annual_property_tax": 325.0, "effective_tax_rate": 0.0032, "fema_risk_score": 31.784918867324212, "home_value_2019": 89000.0, "home_value_2024": 101800.0, "home_value_cagr_5y": 2.72, "insurance_burden": 0.0895, "insurance_vs_tax_ratio": 13.85, "p2i": 2.025, "pop_change_pct_5y": -12.11}, "slug": "catahoula-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 37.8, "housing_affordability": 42.5, "insurance_affordability": 11.4, "resilience": 24.6, "social_resilience": 24.9, "stability": 97.0}, "axis_coverage": 6, "composite": 35.2, "county_fips": "22037", "county_name": "East Feliciana Parish", "rank_national": 2487, "raw": {"annual_premium": 4500, "annual_property_tax": 339.0, "effective_tax_rate": 0.0015, "fema_risk_score": 62.07445116131085, "home_value_2019": 139300.0, "home_value_2024": 228100.0, "home_value_cagr_5y": 10.37, "insurance_burden": 0.0616, "insurance_vs_tax_ratio": 13.27, "p2i": 3.121, "pop_change_pct_5y": -0.52}, "slug": "east-feliciana-parish-la", "state_abbr": "LA"}];
-  
-  if (!top10 || top10.length === 0) return;
+// 파이썬 데이터 전달
+const top100 = [{"axes": {"climate_safety": 67.8, "housing_affordability": 90.8, "insurance_affordability": 2.3, "resilience": 15.0, "social_resilience": 41.0, "stability": 57.7}, "axis_coverage": 6, "composite": 45.9, "county_fips": "22123", "county_name": "West Carroll Parish", "rank_national": 1877, "raw": {"annual_premium": 4500, "annual_property_tax": 199.0, "effective_tax_rate": 0.0021, "fema_risk_score": 32.13490295895641, "home_value_2019": 90300.0, "home_value_2024": 94400.0, "home_value_cagr_5y": 0.89, "insurance_burden": 0.0916, "insurance_vs_tax_ratio": 22.61, "p2i": 1.921, "pop_change_pct_5y": -14.28}, "slug": "west-carroll-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 69.1, "housing_affordability": 76.9, "insurance_affordability": 0.3, "resilience": 13.7, "social_resilience": 27.7, "stability": 47.6}, "axis_coverage": 6, "composite": 41.2, "county_fips": "22107", "county_name": "Tensas Parish", "rank_national": 2143, "raw": {"annual_premium": 4500, "annual_property_tax": 221.0, "effective_tax_rate": 0.0026, "fema_risk_score": 30.862233534839323, "home_value_2019": 66400.0, "home_value_2024": 86300.0, "home_value_cagr_5y": 5.38, "insurance_burden": 0.1229, "insurance_vs_tax_ratio": 20.36, "p2i": 2.357, "pop_change_pct_5y": -13.73}, "slug": "tensas-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 20.4, "housing_affordability": 42.7, "insurance_affordability": 0.5, "resilience": 45.4, "social_resilience": 7.2, "stability": 28.6}, "axis_coverage": 6, "composite": 20.8, "county_fips": "22009", "county_name": "Avoyelles Parish", "rank_national": 3046, "raw": {"annual_premium": 4500, "annual_property_tax": 249.0, "effective_tax_rate": 0.002, "fema_risk_score": 79.54183900731785, "home_value_2019": 104200.0, "home_value_2024": 122400.0, "home_value_cagr_5y": 3.27, "insurance_burden": 0.1144, "insurance_vs_tax_ratio": 18.07, "p2i": 3.113, "pop_change_pct_5y": -4.34}, "slug": "avoyelles-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 35.8, "housing_affordability": 81.3, "insurance_affordability": 1.7, "resilience": 30.8, "social_resilience": 27.6, "stability": 46.3}, "axis_coverage": 6, "composite": 33.8, "county_fips": "22003", "county_name": "Allen Parish", "rank_national": 2584, "raw": {"annual_premium": 4500, "annual_property_tax": 267.0, "effective_tax_rate": 0.0026, "fema_risk_score": 64.04708876869233, "home_value_2019": 97500.0, "home_value_2024": 104500.0, "home_value_cagr_5y": 1.4, "insurance_burden": 0.0968, "insurance_vs_tax_ratio": 16.85, "p2i": 2.249, "pop_change_pct_5y": -12.26}, "slug": "allen-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 61.6, "housing_affordability": 46.5, "insurance_affordability": 0.0, "resilience": 5.1, "social_resilience": 3.3, "stability": 5.5}, "axis_coverage": 6, "composite": 26.8, "county_fips": "22035", "county_name": "East Carroll Parish", "rank_national": 2887, "raw": {"annual_premium": 4500, "annual_property_tax": 277.0, "effective_tax_rate": 0.0028, "fema_risk_score": 38.27553293032135, "home_value_2019": 76800.0, "home_value_2024": 100500.0, "home_value_cagr_5y": 5.53, "insurance_burden": 0.135, "insurance_vs_tax_ratio": 16.25, "p2i": 3.014, "pop_change_pct_5y": -0.34}, "slug": "east-carroll-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 66.4, "housing_affordability": 54.5, "insurance_affordability": 0.1, "resilience": 17.1, "social_resilience": 5.7, "stability": 29.2}, "axis_coverage": 6, "composite": 33.3, "county_fips": "22013", "county_name": "Bienville Parish", "rank_national": 2610, "raw": {"annual_premium": 4500, "annual_property_tax": 301.0, "effective_tax_rate": 0.003, "fema_risk_score": 33.56665606108813, "home_value_2019": 75900.0, "home_value_2024": 99500.0, "home_value_cagr_5y": 5.56, "insurance_burden": 0.1285, "insurance_vs_tax_ratio": 14.95, "p2i": 2.842, "pop_change_pct_5y": -6.83}, "slug": "bienville-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 48.5, "housing_affordability": 61.2, "insurance_affordability": 0.1, "resilience": 24.3, "social_resilience": 0.2, "stability": 2.7}, "axis_coverage": 6, "composite": 26.5, "county_fips": "22065", "county_name": "Madison Parish", "rank_national": 2900, "raw": {"annual_premium": 4500, "annual_property_tax": 313.0, "effective_tax_rate": 0.0033, "fema_risk_score": 51.415844734330264, "home_value_2019": 78100.0, "home_value_2024": 96200.0, "home_value_cagr_5y": 4.26, "insurance_burden": 0.1269, "insurance_vs_tax_ratio": 14.38, "p2i": 2.713, "pop_change_pct_5y": -15.86}, "slug": "madison-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 77.8, "housing_affordability": 82.4, "insurance_affordability": 2.2, "resilience": 37.9, "social_resilience": 28.7, "stability": 33.2}, "axis_coverage": 6, "composite": 46.2, "county_fips": "22127", "county_name": "Winn Parish", "rank_national": 1857, "raw": {"annual_premium": 4500, "annual_property_tax": 325.0, "effective_tax_rate": 0.003, "fema_risk_score": 22.144447979637288, "home_value_2019": 77700.0, "home_value_2024": 108500.0, "home_value_cagr_5y": 6.91, "insurance_burden": 0.0921, "insurance_vs_tax_ratio": 13.85, "p2i": 2.22, "pop_change_pct_5y": -5.91}, "slug": "winn-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 68.2, "housing_affordability": 88.3, "insurance_affordability": 2.5, "resilience": 28.5, "social_resilience": 17.8, "stability": 69.5}, "axis_coverage": 6, "composite": 45.9, "county_fips": "22025", "county_name": "Catahoula Parish", "rank_national": 1876, "raw": {"annual_premium": 4500, "annual_property_tax": 325.0, "effective_tax_rate": 0.0032, "fema_risk_score": 31.784918867324212, "home_value_2019": 89000.0, "home_value_2024": 101800.0, "home_value_cagr_5y": 2.72, "insurance_burden": 0.0895, "insurance_vs_tax_ratio": 13.85, "p2i": 2.025, "pop_change_pct_5y": -12.11}, "slug": "catahoula-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 37.8, "housing_affordability": 42.5, "insurance_affordability": 11.4, "resilience": 24.6, "social_resilience": 24.9, "stability": 97.0}, "axis_coverage": 6, "composite": 35.2, "county_fips": "22037", "county_name": "East Feliciana Parish", "rank_national": 2487, "raw": {"annual_premium": 4500, "annual_property_tax": 339.0, "effective_tax_rate": 0.0015, "fema_risk_score": 62.07445116131085, "home_value_2019": 139300.0, "home_value_2024": 228100.0, "home_value_cagr_5y": 10.37, "insurance_burden": 0.0616, "insurance_vs_tax_ratio": 13.27, "p2i": 3.121, "pop_change_pct_5y": -0.52}, "slug": "east-feliciana-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 32.8, "housing_affordability": 75.1, "insurance_affordability": 1.8, "resilience": 32.8, "social_resilience": 11.3, "stability": 42.2}, "axis_coverage": 6, "composite": 30.2, "county_fips": "22041", "county_name": "Franklin Parish", "rank_national": 2746, "raw": {"annual_premium": 4500, "annual_property_tax": 351.0, "effective_tax_rate": 0.0031, "fema_risk_score": 67.03786191536749, "home_value_2019": 88000.0, "home_value_2024": 113000.0, "home_value_cagr_5y": 5.13, "insurance_burden": 0.0957, "insurance_vs_tax_ratio": 12.82, "p2i": 2.403, "pop_change_pct_5y": -4.1}, "slug": "franklin-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 71.6, "housing_affordability": 67.6, "insurance_affordability": 1.3, "resilience": 26.1, "social_resilience": 22.7, "stability": 28.5}, "axis_coverage": 6, "composite": 39.7, "county_fips": "22049", "county_name": "Jackson Parish", "rank_national": 2242, "raw": {"annual_premium": 4500, "annual_property_tax": 352.0, "effective_tax_rate": 0.003, "fema_risk_score": 28.348711422208083, "home_value_2019": 89500.0, "home_value_2024": 115600.0, "home_value_cagr_5y": 5.25, "insurance_burden": 0.1002, "insurance_vs_tax_ratio": 12.78, "p2i": 2.573, "pop_change_pct_5y": -6.27}, "slug": "jackson-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 64.6, "housing_affordability": 70.5, "insurance_affordability": 0.0, "resilience": 3.7, "social_resilience": 16.5, "stability": 24.7}, "axis_coverage": 6, "composite": 34.4, "county_fips": "22027", "county_name": "Claiborne Parish", "rank_national": 2543, "raw": {"annual_premium": 4500, "annual_property_tax": 356.0, "effective_tax_rate": 0.0043, "fema_risk_score": 35.38020999045498, "home_value_2019": 78100.0, "home_value_2024": 82100.0, "home_value_cagr_5y": 1.0, "insurance_burden": 0.1371, "insurance_vs_tax_ratio": 12.64, "p2i": 2.501, "pop_change_pct_5y": -13.46}, "slug": "claiborne-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 19.2, "housing_affordability": 48.2, "insurance_affordability": 0.9, "resilience": 16.3, "social_resilience": 0.1, "stability": 17.9}, "axis_coverage": 6, "composite": 16.6, "county_fips": "22039", "county_name": "Evangeline Parish", "rank_national": 3097, "raw": {"annual_premium": 4500, "annual_property_tax": 362.0, "effective_tax_rate": 0.0029, "fema_risk_score": 80.6554247534203, "home_value_2019": 96600.0, "home_value_2024": 124600.0, "home_value_cagr_5y": 5.22, "insurance_burden": 0.1074, "insurance_vs_tax_ratio": 12.43, "p2i": 2.973, "pop_change_pct_5y": -4.55}, "slug": "evangeline-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 25.5, "housing_affordability": 67.1, "insurance_affordability": 18.4, "resilience": 8.0, "social_resilience": 28.9, "stability": 90.2}, "axis_coverage": 6, "composite": 35.0, "county_fips": "01023", "county_name": "Choctaw County", "rank_national": 2501, "raw": {"annual_premium": 2480, "annual_property_tax": 207.0, "effective_tax_rate": 0.0017, "fema_risk_score": 74.35571110404072, "home_value_2019": 74100.0, "home_value_2024": 123400.0, "home_value_cagr_5y": 10.74, "insurance_burden": 0.0519, "insurance_vs_tax_ratio": 11.98, "p2i": 2.581, "pop_change_pct_5y": -4.22}, "slug": "choctaw-county-al", "state_abbr": "AL"}, {"axes": {"climate_safety": 48.0, "housing_affordability": 66.4, "insurance_affordability": 0.6, "resilience": 28.7, "social_resilience": 3.2, "stability": 47.6}, "axis_coverage": 6, "composite": 32.5, "county_fips": "22029", "county_name": "Concordia Parish", "rank_national": 2649, "raw": {"annual_premium": 4500, "annual_property_tax": 384.0, "effective_tax_rate": 0.0037, "fema_risk_score": 51.861279032771236, "home_value_2019": 80600.0, "home_value_2024": 103800.0, "home_value_cagr_5y": 5.19, "insurance_burden": 0.1127, "insurance_vs_tax_ratio": 11.72, "p2i": 2.599, "pop_change_pct_5y": -8.11}, "slug": "concordia-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 32.3, "housing_affordability": 64.1, "insurance_affordability": 3.3, "resilience": 55.4, "social_resilience": 10.7, "stability": 19.6}, "axis_coverage": 6, "composite": 28.7, "county_fips": "22083", "county_name": "Richland Parish", "rank_national": 2813, "raw": {"annual_premium": 4500, "annual_property_tax": 401.0, "effective_tax_rate": 0.0028, "fema_risk_score": 67.61056315622017, "home_value_2019": 91900.0, "home_value_2024": 141900.0, "home_value_cagr_5y": 9.08, "insurance_burden": 0.084, "insurance_vs_tax_ratio": 11.22, "p2i": 2.65, "pop_change_pct_5y": -2.59}, "slug": "richland-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 8.3, "housing_affordability": 39.2, "insurance_affordability": 1.3, "resilience": 62.0, "social_resilience": 16.3, "stability": 28.6}, "axis_coverage": 6, "composite": 19.4, "county_fips": "22097", "county_name": "St. Landry Parish", "rank_national": 3065, "raw": {"annual_premium": 4500, "annual_property_tax": 411.0, "effective_tax_rate": 0.0029, "fema_risk_score": 91.69583200763601, "home_value_2019": 108400.0, "home_value_2024": 142500.0, "home_value_cagr_5y": 5.62, "insurance_burden": 0.1012, "insurance_vs_tax_ratio": 10.95, "p2i": 3.205, "pop_change_pct_5y": -1.81}, "slug": "st-landry-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 46.2, "housing_affordability": 57.4, "insurance_affordability": 0.8, "resilience": 19.3, "social_resilience": 9.6, "stability": 19.7}, "axis_coverage": 6, "composite": 27.5, "county_fips": "22119", "county_name": "Webster Parish", "rank_national": 2857, "raw": {"annual_premium": 4500, "annual_property_tax": 412.0, "effective_tax_rate": 0.0036, "fema_risk_score": 53.64301622653515, "home_value_2019": 81500.0, "home_value_2024": 114500.0, "home_value_cagr_5y": 7.04, "insurance_burden": 0.1093, "insurance_vs_tax_ratio": 10.92, "p2i": 2.78, "pop_change_pct_5y": -8.72}, "slug": "webster-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 75.0, "housing_affordability": 89.4, "insurance_affordability": 1.8, "resilience": 35.5, "social_resilience": 20.8, "stability": 25.0}, "axis_coverage": 6, "composite": 44.5, "county_fips": "22021", "county_name": "Caldwell Parish", "rank_national": 1953, "raw": {"annual_premium": 4500, "annual_property_tax": 415.0, "effective_tax_rate": 0.0044, "fema_risk_score": 24.94432071269488, "home_value_2019": 77300.0, "home_value_2024": 93300.0, "home_value_cagr_5y": 3.83, "insurance_burden": 0.0957, "insurance_vs_tax_ratio": 10.84, "p2i": 1.984, "pop_change_pct_5y": -4.92}, "slug": "caldwell-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 98.3, "housing_affordability": 82.7, "insurance_affordability": 1.8, "resilience": 18.5, "social_resilience": 28.0, "stability": 71.0}, "axis_coverage": 6, "composite": 54.1, "county_fips": "48311", "county_name": "McMullen County", "rank_national": 1339, "raw": {"annual_premium": 4200, "annual_property_tax": 400.0, "effective_tax_rate": 0.0041, "fema_risk_score": 1.718103722558066, "home_value_2019": 110900.0, "home_value_2024": 97100.0, "home_value_cagr_5y": -2.62, "insurance_burden": 0.0957, "insurance_vs_tax_ratio": 10.5, "p2i": 2.213, "pop_change_pct_5y": -9.56}, "slug": "mcmullen-county-tx", "state_abbr": "TX"}, {"axes": {"climate_safety": 11.5, "housing_affordability": 65.0, "insurance_affordability": 4.4, "resilience": 30.2, "social_resilience": 18.3, "stability": 63.6}, "axis_coverage": 6, "composite": 25.5, "county_fips": "22053", "county_name": "Jefferson Davis Parish", "rank_national": 2937, "raw": {"annual_premium": 4500, "annual_property_tax": 442.0, "effective_tax_rate": 0.0029, "fema_risk_score": 88.45052497613744, "home_value_2019": 114000.0, "home_value_2024": 150800.0, "home_value_cagr_5y": 5.75, "insurance_burden": 0.0785, "insurance_vs_tax_ratio": 10.18, "p2i": 2.63, "pop_change_pct_5y": 1.54}, "slug": "jefferson-davis-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 88.0, "housing_affordability": null, "insurance_affordability": 18.4, "resilience": 15.6, "social_resilience": 29.8, "stability": 45.0}, "axis_coverage": 5, "composite": 47.1, "county_fips": "48105", "county_name": "Crockett County", "rank_national": 1804, "raw": {"annual_premium": 4200, "annual_property_tax": 416.0, "effective_tax_rate": null, "fema_risk_score": 11.994909322303531, "home_value_2019": 89600.0, "home_value_2024": null, "home_value_cagr_5y": null, "insurance_burden": 0.0518, "insurance_vs_tax_ratio": 10.1, "p2i": null, "pop_change_pct_5y": -19.0}, "slug": "crockett-county-tx", "state_abbr": "TX"}, {"axes": {"climate_safety": 42.8, "housing_affordability": 99.5, "insurance_affordability": 22.1, "resilience": 0.2, "social_resilience": 0.9, "stability": 1.9}, "axis_coverage": 6, "composite": 33.6, "county_fips": "46102", "county_name": "Oglala Lakota County", "rank_national": 2597, "raw": {"annual_premium": 2000, "annual_property_tax": 199.0, "effective_tax_rate": 0.0038, "fema_risk_score": 57.04740693604836, "home_value_2019": 27400.0, "home_value_2024": 52900.0, "home_value_cagr_5y": 14.06, "insurance_burden": 0.0483, "insurance_vs_tax_ratio": 10.05, "p2i": 1.277, "pop_change_pct_5y": -5.89}, "slug": "oglala-lakota-county-sd", "state_abbr": "SD"}, {"axes": {"climate_safety": 16.7, "housing_affordability": 81.9, "insurance_affordability": 0.4, "resilience": 10.2, "social_resilience": 13.8, "stability": 59.7}, "axis_coverage": 6, "composite": 25.8, "county_fips": "12059", "county_name": "Holmes County", "rank_national": 2928, "raw": {"annual_premium": 6000, "annual_property_tax": 600.0, "effective_tax_rate": 0.0054, "fema_risk_score": 83.20076360165447, "home_value_2019": 92700.0, "home_value_2024": 110200.0, "home_value_cagr_5y": 3.52, "insurance_burden": 0.1216, "insurance_vs_tax_ratio": 10.0, "p2i": 2.233, "pop_change_pct_5y": 0.42}, "slug": "holmes-county-fl", "state_abbr": "FL"}, {"axes": {"climate_safety": 14.1, "housing_affordability": 72.6, "insurance_affordability": 0.3, "resilience": 21.0, "social_resilience": 10.1, "stability": 56.3}, "axis_coverage": 6, "composite": 23.9, "county_fips": "12063", "county_name": "Jackson County", "rank_national": 2984, "raw": {"annual_premium": 6000, "annual_property_tax": 609.0, "effective_tax_rate": 0.005, "fema_risk_score": 85.8097359210945, "home_value_2019": 99000.0, "home_value_2024": 120800.0, "home_value_cagr_5y": 4.06, "insurance_burden": 0.1221, "insurance_vs_tax_ratio": 9.85, "p2i": 2.458, "pop_change_pct_5y": 0.64}, "slug": "jackson-county-fl", "state_abbr": "FL"}, {"axes": {"climate_safety": 51.6, "housing_affordability": 92.7, "insurance_affordability": 0.9, "resilience": 24.3, "social_resilience": 8.2, "stability": 74.8}, "axis_coverage": 6, "composite": 40.3, "county_fips": "22091", "county_name": "St. Helena Parish", "rank_national": 2195, "raw": {"annual_premium": 4500, "annual_property_tax": 469.0, "effective_tax_rate": 0.0061, "fema_risk_score": 48.26598790964047, "home_value_2019": 100100.0, "home_value_2024": 77300.0, "home_value_cagr_5y": -5.04, "insurance_burden": 0.1073, "insurance_vs_tax_ratio": 9.59, "p2i": 1.843, "pop_change_pct_5y": 5.45}, "slug": "st-helena-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 9.4, "housing_affordability": 32.0, "insurance_affordability": 1.5, "resilience": 29.8, "social_resilience": 11.2, "stability": 20.3}, "axis_coverage": 6, "composite": 14.1, "county_fips": "22001", "county_name": "Acadia Parish", "rank_national": 3115, "raw": {"annual_premium": 4500, "annual_property_tax": 483.0, "effective_tax_rate": 0.0031, "fema_risk_score": 90.51861279032771, "home_value_2019": 118000.0, "home_value_2024": 155500.0, "home_value_cagr_5y": 5.67, "insurance_burden": 0.0988, "insurance_vs_tax_ratio": 9.32, "p2i": 3.413, "pop_change_pct_5y": -8.81}, "slug": "acadia-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 37.1, "housing_affordability": 73.1, "insurance_affordability": 2.5, "resilience": 9.4, "social_resilience": 17.0, "stability": 81.3}, "axis_coverage": 6, "composite": 33.5, "county_fips": "22085", "county_name": "Sabine Parish", "rank_national": 2599, "raw": {"annual_premium": 4500, "annual_property_tax": 484.0, "effective_tax_rate": 0.0039, "fema_risk_score": 62.71078587336939, "home_value_2019": 94300.0, "home_value_2024": 123100.0, "home_value_cagr_5y": 5.47, "insurance_burden": 0.0894, "insurance_vs_tax_ratio": 9.3, "p2i": 2.446, "pop_change_pct_5y": -8.39}, "slug": "sabine-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 89.9, "housing_affordability": 96.6, "insurance_affordability": 10.0, "resilience": 5.0, "social_resilience": 66.0, "stability": 18.0}, "axis_coverage": 6, "composite": 52.9, "county_fips": "48033", "county_name": "Borden County", "rank_national": 1417, "raw": {"annual_premium": 4200, "annual_property_tax": 460.0, "effective_tax_rate": 0.0042, "fema_risk_score": 10.085905186127905, "home_value_2019": 153300.0, "home_value_2024": 108900.0, "home_value_cagr_5y": -6.61, "insurance_burden": 0.064, "insurance_vs_tax_ratio": 9.13, "p2i": 1.659, "pop_change_pct_5y": 16.31}, "slug": "borden-county-tx", "state_abbr": "TX"}, {"axes": {"climate_safety": 70.3, "housing_affordability": 80.0, "insurance_affordability": 20.4, "resilience": 14.5, "social_resilience": 44.8, "stability": 55.1}, "axis_coverage": 6, "composite": 49.6, "county_fips": "01075", "county_name": "Lamar County", "rank_national": 1634, "raw": {"annual_premium": 2480, "annual_property_tax": 274.0, "effective_tax_rate": 0.0024, "fema_risk_score": 29.68501431753102, "home_value_2019": 80900.0, "home_value_2024": 114000.0, "home_value_cagr_5y": 7.1, "insurance_burden": 0.0496, "insurance_vs_tax_ratio": 9.05, "p2i": 2.28, "pop_change_pct_5y": -1.38}, "slug": "lamar-county-al", "state_abbr": "AL"}, {"axes": {"climate_safety": 72.0, "housing_affordability": 73.7, "insurance_affordability": 2.3, "resilience": 34.8, "social_resilience": 17.3, "stability": 65.6}, "axis_coverage": 6, "composite": 45.0, "county_fips": "22081", "county_name": "Red River Parish", "rank_national": 1928, "raw": {"annual_premium": 4500, "annual_property_tax": 506.0, "effective_tax_rate": 0.0042, "fema_risk_score": 27.998727330575885, "home_value_2019": 78700.0, "home_value_2024": 119700.0, "home_value_cagr_5y": 8.75, "insurance_burden": 0.0915, "insurance_vs_tax_ratio": 8.89, "p2i": 2.435, "pop_change_pct_5y": -13.1}, "slug": "red-river-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 10.6, "housing_affordability": 31.6, "insurance_affordability": 1.4, "resilience": 25.1, "social_resilience": 2.6, "stability": 26.2}, "axis_coverage": 6, "composite": 13.7, "county_fips": "22117", "county_name": "Washington Parish", "rank_national": 3118, "raw": {"annual_premium": 4500, "annual_property_tax": 507.0, "effective_tax_rate": 0.0033, "fema_risk_score": 89.37321030862233, "home_value_2019": 101000.0, "home_value_2024": 155700.0, "home_value_cagr_5y": 9.04, "insurance_burden": 0.0992, "insurance_vs_tax_ratio": 8.88, "p2i": 3.431, "pop_change_pct_5y": -2.83}, "slug": "washington-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 81.8, "housing_affordability": 97.6, "insurance_affordability": 15.2, "resilience": 3.7, "social_resilience": 55.2, "stability": 71.5}, "axis_coverage": 6, "composite": 56.0, "county_fips": "40025", "county_name": "Cimarron County", "rank_national": 1209, "raw": {"annual_premium": 3500, "annual_property_tax": 395.0, "effective_tax_rate": 0.004, "fema_risk_score": 18.167356029271396, "home_value_2019": 56500.0, "home_value_2024": 98600.0, "home_value_cagr_5y": 11.78, "insurance_burden": 0.0563, "insurance_vs_tax_ratio": 8.86, "p2i": 1.586, "pop_change_pct_5y": 2.02}, "slug": "cimarron-county-ok", "state_abbr": "OK"}, {"axes": {"climate_safety": 86.3, "housing_affordability": 79.2, "insurance_affordability": 9.1, "resilience": 10.9, "social_resilience": 8.6, "stability": 67.1}, "axis_coverage": 6, "composite": 48.7, "county_fips": "01105", "county_name": "Perry County", "rank_national": 1691, "raw": {"annual_premium": 2480, "annual_property_tax": 281.0, "effective_tax_rate": 0.0033, "fema_risk_score": 13.713013044861597, "home_value_2019": 65000.0, "home_value_2024": 86400.0, "home_value_cagr_5y": 5.86, "insurance_burden": 0.0659, "insurance_vs_tax_ratio": 8.83, "p2i": 2.295, "pop_change_pct_5y": -13.58}, "slug": "perry-county-al", "state_abbr": "AL"}, {"axes": {"climate_safety": 54.4, "housing_affordability": 65.2, "insurance_affordability": 1.1, "resilience": 25.3, "social_resilience": 32.2, "stability": 68.9}, "axis_coverage": 6, "composite": 39.0, "county_fips": "22111", "county_name": "Union Parish", "rank_national": 2280, "raw": {"annual_premium": 4500, "annual_property_tax": 518.0, "effective_tax_rate": 0.0046, "fema_risk_score": 45.46611517658288, "home_value_2019": 89200.0, "home_value_2024": 112500.0, "home_value_cagr_5y": 4.75, "insurance_burden": 0.1049, "insurance_vs_tax_ratio": 8.69, "p2i": 2.623, "pop_change_pct_5y": -6.85}, "slug": "union-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 44.3, "housing_affordability": 46.6, "insurance_affordability": 0.6, "resilience": 40.4, "social_resilience": 9.3, "stability": 24.3}, "axis_coverage": 6, "composite": 27.8, "county_fips": "22067", "county_name": "Morehouse Parish", "rank_national": 2846, "raw": {"annual_premium": 4500, "annual_property_tax": 530.0, "effective_tax_rate": 0.0045, "fema_risk_score": 55.552020362710785, "home_value_2019": 91100.0, "home_value_2024": 118800.0, "home_value_cagr_5y": 5.45, "insurance_burden": 0.1141, "insurance_vs_tax_ratio": 8.49, "p2i": 3.011, "pop_change_pct_5y": -4.14}, "slug": "morehouse-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 82.0, "housing_affordability": 94.7, "insurance_affordability": 9.2, "resilience": 47.6, "social_resilience": 43.0, "stability": 82.7}, "axis_coverage": 6, "composite": 58.4, "county_fips": "22059", "county_name": "LaSalle Parish", "rank_national": 1052, "raw": {"annual_premium": 4500, "annual_property_tax": 532.0, "effective_tax_rate": 0.0045, "fema_risk_score": 17.944638880050906, "home_value_2019": 93000.0, "home_value_2024": 119500.0, "home_value_cagr_5y": 5.14, "insurance_burden": 0.0657, "insurance_vs_tax_ratio": 8.46, "p2i": 1.745, "pop_change_pct_5y": -0.98}, "slug": "lasalle-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 48.4, "housing_affordability": 40.0, "insurance_affordability": 2.1, "resilience": 29.1, "social_resilience": 18.6, "stability": 64.1}, "axis_coverage": 6, "composite": 32.2, "county_fips": "22031", "county_name": "De Soto Parish", "rank_national": 2661, "raw": {"annual_premium": 4500, "annual_property_tax": 540.0, "effective_tax_rate": 0.0035, "fema_risk_score": 51.47947820553611, "home_value_2019": 117300.0, "home_value_2024": 154900.0, "home_value_cagr_5y": 5.72, "insurance_burden": 0.0926, "insurance_vs_tax_ratio": 8.33, "p2i": 3.189, "pop_change_pct_5y": -0.96}, "slug": "de-soto-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 67.5, "housing_affordability": 57.7, "insurance_affordability": 23.0, "resilience": 19.8, "social_resilience": 19.3, "stability": 75.7}, "axis_coverage": 6, "composite": 46.1, "county_fips": "01007", "county_name": "Bibb County", "rank_national": 1863, "raw": {"annual_premium": 2480, "annual_property_tax": 298.0, "effective_tax_rate": 0.002, "fema_risk_score": 32.48488705058861, "home_value_2019": 92800.0, "home_value_2024": 145700.0, "home_value_cagr_5y": 9.44, "insurance_burden": 0.0472, "insurance_vs_tax_ratio": 8.32, "p2i": 2.773, "pop_change_pct_5y": -1.61}, "slug": "bibb-county-al", "state_abbr": "AL"}, {"axes": {"climate_safety": 5.3, "housing_affordability": 64.4, "insurance_affordability": 2.9, "resilience": 78.2, "social_resilience": 13.7, "stability": 24.5}, "axis_coverage": 6, "composite": 23.6, "county_fips": "22101", "county_name": "St. Mary Parish", "rank_national": 2990, "raw": {"annual_premium": 4500, "annual_property_tax": 545.0, "effective_tax_rate": 0.0039, "fema_risk_score": 94.7184218899141, "home_value_2019": 106900.0, "home_value_2024": 138900.0, "home_value_cagr_5y": 5.38, "insurance_burden": 0.0856, "insurance_vs_tax_ratio": 8.26, "p2i": 2.642, "pop_change_pct_5y": -6.16}, "slug": "st-mary-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 41.9, "housing_affordability": 85.6, "insurance_affordability": 20.6, "resilience": 14.4, "social_resilience": 31.7, "stability": 61.7}, "axis_coverage": 6, "composite": 41.3, "county_fips": "01093", "county_name": "Marion County", "rank_national": 2138, "raw": {"annual_premium": 2480, "annual_property_tax": 301.0, "effective_tax_rate": 0.0028, "fema_risk_score": 57.97009226853325, "home_value_2019": 92800.0, "home_value_2024": 106600.0, "home_value_cagr_5y": 2.81, "insurance_burden": 0.0495, "insurance_vs_tax_ratio": 8.24, "p2i": 2.128, "pop_change_pct_5y": -2.28}, "slug": "marion-county-al", "state_abbr": "AL"}, {"axes": {"climate_safety": 31.3, "housing_affordability": 52.9, "insurance_affordability": 0.4, "resilience": 13.4, "social_resilience": 26.5, "stability": 73.7}, "axis_coverage": 6, "composite": 28.8, "county_fips": "12013", "county_name": "Calhoun County", "rank_national": 2809, "raw": {"annual_premium": 6000, "annual_property_tax": 734.0, "effective_tax_rate": 0.0051, "fema_risk_score": 68.53324848870506, "home_value_2019": 85000.0, "home_value_2024": 145300.0, "home_value_cagr_5y": 11.32, "insurance_burden": 0.1188, "insurance_vs_tax_ratio": 8.17, "p2i": 2.876, "pop_change_pct_5y": -6.06}, "slug": "calhoun-county-fl", "state_abbr": "FL"}, {"axes": {"climate_safety": 13.6, "housing_affordability": 50.5, "insurance_affordability": 2.7, "resilience": 49.0, "social_resilience": 24.8, "stability": 95.9}, "axis_coverage": 6, "composite": 29.3, "county_fips": "22007", "county_name": "Assumption Parish", "rank_national": 2779, "raw": {"annual_premium": 4500, "annual_property_tax": 552.0, "effective_tax_rate": 0.0037, "fema_risk_score": 86.35062042634426, "home_value_2019": 118600.0, "home_value_2024": 150300.0, "home_value_cagr_5y": 4.85, "insurance_burden": 0.0875, "insurance_vs_tax_ratio": 8.15, "p2i": 2.923, "pop_change_pct_5y": -8.87}, "slug": "assumption-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 17.2, "housing_affordability": 39.5, "insurance_affordability": 3.4, "resilience": 90.2, "social_resilience": 15.8, "stability": 52.6}, "axis_coverage": 6, "composite": 27.8, "county_fips": "22047", "county_name": "Iberville Parish", "rank_national": 2845, "raw": {"annual_premium": 4500, "annual_property_tax": 556.0, "effective_tax_rate": 0.0032, "fema_risk_score": 82.72351256761057, "home_value_2019": 143700.0, "home_value_2024": 172800.0, "home_value_cagr_5y": 3.76, "insurance_burden": 0.0833, "insurance_vs_tax_ratio": 8.09, "p2i": 3.2, "pop_change_pct_5y": -9.16}, "slug": "iberville-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 25.9, "housing_affordability": 77.7, "insurance_affordability": 0.3, "resilience": 16.2, "social_resilience": 14.6, "stability": 57.0}, "axis_coverage": 6, "composite": 28.3, "county_fips": "12123", "county_name": "Taylor County", "rank_national": 2824, "raw": {"annual_premium": 6000, "annual_property_tax": 750.0, "effective_tax_rate": 0.0065, "fema_risk_score": 74.00572701240853, "home_value_2019": 85100.0, "home_value_2024": 114600.0, "home_value_cagr_5y": 6.13, "insurance_burden": 0.1223, "insurance_vs_tax_ratio": 8.0, "p2i": 2.335, "pop_change_pct_5y": -1.68}, "slug": "taylor-county-fl", "state_abbr": "FL"}, {"axes": {"climate_safety": 30.5, "housing_affordability": 60.9, "insurance_affordability": 8.1, "resilience": 64.8, "social_resilience": 21.5, "stability": 79.8}, "axis_coverage": 6, "composite": 36.9, "county_fips": "22077", "county_name": "Pointe Coupee Parish", "rank_national": 2393, "raw": {"annual_premium": 4500, "annual_property_tax": 565.0, "effective_tax_rate": 0.0032, "fema_risk_score": 69.32866687877824, "home_value_2019": 142600.0, "home_value_2024": 179300.0, "home_value_cagr_5y": 4.69, "insurance_burden": 0.0682, "insurance_vs_tax_ratio": 7.96, "p2i": 2.718, "pop_change_pct_5y": -8.17}, "slug": "pointe-coupee-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 92.5, "housing_affordability": 88.7, "insurance_affordability": 27.7, "resilience": 21.8, "social_resilience": 56.4, "stability": 87.0}, "axis_coverage": 6, "composite": 64.5, "county_fips": "01037", "county_name": "Coosa County", "rank_national": 653, "raw": {"annual_premium": 2480, "annual_property_tax": 315.0, "effective_tax_rate": 0.0027, "fema_risk_score": 7.508749602290806, "home_value_2019": 84000.0, "home_value_2024": 115500.0, "home_value_cagr_5y": 6.58, "insurance_burden": 0.0432, "insurance_vs_tax_ratio": 7.87, "p2i": 2.014, "pop_change_pct_5y": -4.25}, "slug": "coosa-county-al", "state_abbr": "AL"}, {"axes": {"climate_safety": 28.0, "housing_affordability": 72.8, "insurance_affordability": 8.0, "resilience": 32.3, "social_resilience": 48.0, "stability": 95.9}, "axis_coverage": 6, "composite": 38.9, "county_fips": "22011", "county_name": "Beauregard Parish", "rank_national": 2288, "raw": {"annual_premium": 4500, "annual_property_tax": 576.0, "effective_tax_rate": 0.0036, "fema_risk_score": 71.84218899140949, "home_value_2019": 127500.0, "home_value_2024": 161700.0, "home_value_cagr_5y": 4.87, "insurance_burden": 0.0682, "insurance_vs_tax_ratio": 7.81, "p2i": 2.452, "pop_change_pct_5y": -0.99}, "slug": "beauregard-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 77.0, "housing_affordability": 73.9, "insurance_affordability": 11.7, "resilience": 8.4, "social_resilience": 7.9, "stability": 66.2}, "axis_coverage": 6, "composite": 45.4, "county_fips": "01131", "county_name": "Wilcox County", "rank_national": 1902, "raw": {"annual_premium": 2480, "annual_property_tax": 319.0, "effective_tax_rate": 0.0032, "fema_risk_score": 23.003499840916323, "home_value_2019": 79400.0, "home_value_2024": 98800.0, "home_value_cagr_5y": 4.47, "insurance_burden": 0.061, "insurance_vs_tax_ratio": 7.77, "p2i": 2.431, "pop_change_pct_5y": -4.77}, "slug": "wilcox-county-al", "state_abbr": "AL"}, {"axes": {"climate_safety": 98.3, "housing_affordability": 8.4, "insurance_affordability": 8.5, "resilience": 25.9, "social_resilience": 77.5, "stability": 32.9}, "axis_coverage": 6, "composite": 46.5, "county_fips": "08057", "county_name": "Jackson County", "rank_national": 1837, "raw": {"annual_premium": 3200, "annual_property_tax": 416.0, "effective_tax_rate": 0.0017, "fema_risk_score": 1.749920458160993, "home_value_2019": 196700.0, "home_value_2024": 239600.0, "home_value_cagr_5y": 4.02, "insurance_burden": 0.0671, "insurance_vs_tax_ratio": 7.69, "p2i": 5.027, "pop_change_pct_5y": 8.8}, "slug": "jackson-county-co", "state_abbr": "CO"}, {"axes": {"climate_safety": 10.1, "housing_affordability": 50.2, "insurance_affordability": 3.8, "resilience": 70.8, "social_resilience": 21.1, "stability": 43.0}, "axis_coverage": 6, "composite": 25.0, "county_fips": "22113", "county_name": "Vermilion Parish", "rank_national": 2953, "raw": {"annual_premium": 4500, "annual_property_tax": 589.0, "effective_tax_rate": 0.0036, "fema_risk_score": 89.85046134266625, "home_value_2019": 122200.0, "home_value_2024": 163300.0, "home_value_cagr_5y": 5.97, "insurance_burden": 0.0808, "insurance_vs_tax_ratio": 7.64, "p2i": 2.931, "pop_change_pct_5y": -4.58}, "slug": "vermilion-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 6.4, "housing_affordability": 52.4, "insurance_affordability": 4.2, "resilience": 86.2, "social_resilience": 4.9, "stability": 20.7}, "axis_coverage": 6, "composite": 22.0, "county_fips": "22045", "county_name": "Iberia Parish", "rank_national": 3029, "raw": {"annual_premium": 4500, "annual_property_tax": 593.0, "effective_tax_rate": 0.0036, "fema_risk_score": 93.57301940820871, "home_value_2019": 115600.0, "home_value_2024": 164500.0, "home_value_cagr_5y": 7.31, "insurance_burden": 0.079, "insurance_vs_tax_ratio": 7.59, "p2i": 2.888, "pop_change_pct_5y": -4.57}, "slug": "iberia-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 12.2, "housing_affordability": 49.9, "insurance_affordability": 1.2, "resilience": 15.6, "social_resilience": 13.9, "stability": 79.4}, "axis_coverage": 6, "composite": 22.3, "county_fips": "12133", "county_name": "Washington County", "rank_national": 3019, "raw": {"annual_premium": 6000, "annual_property_tax": 792.0, "effective_tax_rate": 0.0046, "fema_risk_score": 87.71874005727013, "home_value_2019": 113200.0, "home_value_2024": 171000.0, "home_value_cagr_5y": 8.6, "insurance_burden": 0.1031, "insurance_vs_tax_ratio": 7.58, "p2i": 2.938, "pop_change_pct_5y": 3.09}, "slug": "washington-county-fl", "state_abbr": "FL"}, {"axes": {"climate_safety": 77.6, "housing_affordability": 55.0, "insurance_affordability": 25.4, "resilience": 40.7, "social_resilience": 46.9, "stability": 77.0}, "axis_coverage": 6, "composite": 54.3, "county_fips": "01027", "county_name": "Clay County", "rank_national": 1314, "raw": {"annual_premium": 2480, "annual_property_tax": 331.0, "effective_tax_rate": 0.0021, "fema_risk_score": 22.36716512885778, "home_value_2019": 107800.0, "home_value_2024": 156700.0, "home_value_cagr_5y": 7.77, "insurance_burden": 0.0449, "insurance_vs_tax_ratio": 7.49, "p2i": 2.836, "pop_change_pct_5y": 6.41}, "slug": "clay-county-al", "state_abbr": "AL"}, {"axes": {"climate_safety": 52.4, "housing_affordability": 68.5, "insurance_affordability": 12.3, "resilience": 16.5, "social_resilience": 34.3, "stability": 48.2}, "axis_coverage": 6, "composite": 39.0, "county_fips": "01035", "county_name": "Conecuh County", "rank_national": 2279, "raw": {"annual_premium": 2480, "annual_property_tax": 331.0, "effective_tax_rate": 0.0031, "fema_risk_score": 47.534202990773146, "home_value_2019": 81000.0, "home_value_2024": 105300.0, "home_value_cagr_5y": 5.39, "insurance_burden": 0.06, "insurance_vs_tax_ratio": 7.49, "p2i": 2.548, "pop_change_pct_5y": -9.03}, "slug": "conecuh-county-al", "state_abbr": "AL"}, {"axes": {"climate_safety": 67.5, "housing_affordability": 65.8, "insurance_affordability": 4.2, "resilience": 18.0, "social_resilience": 16.9, "stability": 19.0}, "axis_coverage": 6, "composite": 36.6, "county_fips": "01011", "county_name": "Bullock County", "rank_national": 2412, "raw": {"annual_premium": 2480, "annual_property_tax": 332.0, "effective_tax_rate": 0.0041, "fema_risk_score": 32.45307031498568, "home_value_2019": 70300.0, "home_value_2024": 81700.0, "home_value_cagr_5y": 3.05, "insurance_burden": 0.0792, "insurance_vs_tax_ratio": 7.47, "p2i": 2.609, "pop_change_pct_5y": -1.85}, "slug": "bullock-county-al", "state_abbr": "AL"}, {"axes": {"climate_safety": 99.3, "housing_affordability": 99.9, "insurance_affordability": 2.5, "resilience": 4.1, "social_resilience": 67.9, "stability": 6.3}, "axis_coverage": 6, "composite": 53.2, "county_fips": "48269", "county_name": "King County", "rank_national": 1401, "raw": {"annual_premium": 4200, "annual_property_tax": 564.0, "effective_tax_rate": 0.0108, "fema_risk_score": 0.763601654470251, "home_value_2019": 36700.0, "home_value_2024": 52100.0, "home_value_cagr_5y": 7.26, "insurance_burden": 0.09, "insurance_vs_tax_ratio": 7.45, "p2i": 1.117, "pop_change_pct_5y": -10.97}, "slug": "king-county-tx", "state_abbr": "TX"}, {"axes": {"climate_safety": 32.0, "housing_affordability": 64.7, "insurance_affordability": 0.4, "resilience": 2.1, "social_resilience": 23.4, "stability": 95.7}, "axis_coverage": 6, "composite": 31.5, "county_fips": "12029", "county_name": "Dixie County", "rank_national": 2690, "raw": {"annual_premium": 6000, "annual_property_tax": 813.0, "effective_tax_rate": 0.0062, "fema_risk_score": 67.86509704104358, "home_value_2019": 78500.0, "home_value_2024": 132000.0, "home_value_cagr_5y": 10.95, "insurance_burden": 0.1197, "insurance_vs_tax_ratio": 7.38, "p2i": 2.634, "pop_change_pct_5y": 2.83}, "slug": "dixie-county-fl", "state_abbr": "FL"}, {"axes": {"climate_safety": 73.5, "housing_affordability": 78.0, "insurance_affordability": 8.6, "resilience": 19.2, "social_resilience": 10.1, "stability": 66.9}, "axis_coverage": 6, "composite": 45.5, "county_fips": "01085", "county_name": "Lowndes County", "rank_national": 1896, "raw": {"annual_premium": 2480, "annual_property_tax": 337.0, "effective_tax_rate": 0.0039, "fema_risk_score": 26.50334075723831, "home_value_2019": 70000.0, "home_value_2024": 86300.0, "home_value_cagr_5y": 4.28, "insurance_burden": 0.0669, "insurance_vs_tax_ratio": 7.36, "p2i": 2.329, "pop_change_pct_5y": -2.44}, "slug": "lowndes-county-al", "state_abbr": "AL"}, {"axes": {"climate_safety": 34.8, "housing_affordability": 82.5, "insurance_affordability": 0.4, "resilience": 3.4, "social_resilience": 2.0, "stability": 78.8}, "axis_coverage": 6, "composite": 31.3, "county_fips": "12047", "county_name": "Hamilton County", "rank_national": 2699, "raw": {"annual_premium": 6000, "annual_property_tax": 816.0, "effective_tax_rate": 0.0073, "fema_risk_score": 65.065224307986, "home_value_2019": 80100.0, "home_value_2024": 111200.0, "home_value_cagr_5y": 6.78, "insurance_burden": 0.1197, "insurance_vs_tax_ratio": 7.35, "p2i": 2.218, "pop_change_pct_5y": -4.96}, "slug": "hamilton-county-fl", "state_abbr": "FL"}, {"axes": {"climate_safety": 99.8, "housing_affordability": 98.6, "insurance_affordability": 24.8, "resilience": 13.8, "social_resilience": 42.2, "stability": 62.5}, "axis_coverage": 6, "composite": 62.8, "county_fips": "35021", "county_name": "Harding County", "rank_national": 769, "raw": {"annual_premium": 2200, "annual_property_tax": 305.0, "effective_tax_rate": 0.0044, "fema_risk_score": 0.22271714922049, "home_value_2019": 102400.0, "home_value_2024": 70000.0, "home_value_cagr_5y": -7.33, "insurance_burden": 0.0453, "insurance_vs_tax_ratio": 7.21, "p2i": 1.442, "pop_change_pct_5y": 68.03}, "slug": "harding-county-nm", "state_abbr": "NM"}, {"axes": {"climate_safety": 64.3, "housing_affordability": 99.7, "insurance_affordability": 2.1, "resilience": 2.8, "social_resilience": 9.8, "stability": 14.1}, "axis_coverage": 6, "composite": 37.4, "county_fips": "48079", "county_name": "Cochran County", "rank_national": 2365, "raw": {"annual_premium": 4200, "annual_property_tax": 583.0, "effective_tax_rate": 0.011, "fema_risk_score": 35.634743875278396, "home_value_2019": 38800.0, "home_value_2024": 53200.0, "home_value_cagr_5y": 6.52, "insurance_burden": 0.0927, "insurance_vs_tax_ratio": 7.2, "p2i": 1.174, "pop_change_pct_5y": -11.67}, "slug": "cochran-county-tx", "state_abbr": "TX"}, {"axes": {"climate_safety": 78.7, "housing_affordability": 97.1, "insurance_affordability": 6.3, "resilience": 21.0, "social_resilience": 6.8, "stability": 40.7}, "axis_coverage": 6, "composite": 46.6, "county_fips": "40141", "county_name": "Tillman County", "rank_national": 1833, "raw": {"annual_premium": 3500, "annual_property_tax": 500.0, "effective_tax_rate": 0.0063, "fema_risk_score": 21.221762647152403, "home_value_2019": 56800.0, "home_value_2024": 79800.0, "home_value_cagr_5y": 7.04, "insurance_burden": 0.0715, "insurance_vs_tax_ratio": 7.0, "p2i": 1.631, "pop_change_pct_5y": -6.79}, "slug": "tillman-county-ok", "state_abbr": "OK"}, {"axes": {"climate_safety": 70.5, "housing_affordability": 68.6, "insurance_affordability": 19.8, "resilience": 24.6, "social_resilience": 32.8, "stability": 71.9}, "axis_coverage": 6, "composite": 49.3, "county_fips": "01057", "county_name": "Fayette County", "rank_national": 1653, "raw": {"annual_premium": 2480, "annual_property_tax": 355.0, "effective_tax_rate": 0.0028, "fema_risk_score": 29.398663697104677, "home_value_2019": 88500.0, "home_value_2024": 125900.0, "home_value_cagr_5y": 7.3, "insurance_burden": 0.0501, "insurance_vs_tax_ratio": 6.99, "p2i": 2.544, "pop_change_pct_5y": -2.67}, "slug": "fayette-county-al", "state_abbr": "AL"}, {"axes": {"climate_safety": 26.5, "housing_affordability": 75.0, "insurance_affordability": 26.7, "resilience": 22.1, "social_resilience": 31.3, "stability": 58.0}, "axis_coverage": 6, "composite": 37.0, "county_fips": "01127", "county_name": "Walker County", "rank_national": 2384, "raw": {"annual_premium": 2480, "annual_property_tax": 356.0, "effective_tax_rate": 0.0026, "fema_risk_score": 73.33757556474706, "home_value_2019": 104300.0, "home_value_2024": 135900.0, "home_value_cagr_5y": 5.44, "insurance_burden": 0.0439, "insurance_vs_tax_ratio": 6.97, "p2i": 2.405, "pop_change_pct_5y": 1.14}, "slug": "walker-county-al", "state_abbr": "AL"}, {"axes": {"climate_safety": 47.8, "housing_affordability": 70.4, "insurance_affordability": 1.9, "resilience": 10.1, "social_resilience": 20.5, "stability": 64.4}, "axis_coverage": 6, "composite": 34.9, "county_fips": "12067", "county_name": "Lafayette County", "rank_national": 2512, "raw": {"annual_premium": 6000, "annual_property_tax": 863.0, "effective_tax_rate": 0.0055, "fema_risk_score": 52.08399618199173, "home_value_2019": 104700.0, "home_value_2024": 157200.0, "home_value_cagr_5y": 8.47, "insurance_burden": 0.0956, "insurance_vs_tax_ratio": 6.95, "p2i": 2.505, "pop_change_pct_5y": -5.51}, "slug": "lafayette-county-fl", "state_abbr": "FL"}, {"axes": {"climate_safety": 48.8, "housing_affordability": 71.4, "insurance_affordability": 5.2, "resilience": 7.6, "social_resilience": 3.5, "stability": 19.8}, "axis_coverage": 6, "composite": 29.7, "county_fips": "01119", "county_name": "Sumter County", "rank_national": 2759, "raw": {"annual_premium": 2480, "annual_property_tax": 359.0, "effective_tax_rate": 0.0043, "fema_risk_score": 51.065860642698055, "home_value_2019": 74400.0, "home_value_2024": 82600.0, "home_value_cagr_5y": 2.11, "insurance_burden": 0.0745, "insurance_vs_tax_ratio": 6.91, "p2i": 2.48, "pop_change_pct_5y": -7.18}, "slug": "sumter-county-al", "state_abbr": "AL"}, {"axes": {"climate_safety": 44.0, "housing_affordability": 83.7, "insurance_affordability": 7.2, "resilience": 4.9, "social_resilience": 2.6, "stability": 5.9}, "axis_coverage": 6, "composite": 28.9, "county_fips": "05077", "county_name": "Lee County", "rank_national": 2803, "raw": {"annual_premium": 2400, "annual_property_tax": 349.0, "effective_tax_rate": 0.0046, "fema_risk_score": 55.83837098313713, "home_value_2019": 74000.0, "home_value_2024": 75300.0, "home_value_cagr_5y": 0.35, "insurance_burden": 0.0698, "insurance_vs_tax_ratio": 6.88, "p2i": 2.191, "pop_change_pct_5y": -9.08}, "slug": "lee-county-ar", "state_abbr": "AR"}, {"axes": {"climate_safety": 45.8, "housing_affordability": 82.0, "insurance_affordability": 15.9, "resilience": 39.7, "social_resilience": 31.7, "stability": 16.8}, "axis_coverage": 6, "composite": 38.8, "county_fips": "01013", "county_name": "Butler County", "rank_national": 2290, "raw": {"annual_premium": 2480, "annual_property_tax": 362.0, "effective_tax_rate": 0.0036, "fema_risk_score": 54.05663378937321, "home_value_2019": 95900.0, "home_value_2024": 99800.0, "home_value_cagr_5y": 0.8, "insurance_burden": 0.0554, "insurance_vs_tax_ratio": 6.85, "p2i": 2.23, "pop_change_pct_5y": -6.04}, "slug": "butler-county-al", "state_abbr": "AL"}, {"axes": {"climate_safety": 88.4, "housing_affordability": 94.8, "insurance_affordability": 14.2, "resilience": 59.2, "social_resilience": 80.6, "stability": 58.8}, "axis_coverage": 6, "composite": 64.2, "county_fips": "40053", "county_name": "Grant County", "rank_national": 682, "raw": {"annual_premium": 3500, "annual_property_tax": 513.0, "effective_tax_rate": 0.0049, "fema_risk_score": 11.549475023862552, "home_value_2019": 81000.0, "home_value_2024": 105700.0, "home_value_cagr_5y": 5.47, "insurance_burden": 0.0576, "insurance_vs_tax_ratio": 6.82, "p2i": 1.74, "pop_change_pct_5y": -6.05}, "slug": "grant-county-ok", "state_abbr": "OK"}, {"axes": {"climate_safety": 55.1, "housing_affordability": 63.0, "insurance_affordability": 17.2, "resilience": 9.5, "social_resilience": 6.2, "stability": 55.8}, "axis_coverage": 6, "composite": 37.4, "county_fips": "01107", "county_name": "Pickens County", "rank_national": 2361, "raw": {"annual_premium": 2480, "annual_property_tax": 364.0, "effective_tax_rate": 0.0029, "fema_risk_score": 44.82978046452434, "home_value_2019": 96000.0, "home_value_2024": 123900.0, "home_value_cagr_5y": 5.23, "insurance_burden": 0.0536, "insurance_vs_tax_ratio": 6.81, "p2i": 2.678, "pop_change_pct_5y": -7.52}, "slug": "pickens-county-al", "state_abbr": "AL"}, {"axes": {"climate_safety": 41.9, "housing_affordability": 65.5, "insurance_affordability": 30.8, "resilience": 53.9, "social_resilience": 54.0, "stability": 97.2}, "axis_coverage": 6, "composite": 50.6, "county_fips": "01129", "county_name": "Washington County", "rank_national": 1564, "raw": {"annual_premium": 2480, "annual_property_tax": 365.0, "effective_tax_rate": 0.0023, "fema_risk_score": 58.001909004136174, "home_value_2019": 89100.0, "home_value_2024": 159700.0, "home_value_cagr_5y": 12.38, "insurance_burden": 0.0406, "insurance_vs_tax_ratio": 6.79, "p2i": 2.616, "pop_change_pct_5y": -8.45}, "slug": "washington-county-al", "state_abbr": "AL"}, {"axes": {"climate_safety": 77.7, "housing_affordability": 95.7, "insurance_affordability": 6.0, "resilience": 7.0, "social_resilience": 20.5, "stability": 31.7}, "axis_coverage": 6, "composite": 45.1, "county_fips": "40067", "county_name": "Jefferson County", "rank_national": 1922, "raw": {"annual_premium": 3500, "annual_property_tax": 517.0, "effective_tax_rate": 0.0063, "fema_risk_score": 22.23989818644607, "home_value_2019": 66400.0, "home_value_2024": 82500.0, "home_value_cagr_5y": 4.44, "insurance_burden": 0.0719, "insurance_vs_tax_ratio": 6.77, "p2i": 1.695, "pop_change_pct_5y": -12.63}, "slug": "jefferson-county-ok", "state_abbr": "OK"}, {"axes": {"climate_safety": 56.7, "housing_affordability": 58.2, "insurance_affordability": 5.7, "resilience": 8.1, "social_resilience": 12.2, "stability": 51.1}, "axis_coverage": 6, "composite": 34.3, "county_fips": "40127", "county_name": "Pushmataha County", "rank_national": 2553, "raw": {"annual_premium": 3500, "annual_property_tax": 518.0, "effective_tax_rate": 0.0039, "fema_risk_score": 43.17531021317213, "home_value_2019": 80500.0, "home_value_2024": 132300.0, "home_value_cagr_5y": 10.45, "insurance_burden": 0.073, "insurance_vs_tax_ratio": 6.76, "p2i": 2.76, "pop_change_pct_5y": -3.04}, "slug": "pushmataha-county-ok", "state_abbr": "OK"}, {"axes": {"climate_safety": 51.8, "housing_affordability": 53.3, "insurance_affordability": 4.1, "resilience": 9.0, "social_resilience": 7.8, "stability": 16.6}, "axis_coverage": 6, "composite": 27.9, "county_fips": "40023", "county_name": "Choctaw County", "rank_national": 2843, "raw": {"annual_premium": 3500, "annual_property_tax": 520.0, "effective_tax_rate": 0.0041, "fema_risk_score": 48.13872096722876, "home_value_2019": 96800.0, "home_value_2024": 126500.0, "home_value_cagr_5y": 5.5, "insurance_burden": 0.0794, "insurance_vs_tax_ratio": 6.73, "p2i": 2.87, "pop_change_pct_5y": -3.44}, "slug": "choctaw-county-ok", "state_abbr": "OK"}, {"axes": {"climate_safety": 53.6, "housing_affordability": 77.3, "insurance_affordability": 19.1, "resilience": 21.3, "social_resilience": 39.8, "stability": 42.4}, "axis_coverage": 6, "composite": 42.8, "county_fips": "01041", "county_name": "Crenshaw County", "rank_national": 2053, "raw": {"annual_premium": 2480, "annual_property_tax": 369.0, "effective_tax_rate": 0.0032, "fema_risk_score": 46.26153356665606, "home_value_2019": 81000.0, "home_value_2024": 114000.0, "home_value_cagr_5y": 7.07, "insurance_burden": 0.0511, "insurance_vs_tax_ratio": 6.72, "p2i": 2.348, "pop_change_pct_5y": -5.22}, "slug": "crenshaw-county-al", "state_abbr": "AL"}, {"axes": {"climate_safety": 40.9, "housing_affordability": 57.3, "insurance_affordability": 8.5, "resilience": 7.0, "social_resilience": 10.3, "stability": 41.8}, "axis_coverage": 6, "composite": 28.9, "county_fips": "40089", "county_name": "McCurtain County", "rank_national": 2808, "raw": {"annual_premium": 3500, "annual_property_tax": 528.0, "effective_tax_rate": 0.0037, "fema_risk_score": 58.92459433662106, "home_value_2019": 83300.0, "home_value_2024": 144500.0, "home_value_cagr_5y": 11.65, "insurance_burden": 0.0674, "insurance_vs_tax_ratio": 6.63, "p2i": 2.783, "pop_change_pct_5y": -6.52}, "slug": "mccurtain-county-ok", "state_abbr": "OK"}, {"axes": {"climate_safety": 67.7, "housing_affordability": 46.8, "insurance_affordability": 12.6, "resilience": 15.4, "social_resilience": 3.9, "stability": 20.4}, "axis_coverage": 6, "composite": 34.5, "county_fips": "08099", "county_name": "Prowers County", "rank_national": 2538, "raw": {"annual_premium": 3200, "annual_property_tax": 487.0, "effective_tax_rate": 0.003, "fema_risk_score": 32.230353165765194, "home_value_2019": 106100.0, "home_value_2024": 160600.0, "home_value_cagr_5y": 8.64, "insurance_burden": 0.0598, "insurance_vs_tax_ratio": 6.57, "p2i": 3.001, "pop_change_pct_5y": -0.93}, "slug": "prowers-county-co", "state_abbr": "CO"}, {"axes": {"climate_safety": 55.9, "housing_affordability": 87.1, "insurance_affordability": 27.6, "resilience": 17.7, "social_resilience": 31.6, "stability": 55.8}, "axis_coverage": 6, "composite": 47.2, "county_fips": "01133", "county_name": "Winston County", "rank_national": 1788, "raw": {"annual_premium": 2480, "annual_property_tax": 380.0, "effective_tax_rate": 0.0032, "fema_risk_score": 44.002545338848236, "home_value_2019": 86100.0, "home_value_2024": 118900.0, "home_value_cagr_5y": 6.67, "insurance_burden": 0.0433, "insurance_vs_tax_ratio": 6.53, "p2i": 2.077, "pop_change_pct_5y": -0.43}, "slug": "winston-county-al", "state_abbr": "AL"}, {"axes": {"climate_safety": 85.0, "housing_affordability": 92.8, "insurance_affordability": 3.9, "resilience": 6.1, "social_resilience": 20.6, "stability": 27.5}, "axis_coverage": 6, "composite": 45.8, "county_fips": "40057", "county_name": "Harmon County", "rank_national": 1885, "raw": {"annual_premium": 3500, "annual_property_tax": 537.0, "effective_tax_rate": 0.0067, "fema_risk_score": 14.953865733375757, "home_value_2019": 66500.0, "home_value_2024": 79700.0, "home_value_cagr_5y": 3.69, "insurance_burden": 0.0808, "insurance_vs_tax_ratio": 6.52, "p2i": 1.839, "pop_change_pct_5y": -11.22}, "slug": "harmon-county-ok", "state_abbr": "OK"}, {"axes": {"climate_safety": 41.0, "housing_affordability": 54.0, "insurance_affordability": 13.2, "resilience": 17.7, "social_resilience": 27.7, "stability": 35.5}, "axis_coverage": 6, "composite": 31.8, "county_fips": "01099", "county_name": "Monroe County", "rank_national": 2678, "raw": {"annual_premium": 2480, "annual_property_tax": 381.0, "effective_tax_rate": 0.0032, "fema_risk_score": 58.89277760101813, "home_value_2019": 102200.0, "home_value_2024": 120600.0, "home_value_cagr_5y": 3.37, "insurance_burden": 0.0586, "insurance_vs_tax_ratio": 6.51, "p2i": 2.852, "pop_change_pct_5y": -8.85}, "slug": "monroe-county-al", "state_abbr": "AL"}, {"axes": {"climate_safety": 46.7, "housing_affordability": 61.5, "insurance_affordability": 8.5, "resilience": 6.0, "social_resilience": 12.4, "stability": 90.2}, "axis_coverage": 6, "composite": 36.2, "county_fips": "28005", "county_name": "Amite County", "rank_national": 2433, "raw": {"annual_premium": 2500, "annual_property_tax": 386.0, "effective_tax_rate": 0.0038, "fema_risk_score": 53.16576519249126, "home_value_2019": 83600.0, "home_value_2024": 100800.0, "home_value_cagr_5y": 3.81, "insurance_burden": 0.0672, "insurance_vs_tax_ratio": 6.48, "p2i": 2.708, "pop_change_pct_5y": 1.23}, "slug": "amite-county-ms", "state_abbr": "MS"}, {"axes": {"climate_safety": 19.8, "housing_affordability": 27.1, "insurance_affordability": 0.2, "resilience": 33.0, "social_resilience": 2.7, "stability": 30.9}, "axis_coverage": 6, "composite": 16.7, "county_fips": "12039", "county_name": "Gadsden County", "rank_national": 3095, "raw": {"annual_premium": 6000, "annual_property_tax": 927.0, "effective_tax_rate": 0.0053, "fema_risk_score": 80.05090677696468, "home_value_2019": 96800.0, "home_value_2024": 174900.0, "home_value_cagr_5y": 12.56, "insurance_burden": 0.1229, "insurance_vs_tax_ratio": 6.47, "p2i": 3.584, "pop_change_pct_5y": -4.86}, "slug": "gadsden-county-fl", "state_abbr": "FL"}, {"axes": {"climate_safety": 80.9, "housing_affordability": 92.9, "insurance_affordability": 13.0, "resilience": 13.2, "social_resilience": 29.1, "stability": 69.5}, "axis_coverage": 6, "composite": 52.6, "county_fips": "40055", "county_name": "Greer County", "rank_national": 1433, "raw": {"annual_premium": 3500, "annual_property_tax": 545.0, "effective_tax_rate": 0.005, "fema_risk_score": 19.058224626153354, "home_value_2019": 76500.0, "home_value_2024": 109100.0, "home_value_cagr_5y": 7.36, "insurance_burden": 0.0589, "insurance_vs_tax_ratio": 6.42, "p2i": 1.837, "pop_change_pct_5y": -6.35}, "slug": "greer-county-ok", "state_abbr": "OK"}, {"axes": {"climate_safety": 42.0, "housing_affordability": 64.0, "insurance_affordability": 7.3, "resilience": 44.3, "social_resilience": 8.5, "stability": 12.8}, "axis_coverage": 6, "composite": 30.6, "county_fips": "01047", "county_name": "Dallas County", "rank_national": 2729, "raw": {"annual_premium": 2480, "annual_property_tax": 392.0, "effective_tax_rate": 0.0041, "fema_risk_score": 57.84282532612154, "home_value_2019": 83300.0, "home_value_2024": 94600.0, "home_value_cagr_5y": 2.58, "insurance_burden": 0.0696, "insurance_vs_tax_ratio": 6.33, "p2i": 2.655, "pop_change_pct_5y": -5.85}, "slug": "dallas-county-al", "state_abbr": "AL"}, {"axes": {"climate_safety": 27.8, "housing_affordability": 71.8, "insurance_affordability": 19.6, "resilience": 22.2, "social_resilience": 14.5, "stability": 31.3}, "axis_coverage": 6, "composite": 30.8, "county_fips": "01025", "county_name": "Clarke County", "rank_national": 2723, "raw": {"annual_premium": 2480, "annual_property_tax": 396.0, "effective_tax_rate": 0.0033, "fema_risk_score": 72.0967228762329, "home_value_2019": 112500.0, "home_value_2024": 121700.0, "home_value_cagr_5y": 1.58, "insurance_burden": 0.0504, "insurance_vs_tax_ratio": 6.26, "p2i": 2.471, "pop_change_pct_5y": -6.57}, "slug": "clarke-county-al", "state_abbr": "AL"}, {"axes": {"climate_safety": 65.3, "housing_affordability": 85.2, "insurance_affordability": 4.6, "resilience": 30.0, "social_resilience": 41.8, "stability": 27.4}, "axis_coverage": 6, "composite": 43.4, "county_fips": "40075", "county_name": "Kiowa County", "rank_national": 2021, "raw": {"annual_premium": 3500, "annual_property_tax": 560.0, "effective_tax_rate": 0.0058, "fema_risk_score": 34.68024180719058, "home_value_2019": 62900.0, "home_value_2024": 96100.0, "home_value_cagr_5y": 8.85, "insurance_burden": 0.0778, "insurance_vs_tax_ratio": 6.25, "p2i": 2.137, "pop_change_pct_5y": -5.66}, "slug": "kiowa-county-ok", "state_abbr": "OK"}, {"axes": {"climate_safety": 58.2, "housing_affordability": 75.4, "insurance_affordability": 5.9, "resilience": 10.0, "social_resilience": 13.4, "stability": 24.7}, "axis_coverage": 6, "composite": 35.1, "county_fips": "40107", "county_name": "Okfuskee County", "rank_national": 2496, "raw": {"annual_premium": 3500, "annual_property_tax": 560.0, "effective_tax_rate": 0.0048, "fema_risk_score": 41.74355711104041, "home_value_2019": 81400.0, "home_value_2024": 115900.0, "home_value_cagr_5y": 7.32, "insurance_burden": 0.0724, "insurance_vs_tax_ratio": 6.25, "p2i": 2.396, "pop_change_pct_5y": -6.54}, "slug": "okfuskee-county-ok", "state_abbr": "OK"}, {"axes": {"climate_safety": 11.2, "housing_affordability": 51.7, "insurance_affordability": 22.9, "resilience": 33.3, "social_resilience": 29.3, "stability": 58.6}, "axis_coverage": 6, "composite": 29.0, "county_fips": "01039", "county_name": "Covington County", "rank_national": 2795, "raw": {"annual_premium": 2480, "annual_property_tax": 397.0, "effective_tax_rate": 0.0026, "fema_risk_score": 88.70505886096086, "home_value_2019": 97600.0, "home_value_2024": 152100.0, "home_value_cagr_5y": 9.28, "insurance_burden": 0.0473, "insurance_vs_tax_ratio": 6.25, "p2i": 2.9, "pop_change_pct_5y": 1.15}, "slug": "covington-county-al", "state_abbr": "AL"}, {"axes": {"climate_safety": 29.5, "housing_affordability": 75.4, "insurance_affordability": 0.2, "resilience": 11.5, "social_resilience": 8.5, "stability": 43.2}, "axis_coverage": 6, "composite": 26.5, "county_fips": "12079", "county_name": "Madison County", "rank_national": 2898, "raw": {"annual_premium": 6000, "annual_property_tax": 965.0, "effective_tax_rate": 0.0083, "fema_risk_score": 70.3468024180719, "home_value_2019": 89100.0, "home_value_2024": 116200.0, "home_value_cagr_5y": 5.45, "insurance_burden": 0.1237, "insurance_vs_tax_ratio": 6.22, "p2i": 2.397, "pop_change_pct_5y": -2.01}, "slug": "madison-county-fl", "state_abbr": "FL"}, {"axes": {"climate_safety": 77.2, "housing_affordability": 89.5, "insurance_affordability": 3.4, "resilience": 5.5, "social_resilience": 6.1, "stability": 52.5}, "axis_coverage": 6, "composite": 43.8, "county_fips": "48405", "county_name": "San Augustine County", "rank_national": 1999, "raw": {"annual_premium": 4200, "annual_property_tax": 676.0, "effective_tax_rate": 0.0068, "fema_risk_score": 22.717149220489976, "home_value_2019": 88000.0, "home_value_2024": 99900.0, "home_value_cagr_5y": 2.57, "insurance_burden": 0.0833, "insurance_vs_tax_ratio": 6.21, "p2i": 1.982, "pop_change_pct_5y": -4.97}, "slug": "san-augustine-county-tx", "state_abbr": "TX"}, {"axes": {"climate_safety": 8.6, "housing_affordability": 50.0, "insurance_affordability": 3.9, "resilience": 75.8, "social_resilience": 27.1, "stability": 68.3}, "axis_coverage": 6, "composite": 28.2, "county_fips": "22099", "county_name": "St. Martin Parish", "rank_national": 2829, "raw": {"annual_premium": 4500, "annual_property_tax": 725.0, "effective_tax_rate": 0.0044, "fema_risk_score": 91.31403118040089, "home_value_2019": 124900.0, "home_value_2024": 164200.0, "home_value_cagr_5y": 5.62, "insurance_burden": 0.0804, "insurance_vs_tax_ratio": 6.21, "p2i": 2.934, "pop_change_pct_5y": -4.43}, "slug": "st-martin-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 58.7, "housing_affordability": 66.7, "insurance_affordability": 4.5, "resilience": 14.7, "social_resilience": 7.6, "stability": 60.4}, "axis_coverage": 6, "composite": 37.0, "county_fips": "28021", "county_name": "Claiborne County", "rank_national": 2388, "raw": {"annual_premium": 2500, "annual_property_tax": 403.0, "effective_tax_rate": 0.0049, "fema_risk_score": 41.202672605790646, "home_value_2019": 67500.0, "home_value_2024": 82700.0, "home_value_cagr_5y": 4.15, "insurance_burden": 0.0784, "insurance_vs_tax_ratio": 6.2, "p2i": 2.593, "pop_change_pct_5y": -5.58}, "slug": "claiborne-county-ms", "state_abbr": "MS"}, {"axes": {"climate_safety": 91.4, "housing_affordability": 50.3, "insurance_affordability": 10.2, "resilience": 2.5, "social_resilience": 18.9, "stability": 15.4}, "axis_coverage": 6, "composite": 41.2, "county_fips": "08011", "county_name": "Bent County", "rank_national": 2141, "raw": {"annual_premium": 3200, "annual_property_tax": 517.0, "effective_tax_rate": 0.0035, "fema_risk_score": 8.622335348393255, "home_value_2019": 81000.0, "home_value_2024": 146900.0, "home_value_cagr_5y": 12.64, "insurance_burden": 0.0638, "insurance_vs_tax_ratio": 6.19, "p2i": 2.928, "pop_change_pct_5y": -4.11}, "slug": "bent-county-co", "state_abbr": "CO"}, {"axes": {"climate_safety": 89.1, "housing_affordability": 99.9, "insurance_affordability": 6.5, "resilience": 7.2, "social_resilience": 13.5, "stability": 92.5}, "axis_coverage": 6, "composite": 54.7, "county_fips": "48101", "county_name": "Cottle County", "rank_national": 1292, "raw": {"annual_premium": 4200, "annual_property_tax": 680.0, "effective_tax_rate": 0.0115, "fema_risk_score": 10.944957047406936, "home_value_2019": 46600.0, "home_value_2024": 59300.0, "home_value_cagr_5y": 4.94, "insurance_burden": 0.0711, "insurance_vs_tax_ratio": 6.18, "p2i": 1.004, "pop_change_pct_5y": -16.69}, "slug": "cottle-county-tx", "state_abbr": "TX"}, {"axes": {"climate_safety": 52.5, "housing_affordability": 65.9, "insurance_affordability": 3.2, "resilience": 15.7, "social_resilience": 12.1, "stability": 38.7}, "axis_coverage": 6, "composite": 33.1, "county_fips": "40077", "county_name": "Latimer County", "rank_national": 2619, "raw": {"annual_premium": 3500, "annual_property_tax": 567.0, "effective_tax_rate": 0.0053, "fema_risk_score": 47.40693604836144, "home_value_2019": 87000.0, "home_value_2024": 107900.0, "home_value_cagr_5y": 4.4, "insurance_burden": 0.0845, "insurance_vs_tax_ratio": 6.17, "p2i": 2.606, "pop_change_pct_5y": -8.02}, "slug": "latimer-county-ok", "state_abbr": "OK"}, {"axes": {"climate_safety": 82.7, "housing_affordability": 42.3, "insurance_affordability": 13.0, "resilience": 34.4, "social_resilience": 11.2, "stability": 25.2}, "axis_coverage": 6, "composite": 41.5, "county_fips": "08089", "county_name": "Otero County", "rank_national": 2127, "raw": {"annual_premium": 3200, "annual_property_tax": 520.0, "effective_tax_rate": 0.0031, "fema_risk_score": 17.276487432389438, "home_value_2019": 94900.0, "home_value_2024": 168900.0, "home_value_cagr_5y": 12.22, "insurance_burden": 0.0592, "insurance_vs_tax_ratio": 6.15, "p2i": 3.126, "pop_change_pct_5y": 0.21}, "slug": "otero-county-co", "state_abbr": "CO"}, {"axes": {"climate_safety": 33.6, "housing_affordability": 72.8, "insurance_affordability": 5.7, "resilience": 2.2, "social_resilience": 7.4, "stability": 24.0}, "axis_coverage": 6, "composite": 25.8, "county_fips": "40001", "county_name": "Adair County", "rank_national": 2930, "raw": {"annual_premium": 3500, "annual_property_tax": 569.0, "effective_tax_rate": 0.0048, "fema_risk_score": 66.2424435252943, "home_value_2019": 87600.0, "home_value_2024": 117800.0, "home_value_cagr_5y": 6.1, "insurance_burden": 0.0729, "insurance_vs_tax_ratio": 6.15, "p2i": 2.452, "pop_change_pct_5y": -11.9}, "slug": "adair-county-ok", "state_abbr": "OK"}, {"axes": {"climate_safety": 94.8, "housing_affordability": 76.1, "insurance_affordability": 9.3, "resilience": 6.2, "social_resilience": 17.6, "stability": 26.8}, "axis_coverage": 6, "composite": 47.2, "county_fips": "08025", "county_name": "Crowley County", "rank_national": 1790, "raw": {"annual_premium": 3200, "annual_property_tax": 521.0, "effective_tax_rate": 0.0045, "fema_risk_score": 5.249761374482978, "home_value_2019": 79400.0, "home_value_2024": 116200.0, "home_value_cagr_5y": 7.91, "insurance_burden": 0.0655, "insurance_vs_tax_ratio": 6.14, "p2i": 2.38, "pop_change_pct_5y": -1.86}, "slug": "crowley-county-co", "state_abbr": "CO"}];
+const bottom100 = [{"axes": {"climate_safety": 16.0, "housing_affordability": 15.3, "insurance_affordability": 99.9, "resilience": 87.5, "social_resilience": 97.4, "stability": 72.1}, "axis_coverage": 6, "composite": 57.8, "county_fips": "33015", "county_name": "Rockingham County", "rank_national": 1093, "raw": {"annual_premium": 900, "annual_property_tax": 7839.0, "effective_tax_rate": 0.0158, "fema_risk_score": 83.96436525612472, "home_value_2019": 326300.0, "home_value_2024": 497500.0, "home_value_cagr_5y": 8.8, "insurance_burden": 0.0076, "insurance_vs_tax_ratio": 0.11, "p2i": 4.204, "pop_change_pct_5y": 4.15}, "slug": "rockingham-county-nh", "state_abbr": "NH"}, {"axes": {"climate_safety": 20.5, "housing_affordability": 25.5, "insurance_affordability": 99.6, "resilience": 94.4, "social_resilience": 96.5, "stability": 96.4}, "axis_coverage": 6, "composite": 63.6, "county_fips": "34019", "county_name": "Hunterdon County", "rank_national": 718, "raw": {"annual_premium": 1200, "annual_property_tax": 10001.0, "effective_tax_rate": 0.0193, "fema_risk_score": 79.38275532930321, "home_value_2019": 415100.0, "home_value_2024": 517200.0, "home_value_cagr_5y": 4.5, "insurance_burden": 0.0085, "insurance_vs_tax_ratio": 0.12, "p2i": 3.65, "pop_change_pct_5y": 4.28}, "slug": "hunterdon-county-nj", "state_abbr": "NJ"}, {"axes": {"climate_safety": 9.2, "housing_affordability": 14.7, "insurance_affordability": 99.5, "resilience": 92.0, "social_resilience": 83.7, "stability": 47.9}, "axis_coverage": 6, "composite": 52.2, "county_fips": "34027", "county_name": "Morris County", "rank_national": 1463, "raw": {"annual_premium": 1200, "annual_property_tax": 10001.0, "effective_tax_rate": 0.0172, "fema_risk_score": 90.70951320394528, "home_value_2019": 456200.0, "home_value_2024": 582500.0, "home_value_cagr_5y": 5.01, "insurance_burden": 0.0087, "insurance_vs_tax_ratio": 0.12, "p2i": 4.242, "pop_change_pct_5y": 4.29}, "slug": "morris-county-nj", "state_abbr": "NJ"}, {"axes": {"climate_safety": 6.5, "housing_affordability": 19.3, "insurance_affordability": 99.6, "resilience": 88.7, "social_resilience": 83.0, "stability": 48.0}, "axis_coverage": 6, "composite": 51.7, "county_fips": "34035", "county_name": "Somerset County", "rank_national": 1493, "raw": {"annual_premium": 1200, "annual_property_tax": 10001.0, "effective_tax_rate": 0.0181, "fema_risk_score": 93.41393573019408, "home_value_2019": 430700.0, "home_value_2024": 552100.0, "home_value_cagr_5y": 5.09, "insurance_burden": 0.0085, "insurance_vs_tax_ratio": 0.12, "p2i": 3.933, "pop_change_pct_5y": 6.07}, "slug": "somerset-county-nj", "state_abbr": "NJ"}, {"axes": {"climate_safety": 3.6, "housing_affordability": 9.2, "insurance_affordability": 98.9, "resilience": 91.0, "social_resilience": 77.3, "stability": 54.7}, "axis_coverage": 6, "composite": 49.5, "county_fips": "34025", "county_name": "Monmouth County", "rank_national": 1645, "raw": {"annual_premium": 1200, "annual_property_tax": 10001.0, "effective_tax_rate": 0.0165, "fema_risk_score": 96.43652561247215, "home_value_2019": 421900.0, "home_value_2024": 606100.0, "home_value_cagr_5y": 7.51, "insurance_burden": 0.0096, "insurance_vs_tax_ratio": 0.12, "p2i": 4.855, "pop_change_pct_5y": 3.81}, "slug": "monmouth-county-nj", "state_abbr": "NJ"}, {"axes": {"climate_safety": 1.3, "housing_affordability": 8.6, "insurance_affordability": 98.9, "resilience": 62.8, "social_resilience": 61.6, "stability": 15.8}, "axis_coverage": 6, "composite": 40.4, "county_fips": "34003", "county_name": "Bergen County", "rank_national": 2190, "raw": {"annual_premium": 1200, "annual_property_tax": 10001.0, "effective_tax_rate": 0.0161, "fema_risk_score": 98.69551384027999, "home_value_2019": 469500.0, "home_value_2024": 623000.0, "home_value_cagr_5y": 5.82, "insurance_burden": 0.0096, "insurance_vs_tax_ratio": 0.12, "p2i": 4.989, "pop_change_pct_5y": 3.43}, "slug": "bergen-county-nj", "state_abbr": "NJ"}, {"axes": {"climate_safety": 4.1, "housing_affordability": 15.9, "insurance_affordability": 97.8, "resilience": 59.3, "social_resilience": 36.2, "stability": 12.3}, "axis_coverage": 6, "composite": 38.8, "county_fips": "34023", "county_name": "Middlesex County", "rank_national": 2295, "raw": {"annual_premium": 1200, "annual_property_tax": 9712.0, "effective_tax_rate": 0.021, "fema_risk_score": 95.86382437161947, "home_value_2019": 344100.0, "home_value_2024": 462900.0, "home_value_cagr_5y": 6.11, "insurance_burden": 0.0108, "insurance_vs_tax_ratio": 0.12, "p2i": 4.15, "pop_change_pct_5y": 5.49}, "slug": "middlesex-county-nj", "state_abbr": "NJ"}, {"axes": {"climate_safety": 7.5, "housing_affordability": 7.7, "insurance_affordability": 96.2, "resilience": 38.4, "social_resilience": 20.5, "stability": 5.0}, "axis_coverage": 6, "composite": 33.8, "county_fips": "34039", "county_name": "Union County", "rank_national": 2586, "raw": {"annual_premium": 1200, "annual_property_tax": 10001.0, "effective_tax_rate": 0.0189, "fema_risk_score": 92.42761692650335, "home_value_2019": 367200.0, "home_value_2024": 529200.0, "home_value_cagr_5y": 7.58, "insurance_burden": 0.0116, "insurance_vs_tax_ratio": 0.12, "p2i": 5.128, "pop_change_pct_5y": 4.56}, "slug": "union-county-nj", "state_abbr": "NJ"}, {"axes": {"climate_safety": 10.3, "housing_affordability": 6.8, "insurance_affordability": 91.3, "resilience": 42.0, "social_resilience": 9.4, "stability": 2.6}, "axis_coverage": 6, "composite": 32.3, "county_fips": "34031", "county_name": "Passaic County", "rank_national": 2657, "raw": {"annual_premium": 1200, "annual_property_tax": 10001.0, "effective_tax_rate": 0.0218, "fema_risk_score": 89.65956092904868, "home_value_2019": 342600.0, "home_value_2024": 459500.0, "home_value_cagr_5y": 6.05, "insurance_burden": 0.0137, "insurance_vs_tax_ratio": 0.12, "p2i": 5.25, "pop_change_pct_5y": 3.45}, "slug": "passaic-county-nj", "state_abbr": "NJ"}, {"axes": {"climate_safety": 7.2, "housing_affordability": 2.6, "insurance_affordability": 88.3, "resilience": 31.4, "social_resilience": 6.1, "stability": 0.8}, "axis_coverage": 6, "composite": 28.5, "county_fips": "34013", "county_name": "Essex County", "rank_national": 2820, "raw": {"annual_premium": 1200, "annual_property_tax": 10001.0, "effective_tax_rate": 0.0191, "fema_risk_score": 92.74578428253261, "home_value_2019": 386000.0, "home_value_2024": 524100.0, "home_value_cagr_5y": 6.31, "insurance_burden": 0.0149, "insurance_vs_tax_ratio": 0.12, "p2i": 6.487, "pop_change_pct_5y": 8.5}, "slug": "essex-county-nj", "state_abbr": "NJ"}, {"axes": {"climate_safety": 84.5, "housing_affordability": 1.3, "insurance_affordability": 99.3, "resilience": 88.1, "social_resilience": 79.2, "stability": 2.3}, "axis_coverage": 6, "composite": 67.3, "county_fips": "51610", "county_name": "Falls Church city", "rank_national": 504, "raw": {"annual_premium": 1300, "annual_property_tax": 10001.0, "effective_tax_rate": 0.0095, "fema_risk_score": 15.494750238625517, "home_value_2019": 789300.0, "home_value_2024": 1055600.0, "home_value_cagr_5y": 5.99, "insurance_burden": 0.0091, "insurance_vs_tax_ratio": 0.13, "p2i": 7.368, "pop_change_pct_5y": 4.12}, "slug": "falls-church-city-va", "state_abbr": "VA"}, {"axes": {"climate_safety": 25.5, "housing_affordability": 22.0, "insurance_affordability": 99.2, "resilience": 84.6, "social_resilience": 77.9, "stability": 43.6}, "axis_coverage": 6, "composite": 56.4, "county_fips": "33013", "county_name": "Merrimack County", "rank_national": 1185, "raw": {"annual_premium": 900, "annual_property_tax": 6783.0, "effective_tax_rate": 0.0185, "fema_risk_score": 74.38752783964365, "home_value_2019": 237600.0, "home_value_2024": 367600.0, "home_value_cagr_5y": 9.12, "insurance_burden": 0.0093, "insurance_vs_tax_ratio": 0.13, "p2i": 3.79, "pop_change_pct_5y": 4.04}, "slug": "merrimack-county-nh", "state_abbr": "NH"}, {"axes": {"climate_safety": 37.2, "housing_affordability": 16.5, "insurance_affordability": 98.3, "resilience": 81.6, "social_resilience": 73.5, "stability": 20.4}, "axis_coverage": 6, "composite": 55.8, "county_fips": "33017", "county_name": "Strafford County", "rank_national": 1221, "raw": {"annual_premium": 900, "annual_property_tax": 6708.0, "effective_tax_rate": 0.0185, "fema_risk_score": 62.67896913776646, "home_value_2019": 235900.0, "home_value_2024": 362800.0, "home_value_cagr_5y": 8.99, "insurance_burden": 0.0102, "insurance_vs_tax_ratio": 0.13, "p2i": 4.096, "pop_change_pct_5y": 2.67}, "slug": "strafford-county-nh", "state_abbr": "NH"}, {"axes": {"climate_safety": 11.4, "housing_affordability": 17.0, "insurance_affordability": 99.5, "resilience": 77.9, "social_resilience": 74.6, "stability": 21.0}, "axis_coverage": 6, "composite": 48.2, "county_fips": "33011", "county_name": "Hillsborough County", "rank_national": 1727, "raw": {"annual_premium": 900, "annual_property_tax": 6999.0, "effective_tax_rate": 0.0166, "fema_risk_score": 88.57779191854915, "home_value_2019": 274800.0, "home_value_2024": 421100.0, "home_value_cagr_5y": 8.91, "insurance_burden": 0.0087, "insurance_vs_tax_ratio": 0.13, "p2i": 4.067, "pop_change_pct_5y": 3.23}, "slug": "hillsborough-county-nh", "state_abbr": "NH"}, {"axes": {"climate_safety": 6.9, "housing_affordability": 22.8, "insurance_affordability": 95.6, "resilience": 73.8, "social_resilience": 29.0, "stability": 10.2}, "axis_coverage": 6, "composite": 40.7, "county_fips": "34021", "county_name": "Mercer County", "rank_national": 2168, "raw": {"annual_premium": 1200, "annual_property_tax": 8909.0, "effective_tax_rate": 0.0236, "fema_risk_score": 93.03213490295896, "home_value_2019": 291100.0, "home_value_2024": 377700.0, "home_value_cagr_5y": 5.35, "insurance_burden": 0.0119, "insurance_vs_tax_ratio": 0.13, "p2i": 3.753, "pop_change_pct_5y": 4.88}, "slug": "mercer-county-nj", "state_abbr": "NJ"}, {"axes": {"climate_safety": 4.6, "housing_affordability": 4.2, "insurance_affordability": 93.3, "resilience": 38.3, "social_resilience": 20.4, "stability": 0.1}, "axis_coverage": 6, "composite": 31.2, "county_fips": "34017", "county_name": "Hudson County", "rank_national": 2710, "raw": {"annual_premium": 1200, "annual_property_tax": 9555.0, "effective_tax_rate": 0.0177, "fema_risk_score": 95.38657333757557, "home_value_2019": 378000.0, "home_value_2024": 539700.0, "home_value_cagr_5y": 7.38, "insurance_burden": 0.0131, "insurance_vs_tax_ratio": 0.13, "p2i": 5.879, "pop_change_pct_5y": 7.21}, "slug": "hudson-county-nj", "state_abbr": "NJ"}, {"axes": {"climate_safety": 29.7, "housing_affordability": 40.3, "insurance_affordability": 98.2, "resilience": 89.2, "social_resilience": 95.1, "stability": 93.8}, "axis_coverage": 6, "composite": 67.3, "county_fips": "34037", "county_name": "Sussex County", "rank_national": 501, "raw": {"annual_premium": 1200, "annual_property_tax": 8568.0, "effective_tax_rate": 0.0232, "fema_risk_score": 70.18771874005726, "home_value_2019": 267500.0, "home_value_2024": 369400.0, "home_value_cagr_5y": 6.67, "insurance_burden": 0.0103, "insurance_vs_tax_ratio": 0.14, "p2i": 3.179, "pop_change_pct_5y": 3.06}, "slug": "sussex-county-nj", "state_abbr": "NJ"}, {"axes": {"climate_safety": 60.8, "housing_affordability": 11.8, "insurance_affordability": 99.1, "resilience": 91.4, "social_resilience": 78.7, "stability": 13.1}, "axis_coverage": 6, "composite": 63.1, "county_fips": "50007", "county_name": "Chittenden County", "rank_national": 754, "raw": {"annual_premium": 900, "annual_property_tax": 6617.0, "effective_tax_rate": 0.0151, "fema_risk_score": 39.10276805599746, "home_value_2019": 297900.0, "home_value_2024": 439200.0, "home_value_cagr_5y": 8.07, "insurance_burden": 0.0093, "insurance_vs_tax_ratio": 0.14, "p2i": 4.539, "pop_change_pct_5y": 4.37}, "slug": "chittenden-county-vt", "state_abbr": "VT"}, {"axes": {"climate_safety": 4.0, "housing_affordability": 0.2, "insurance_affordability": 99.1, "resilience": 94.4, "social_resilience": 66.8, "stability": 14.2}, "axis_coverage": 6, "composite": 43.5, "county_fips": "06041", "county_name": "Marin County", "rank_national": 2014, "raw": {"annual_premium": 1400, "annual_property_tax": 10001.0, "effective_tax_rate": 0.0066, "fema_risk_score": 96.0229080496341, "home_value_2019": 995800.0, "home_value_2024": 1507300.0, "home_value_cagr_5y": 8.64, "insurance_burden": 0.0094, "insurance_vs_tax_ratio": 0.14, "p2i": 10.11, "pop_change_pct_5y": -0.76}, "slug": "marin-county-ca", "state_abbr": "CA"}, {"axes": {"climate_safety": 1.1, "housing_affordability": 0.2, "insurance_affordability": 98.6, "resilience": 99.1, "social_resilience": 56.8, "stability": 0.3}, "axis_coverage": 6, "composite": 40.6, "county_fips": "06075", "county_name": "San Francisco County", "rank_national": 2172, "raw": {"annual_premium": 1400, "annual_property_tax": 9862.0, "effective_tax_rate": 0.0071, "fema_risk_score": 98.91823098950047, "home_value_2019": 1097800.0, "home_value_2024": 1394500.0, "home_value_cagr_5y": 4.9, "insurance_burden": 0.0099, "insurance_vs_tax_ratio": 0.14, "p2i": 9.892, "pop_change_pct_5y": -5.11}, "slug": "san-francisco-county-ca", "state_abbr": "CA"}, {"axes": {"climate_safety": 0.4, "housing_affordability": 1.8, "insurance_affordability": 99.8, "resilience": 78.4, "social_resilience": 62.6, "stability": 3.7}, "axis_coverage": 6, "composite": 39.8, "county_fips": "53033", "county_name": "King County", "rank_national": 2239, "raw": {"annual_premium": 1000, "annual_property_tax": 7114.0, "effective_tax_rate": 0.0083, "fema_risk_score": 99.6500159083678, "home_value_2019": 549200.0, "home_value_2024": 859900.0, "home_value_cagr_5y": 9.38, "insurance_burden": 0.008, "insurance_vs_tax_ratio": 0.14, "p2i": 6.893, "pop_change_pct_5y": 4.18}, "slug": "king-county-wa", "state_abbr": "WA"}, {"axes": {"climate_safety": 0.2, "housing_affordability": 0.5, "insurance_affordability": 99.6, "resilience": 69.0, "social_resilience": 62.9, "stability": 3.5}, "axis_coverage": 6, "composite": 38.6, "county_fips": "06085", "county_name": "Santa Clara County", "rank_national": 2303, "raw": {"annual_premium": 1400, "annual_property_tax": 10001.0, "effective_tax_rate": 0.0067, "fema_risk_score": 99.84091632198536, "home_value_2019": 984000.0, "home_value_2024": 1490600.0, "home_value_cagr_5y": 8.66, "insurance_burden": 0.0085, "insurance_vs_tax_ratio": 0.14, "p2i": 9.073, "pop_change_pct_5y": -1.32}, "slug": "santa-clara-county-ca", "state_abbr": "CA"}, {"axes": {"climate_safety": 15.2, "housing_affordability": 49.0, "insurance_affordability": 96.7, "resilience": 87.2, "social_resilience": 81.0, "stability": 80.3}, "axis_coverage": 6, "composite": 60.9, "county_fips": "34015", "county_name": "Gloucester County", "rank_national": 901, "raw": {"annual_premium": 1200, "annual_property_tax": 8055.0, "effective_tax_rate": 0.026, "fema_risk_score": 84.72796691059497, "home_value_2019": 219700.0, "home_value_2024": 310400.0, "home_value_cagr_5y": 7.16, "insurance_burden": 0.0114, "insurance_vs_tax_ratio": 0.15, "p2i": 2.953, "pop_change_pct_5y": 5.42}, "slug": "gloucester-county-nj", "state_abbr": "NJ"}, {"axes": {"climate_safety": 39.6, "housing_affordability": 33.5, "insurance_affordability": 97.7, "resilience": 71.9, "social_resilience": 77.7, "stability": 40.4}, "axis_coverage": 6, "composite": 60.3, "county_fips": "33005", "county_name": "Cheshire County", "rank_national": 940, "raw": {"annual_premium": 900, "annual_property_tax": 6048.0, "effective_tax_rate": 0.0216, "fema_risk_score": 60.29271396754693, "home_value_2019": 195300.0, "home_value_2024": 280100.0, "home_value_cagr_5y": 7.48, "insurance_burden": 0.0108, "insurance_vs_tax_ratio": 0.15, "p2i": 3.361, "pop_change_pct_5y": 1.65}, "slug": "cheshire-county-nh", "state_abbr": "NH"}, {"axes": {"climate_safety": 24.6, "housing_affordability": 31.4, "insurance_affordability": 95.6, "resilience": 84.1, "social_resilience": 75.5, "stability": 52.2}, "axis_coverage": 6, "composite": 57.2, "county_fips": "34041", "county_name": "Warren County", "rank_national": 1139, "raw": {"annual_premium": 1200, "annual_property_tax": 8119.0, "effective_tax_rate": 0.0234, "fema_risk_score": 75.31021317212854, "home_value_2019": 264200.0, "home_value_2024": 346500.0, "home_value_cagr_5y": 5.57, "insurance_burden": 0.0119, "insurance_vs_tax_ratio": 0.15, "p2i": 3.435, "pop_change_pct_5y": 4.71}, "slug": "warren-county-nj", "state_abbr": "NJ"}, {"axes": {"climate_safety": 33.4, "housing_affordability": 19.9, "insurance_affordability": 98.3, "resilience": 66.5, "social_resilience": 70.3, "stability": 33.9}, "axis_coverage": 6, "composite": 54.6, "county_fips": "33009", "county_name": "Grafton County", "rank_national": 1297, "raw": {"annual_premium": 900, "annual_property_tax": 5925.0, "effective_tax_rate": 0.0172, "fema_risk_score": 66.40152720330894, "home_value_2019": 220300.0, "home_value_2024": 344500.0, "home_value_cagr_5y": 9.35, "insurance_burden": 0.0102, "insurance_vs_tax_ratio": 0.15, "p2i": 3.903, "pop_change_pct_5y": 2.61}, "slug": "grafton-county-nh", "state_abbr": "NH"}, {"axes": {"climate_safety": 7.0, "housing_affordability": 36.3, "insurance_affordability": 97.2, "resilience": 95.4, "social_resilience": 73.5, "stability": 57.9}, "axis_coverage": 6, "composite": 54.5, "county_fips": "34005", "county_name": "Burlington County", "rank_national": 1307, "raw": {"annual_premium": 1200, "annual_property_tax": 7983.0, "effective_tax_rate": 0.0226, "fema_risk_score": 92.9685014317531, "home_value_2019": 251200.0, "home_value_2024": 354000.0, "home_value_cagr_5y": 7.1, "insurance_burden": 0.0111, "insurance_vs_tax_ratio": 0.15, "p2i": 3.274, "pop_change_pct_5y": 4.96}, "slug": "burlington-county-nj", "state_abbr": "NJ"}, {"axes": {"climate_safety": 0.7, "housing_affordability": 0.3, "insurance_affordability": 99.4, "resilience": 94.6, "social_resilience": 73.6, "stability": 5.5}, "axis_coverage": 6, "composite": 42.5, "county_fips": "06081", "county_name": "San Mateo County", "rank_national": 2073, "raw": {"annual_premium": 1400, "annual_property_tax": 9519.0, "effective_tax_rate": 0.0061, "fema_risk_score": 99.33184855233853, "home_value_2019": 1089400.0, "home_value_2024": 1559600.0, "home_value_cagr_5y": 7.44, "insurance_burden": 0.0088, "insurance_vs_tax_ratio": 0.15, "p2i": 9.818, "pop_change_pct_5y": -3.27}, "slug": "san-mateo-county-ca", "state_abbr": "CA"}, {"axes": {"climate_safety": 8.7, "housing_affordability": 37.9, "insurance_affordability": 91.9, "resilience": 67.8, "social_resilience": 23.8, "stability": 14.3}, "axis_coverage": 6, "composite": 41.9, "county_fips": "34007", "county_name": "Camden County", "rank_national": 2113, "raw": {"annual_premium": 1200, "annual_property_tax": 8134.0, "effective_tax_rate": 0.0283, "fema_risk_score": 91.18676423798918, "home_value_2019": 197800.0, "home_value_2024": 287100.0, "home_value_cagr_5y": 7.74, "insurance_burden": 0.0135, "insurance_vs_tax_ratio": 0.15, "p2i": 3.235, "pop_change_pct_5y": 4.05}, "slug": "camden-county-nj", "state_abbr": "NJ"}, {"axes": {"climate_safety": 83.9, "housing_affordability": 17.6, "insurance_affordability": 98.5, "resilience": 79.0, "social_resilience": 86.1, "stability": 76.1}, "axis_coverage": 6, "composite": 76.6, "county_fips": "50001", "county_name": "Addison County", "rank_national": 126, "raw": {"annual_premium": 900, "annual_property_tax": 5690.0, "effective_tax_rate": 0.0158, "fema_risk_score": 16.099268215081132, "home_value_2019": 249700.0, "home_value_2024": 361200.0, "home_value_cagr_5y": 7.66, "insurance_burden": 0.01, "insurance_vs_tax_ratio": 0.16, "p2i": 4.029, "pop_change_pct_5y": 2.12}, "slug": "addison-county-vt", "state_abbr": "VT"}, {"axes": {"climate_safety": 68.1, "housing_affordability": 34.9, "insurance_affordability": 97.0, "resilience": 64.2, "social_resilience": 87.8, "stability": 54.0}, "axis_coverage": 6, "composite": 70.5, "county_fips": "33019", "county_name": "Sullivan County", "rank_national": 339, "raw": {"annual_premium": 900, "annual_property_tax": 5756.0, "effective_tax_rate": 0.0214, "fema_risk_score": 31.81673560292714, "home_value_2019": 173600.0, "home_value_2024": 268700.0, "home_value_cagr_5y": 9.13, "insurance_burden": 0.0111, "insurance_vs_tax_ratio": 0.16, "p2i": 3.323, "pop_change_pct_5y": 1.42}, "slug": "sullivan-county-nh", "state_abbr": "NH"}, {"axes": {"climate_safety": 43.1, "housing_affordability": 22.5, "insurance_affordability": 97.7, "resilience": 90.9, "social_resilience": 80.3, "stability": 44.7}, "axis_coverage": 6, "composite": 62.3, "county_fips": "50023", "county_name": "Washington County", "rank_national": 811, "raw": {"annual_premium": 900, "annual_property_tax": 5498.0, "effective_tax_rate": 0.0175, "fema_risk_score": 56.761056315622014, "home_value_2019": 226900.0, "home_value_2024": 315000.0, "home_value_cagr_5y": 6.78, "insurance_burden": 0.0108, "insurance_vs_tax_ratio": 0.16, "p2i": 3.775, "pop_change_pct_5y": 2.86}, "slug": "washington-county-vt", "state_abbr": "VT"}, {"axes": {"climate_safety": 42.9, "housing_affordability": 21.2, "insurance_affordability": 96.3, "resilience": 67.1, "social_resilience": 86.5, "stability": 51.0}, "axis_coverage": 6, "composite": 60.6, "county_fips": "50027", "county_name": "Windsor County", "rank_national": 917, "raw": {"annual_premium": 900, "annual_property_tax": 5458.0, "effective_tax_rate": 0.0184, "fema_risk_score": 56.92013999363665, "home_value_2019": 224500.0, "home_value_2024": 296400.0, "home_value_cagr_5y": 5.71, "insurance_burden": 0.0116, "insurance_vs_tax_ratio": 0.16, "p2i": 3.82, "pop_change_pct_5y": 4.91}, "slug": "windsor-county-vt", "state_abbr": "VT"}, {"axes": {"climate_safety": 9.2, "housing_affordability": 13.0, "insurance_affordability": 97.1, "resilience": 98.3, "social_resilience": 79.8, "stability": 4.8}, "axis_coverage": 6, "composite": 47.3, "county_fips": "55025", "county_name": "Dane County", "rank_national": 1787, "raw": {"annual_premium": 1000, "annual_property_tax": 6420.0, "effective_tax_rate": 0.0163, "fema_risk_score": 90.7413299395482, "home_value_2019": 265600.0, "home_value_2024": 394800.0, "home_value_cagr_5y": 8.25, "insurance_burden": 0.0111, "insurance_vs_tax_ratio": 0.16, "p2i": 4.388, "pop_change_pct_5y": 6.83}, "slug": "dane-county-wi", "state_abbr": "WI"}, {"axes": {"climate_safety": 26.0, "housing_affordability": 2.8, "insurance_affordability": 99.3, "resilience": 53.4, "social_resilience": 80.8, "stability": 0.5}, "axis_coverage": 6, "composite": 46.5, "county_fips": "51013", "county_name": "Arlington County", "rank_national": 1842, "raw": {"annual_premium": 1300, "annual_property_tax": 8153.0, "effective_tax_rate": 0.0091, "fema_risk_score": 73.91027680559975, "home_value_2019": 705400.0, "home_value_2024": 895000.0, "home_value_cagr_5y": 4.88, "insurance_burden": 0.0091, "insurance_vs_tax_ratio": 0.16, "p2i": 6.298, "pop_change_pct_5y": 1.2}, "slug": "arlington-county-va", "state_abbr": "VA"}, {"axes": {"climate_safety": 98.9, "housing_affordability": 17.4, "insurance_affordability": 99.2, "resilience": 99.0, "social_resilience": 99.3, "stability": 99.6}, "axis_coverage": 6, "composite": 86.9, "county_fips": "50013", "county_name": "Grand Isle County", "rank_national": 4, "raw": {"annual_premium": 900, "annual_property_tax": 5195.0, "effective_tax_rate": 0.0132, "fema_risk_score": 1.081769010499523, "home_value_2019": 274800.0, "home_value_2024": 394100.0, "home_value_cagr_5y": 7.48, "insurance_burden": 0.0092, "insurance_vs_tax_ratio": 0.17, "p2i": 4.046, "pop_change_pct_5y": 6.1}, "slug": "grand-isle-county-vt", "state_abbr": "VT"}, {"axes": {"climate_safety": 49.0, "housing_affordability": 23.3, "insurance_affordability": 92.0, "resilience": 87.6, "social_resilience": 88.0, "stability": 94.0}, "axis_coverage": 6, "composite": 68.2, "county_fips": "36079", "county_name": "Putnam County", "rank_national": 455, "raw": {"annual_premium": 1700, "annual_property_tax": 10001.0, "effective_tax_rate": 0.0212, "fema_risk_score": 50.84314349347757, "home_value_2019": 358500.0, "home_value_2024": 471300.0, "home_value_cagr_5y": 5.62, "insurance_burden": 0.0135, "insurance_vs_tax_ratio": 0.17, "p2i": 3.733, "pop_change_pct_5y": -0.69}, "slug": "putnam-county-ny", "state_abbr": "NY"}, {"axes": {"climate_safety": 8.0, "housing_affordability": 21.4, "insurance_affordability": 99.6, "resilience": 86.0, "social_resilience": 83.4, "stability": 52.1}, "axis_coverage": 6, "composite": 52.7, "county_fips": "42029", "county_name": "Chester County", "rank_national": 1427, "raw": {"annual_premium": 1100, "annual_property_tax": 6308.0, "effective_tax_rate": 0.013, "fema_risk_score": 91.98218262806236, "home_value_2019": 357100.0, "home_value_2024": 485600.0, "home_value_cagr_5y": 6.34, "insurance_burden": 0.0086, "insurance_vs_tax_ratio": 0.17, "p2i": 3.817, "pop_change_pct_5y": 5.44}, "slug": "chester-county-pa", "state_abbr": "PA"}, {"axes": {"climate_safety": 3.4, "housing_affordability": 10.6, "insurance_affordability": 96.2, "resilience": 95.0, "social_resilience": 72.2, "stability": 88.2}, "axis_coverage": 6, "composite": 52.2, "county_fips": "36059", "county_name": "Nassau County", "rank_national": 1464, "raw": {"annual_premium": 1700, "annual_property_tax": 10001.0, "effective_tax_rate": 0.0146, "fema_risk_score": 96.65924276169265, "home_value_2019": 493500.0, "home_value_2024": 684700.0, "home_value_cagr_5y": 6.77, "insurance_burden": 0.0116, "insurance_vs_tax_ratio": 0.17, "p2i": 4.683, "pop_change_pct_5y": 2.44}, "slug": "nassau-county-ny", "state_abbr": "NY"}, {"axes": {"climate_safety": 2.9, "housing_affordability": 12.7, "insurance_affordability": 93.4, "resilience": 94.8, "social_resilience": 73.6, "stability": 89.2}, "axis_coverage": 6, "composite": 51.9, "county_fips": "36103", "county_name": "Suffolk County", "rank_national": 1475, "raw": {"annual_premium": 1700, "annual_property_tax": 10001.0, "effective_tax_rate": 0.0173, "fema_risk_score": 97.13649379573656, "home_value_2019": 397400.0, "home_value_2024": 578400.0, "home_value_cagr_5y": 7.8, "insurance_burden": 0.013, "insurance_vs_tax_ratio": 0.17, "p2i": 4.426, "pop_change_pct_5y": 3.12}, "slug": "suffolk-county-ny", "state_abbr": "NY"}, {"axes": {"climate_safety": 19.8, "housing_affordability": 47.1, "insurance_affordability": 87.7, "resilience": 87.6, "social_resilience": 31.4, "stability": 32.4}, "axis_coverage": 6, "composite": 50.1, "county_fips": "34033", "county_name": "Salem County", "rank_national": 1607, "raw": {"annual_premium": 1200, "annual_property_tax": 7018.0, "effective_tax_rate": 0.0293, "fema_risk_score": 80.08272351256761, "home_value_2019": 184600.0, "home_value_2024": 239500.0, "home_value_cagr_5y": 5.35, "insurance_burden": 0.015, "insurance_vs_tax_ratio": 0.17, "p2i": 2.995, "pop_change_pct_5y": 3.63}, "slug": "salem-county-nj", "state_abbr": "NJ"}, {"axes": {"climate_safety": 3.7, "housing_affordability": 4.1, "insurance_affordability": 99.5, "resilience": 74.5, "social_resilience": 70.0, "stability": 30.7}, "axis_coverage": 6, "composite": 44.1, "county_fips": "41005", "county_name": "Clackamas County", "rank_national": 1981, "raw": {"annual_premium": 900, "annual_property_tax": 5171.0, "effective_tax_rate": 0.0085, "fema_risk_score": 96.34107540566337, "home_value_2019": 395100.0, "home_value_2024": 611000.0, "home_value_cagr_5y": 9.11, "insurance_burden": 0.0087, "insurance_vs_tax_ratio": 0.17, "p2i": 5.902, "pop_change_pct_5y": 3.29}, "slug": "clackamas-county-or", "state_abbr": "OR"}, {"axes": {"climate_safety": 14.9, "housing_affordability": 5.7, "insurance_affordability": 86.5, "resilience": 71.3, "social_resilience": 28.4, "stability": 22.3}, "axis_coverage": 6, "composite": 39.1, "county_fips": "36087", "county_name": "Rockland County", "rank_national": 2276, "raw": {"annual_premium": 1700, "annual_property_tax": 10001.0, "effective_tax_rate": 0.0168, "fema_risk_score": 84.98250079541839, "home_value_2019": 443400.0, "home_value_2024": 596900.0, "home_value_cagr_5y": 6.13, "insurance_burden": 0.0155, "insurance_vs_tax_ratio": 0.17, "p2i": 5.428, "pop_change_pct_5y": 5.38}, "slug": "rockland-county-ny", "state_abbr": "NY"}, {"axes": {"climate_safety": 1.4, "housing_affordability": 3.1, "insurance_affordability": 98.4, "resilience": 84.2, "social_resilience": 42.3, "stability": 2.7}, "axis_coverage": 6, "composite": 38.4, "county_fips": "41051", "county_name": "Multnomah County", "rank_national": 2309, "raw": {"annual_premium": 900, "annual_property_tax": 5301.0, "effective_tax_rate": 0.0096, "fema_risk_score": 98.60006363347121, "home_value_2019": 386200.0, "home_value_2024": 552700.0, "home_value_cagr_5y": 7.43, "insurance_burden": 0.0101, "insurance_vs_tax_ratio": 0.17, "p2i": 6.226, "pop_change_pct_5y": -0.39}, "slug": "multnomah-county-or", "state_abbr": "OR"}, {"axes": {"climate_safety": 0.1, "housing_affordability": 0.7, "insurance_affordability": 97.6, "resilience": 83.5, "social_resilience": 48.5, "stability": 3.3}, "axis_coverage": 6, "composite": 38.1, "county_fips": "06001", "county_name": "Alameda County", "rank_national": 2323, "raw": {"annual_premium": 1400, "annual_property_tax": 8474.0, "effective_tax_rate": 0.0078, "fema_risk_score": 99.87273305758829, "home_value_2019": 769300.0, "home_value_2024": 1090100.0, "home_value_cagr_5y": 7.22, "insurance_burden": 0.0108, "insurance_vs_tax_ratio": 0.17, "p2i": 8.426, "pop_change_pct_5y": -0.44}, "slug": "alameda-county-ca", "state_abbr": "CA"}, {"axes": {"climate_safety": 5.6, "housing_affordability": 5.1, "insurance_affordability": 89.8, "resilience": 77.8, "social_resilience": 31.9, "stability": 9.5}, "axis_coverage": 6, "composite": 36.8, "county_fips": "36119", "county_name": "Westchester County", "rank_national": 2402, "raw": {"annual_premium": 1700, "annual_property_tax": 10001.0, "effective_tax_rate": 0.0151, "fema_risk_score": 94.30480432707604, "home_value_2019": 540600.0, "home_value_2024": 663200.0, "home_value_cagr_5y": 4.17, "insurance_burden": 0.0143, "insurance_vs_tax_ratio": 0.17, "p2i": 5.574, "pop_change_pct_5y": 3.18}, "slug": "westchester-county-ny", "state_abbr": "NY"}, {"axes": {"climate_safety": 3.8, "housing_affordability": 0.2, "insurance_affordability": 84.7, "resilience": 50.1, "social_resilience": 33.4, "stability": 0.1}, "axis_coverage": 6, "composite": 30.7, "county_fips": "36061", "county_name": "New York County", "rank_national": 2728, "raw": {"annual_premium": 1700, "annual_property_tax": 10001.0, "effective_tax_rate": 0.0092, "fema_risk_score": 96.18199172764874, "home_value_2019": 987700.0, "home_value_2024": 1090500.0, "home_value_cagr_5y": 2.0, "insurance_burden": 0.0164, "insurance_vs_tax_ratio": 0.17, "p2i": 10.493, "pop_change_pct_5y": -0.15}, "slug": "new-york-county-ny", "state_abbr": "NY"}, {"axes": {"climate_safety": 52.8, "housing_affordability": 17.4, "insurance_affordability": 98.8, "resilience": 82.0, "social_resilience": 81.7, "stability": 80.1}, "axis_coverage": 6, "composite": 67.5, "county_fips": "33001", "county_name": "Belknap County", "rank_national": 492, "raw": {"annual_premium": 900, "annual_property_tax": 4924.0, "effective_tax_rate": 0.0131, "fema_risk_score": 47.08876869233217, "home_value_2019": 226500.0, "home_value_2024": 374900.0, "home_value_cagr_5y": 10.6, "insurance_burden": 0.0097, "insurance_vs_tax_ratio": 0.18, "p2i": 4.041, "pop_change_pct_5y": 6.2}, "slug": "belknap-county-nh", "state_abbr": "NH"}, {"axes": {"climate_safety": 28.8, "housing_affordability": 34.5, "insurance_affordability": 98.7, "resilience": 96.9, "social_resilience": 98.0, "stability": 72.4}, "axis_coverage": 6, "composite": 65.2, "county_fips": "39041", "county_name": "Delaware County", "rank_national": 616, "raw": {"annual_premium": 1300, "annual_property_tax": 7132.0, "effective_tax_rate": 0.016, "fema_risk_score": 71.11040407254215, "home_value_2019": 308800.0, "home_value_2024": 445500.0, "home_value_cagr_5y": 7.61, "insurance_burden": 0.0097, "insurance_vs_tax_ratio": 0.18, "p2i": 3.336, "pop_change_pct_5y": 12.78}, "slug": "delaware-county-oh", "state_abbr": "OH"}, {"axes": {"climate_safety": 51.3, "housing_affordability": 20.4, "insurance_affordability": 94.5, "resilience": 69.9, "social_resilience": 62.0, "stability": 46.0}, "axis_coverage": 6, "composite": 59.9, "county_fips": "50025", "county_name": "Windham County", "rank_national": 971, "raw": {"annual_premium": 900, "annual_property_tax": 5062.0, "effective_tax_rate": 0.0181, "fema_risk_score": 48.61597200127267, "home_value_2019": 214200.0, "home_value_2024": 279600.0, "home_value_cagr_5y": 5.47, "insurance_burden": 0.0125, "insurance_vs_tax_ratio": 0.18, "p2i": 3.872, "pop_change_pct_5y": 7.24}, "slug": "windham-county-vt", "state_abbr": "VT"}, {"axes": {"climate_safety": 2.8, "housing_affordability": 12.6, "insurance_affordability": 92.4, "resilience": 89.3, "social_resilience": 59.3, "stability": 83.5}, "axis_coverage": 6, "composite": 49.0, "county_fips": "34029", "county_name": "Ocean County", "rank_national": 1676, "raw": {"annual_premium": 1200, "annual_property_tax": 6562.0, "effective_tax_rate": 0.0165, "fema_risk_score": 97.23194400254533, "home_value_2019": 279000.0, "home_value_2024": 398400.0, "home_value_cagr_5y": 7.38, "insurance_burden": 0.0134, "insurance_vs_tax_ratio": 0.18, "p2i": 4.433, "pop_change_pct_5y": 9.72}, "slug": "ocean-county-nj", "state_abbr": "NJ"}, {"axes": {"climate_safety": 6.2, "housing_affordability": 42.0, "insurance_affordability": 89.1, "resilience": 79.6, "social_resilience": 53.4, "stability": 50.9}, "axis_coverage": 6, "composite": 48.8, "county_fips": "17097", "county_name": "Lake County", "rank_national": 1686, "raw": {"annual_premium": 1600, "annual_property_tax": 8923.0, "effective_tax_rate": 0.0258, "fema_risk_score": 93.73210308622335, "home_value_2019": 265100.0, "home_value_2024": 345700.0, "home_value_cagr_5y": 5.45, "insurance_burden": 0.0145, "insurance_vs_tax_ratio": 0.18, "p2i": 3.131, "pop_change_pct_5y": 1.82}, "slug": "lake-county-il", "state_abbr": "IL"}, {"axes": {"climate_safety": 7.7, "housing_affordability": 23.8, "insurance_affordability": 94.8, "resilience": 83.2, "social_resilience": 45.2, "stability": 27.2}, "axis_coverage": 6, "composite": 45.1, "county_fips": "42045", "county_name": "Delaware County", "rank_national": 1923, "raw": {"annual_premium": 1100, "annual_property_tax": 6124.0, "effective_tax_rate": 0.0184, "fema_risk_score": 92.26853324848871, "home_value_2019": 244400.0, "home_value_2024": 332200.0, "home_value_cagr_5y": 6.33, "insurance_burden": 0.0123, "insurance_vs_tax_ratio": 0.18, "p2i": 3.71, "pop_change_pct_5y": 2.6}, "slug": "delaware-county-pa", "state_abbr": "PA"}, {"axes": {"climate_safety": 5.4, "housing_affordability": 9.8, "insurance_affordability": 99.7, "resilience": 51.6, "social_resilience": 73.8, "stability": 24.4}, "axis_coverage": 6, "composite": 43.0, "county_fips": "51059", "county_name": "Fairfax County", "rank_national": 2046, "raw": {"annual_premium": 1300, "annual_property_tax": 7368.0, "effective_tax_rate": 0.0101, "fema_risk_score": 94.59115494750239, "home_value_2019": 563100.0, "home_value_2024": 732800.0, "home_value_cagr_5y": 5.41, "insurance_burden": 0.0085, "insurance_vs_tax_ratio": 0.18, "p2i": 4.77, "pop_change_pct_5y": 0.17}, "slug": "fairfax-county-va", "state_abbr": "VA"}, {"axes": {"climate_safety": 8.6, "housing_affordability": 2.4, "insurance_affordability": 96.3, "resilience": 84.5, "social_resilience": 55.6, "stability": 4.7}, "axis_coverage": 6, "composite": 41.5, "county_fips": "41003", "county_name": "Benton County", "rank_national": 2131, "raw": {"annual_premium": 900, "annual_property_tax": 4884.0, "effective_tax_rate": 0.0095, "fema_risk_score": 91.34584791600382, "home_value_2019": 331300.0, "home_value_2024": 513000.0, "home_value_cagr_5y": 9.14, "insurance_burden": 0.0116, "insurance_vs_tax_ratio": 0.18, "p2i": 6.602, "pop_change_pct_5y": 5.7}, "slug": "benton-county-or", "state_abbr": "OR"}, {"axes": {"climate_safety": 2.6, "housing_affordability": 5.6, "insurance_affordability": 99.7, "resilience": 64.9, "social_resilience": 65.1, "stability": 7.6}, "axis_coverage": 6, "composite": 40.3, "county_fips": "41067", "county_name": "Washington County", "rank_national": 2196, "raw": {"annual_premium": 900, "annual_property_tax": 4929.0, "effective_tax_rate": 0.0084, "fema_risk_score": 97.45466115176583, "home_value_2019": 386600.0, "home_value_2024": 588000.0, "home_value_cagr_5y": 8.75, "insurance_burden": 0.0084, "insurance_vs_tax_ratio": 0.18, "p2i": 5.456, "pop_change_pct_5y": 2.45}, "slug": "washington-county-or", "state_abbr": "OR"}, {"axes": {"climate_safety": 3.1, "housing_affordability": 22.3, "insurance_affordability": 86.7, "resilience": 79.8, "social_resilience": 12.3, "stability": 24.5}, "axis_coverage": 6, "composite": 37.6, "county_fips": "34001", "county_name": "Atlantic County", "rank_national": 2348, "raw": {"annual_premium": 1200, "annual_property_tax": 6776.0, "effective_tax_rate": 0.023, "fema_risk_score": 96.945593382119, "home_value_2019": 217900.0, "home_value_2024": 295000.0, "home_value_cagr_5y": 6.25, "insurance_burden": 0.0154, "insurance_vs_tax_ratio": 0.18, "p2i": 3.78, "pop_change_pct_5y": 3.82}, "slug": "atlantic-county-nj", "state_abbr": "NJ"}, {"axes": {"climate_safety": 87.4, "housing_affordability": 16.9, "insurance_affordability": 95.5, "resilience": 76.5, "social_resilience": 83.7, "stability": 41.0}, "axis_coverage": 6, "composite": 72.8, "county_fips": "50015", "county_name": "Lamoille County", "rank_national": 246, "raw": {"annual_premium": 900, "annual_property_tax": 4785.0, "effective_tax_rate": 0.0157, "fema_risk_score": 12.631244034362075, "home_value_2019": 225600.0, "home_value_2024": 304700.0, "home_value_cagr_5y": 6.2, "insurance_burden": 0.012, "insurance_vs_tax_ratio": 0.19, "p2i": 4.068, "pop_change_pct_5y": 3.28}, "slug": "lamoille-county-vt", "state_abbr": "VT"}, {"axes": {"climate_safety": 7.7, "housing_affordability": 20.1, "insurance_affordability": 99.0, "resilience": 80.4, "social_resilience": 86.3, "stability": 68.6}, "axis_coverage": 6, "composite": 53.6, "county_fips": "42017", "county_name": "Bucks County", "rank_national": 1377, "raw": {"annual_premium": 1100, "annual_property_tax": 5826.0, "effective_tax_rate": 0.0131, "fema_risk_score": 92.23671651288578, "home_value_2019": 330600.0, "home_value_2024": 445700.0, "home_value_cagr_5y": 6.16, "insurance_burden": 0.0096, "insurance_vs_tax_ratio": 0.19, "p2i": 3.884, "pop_change_pct_5y": 3.3}, "slug": "bucks-county-pa", "state_abbr": "PA"}, {"axes": {"climate_safety": null, "housing_affordability": 8.0, "insurance_affordability": 90.3, "resilience": null, "social_resilience": null, "stability": 18.5}, "axis_coverage": 3, "composite": 51.2, "county_fips": "09190", "county_name": "Western Connecticut Planning Region", "rank_national": 1523, "raw": {"annual_premium": 1800, "annual_property_tax": 9295.0, "effective_tax_rate": 0.0142, "fema_risk_score": null, "home_value_2019": null, "home_value_2024": 652900.0, "home_value_cagr_5y": null, "insurance_burden": 0.014, "insurance_vs_tax_ratio": 0.19, "p2i": 5.093, "pop_change_pct_5y": null}, "slug": "western-connecticut-planning-region-ct", "state_abbr": "CT"}, {"axes": {"climate_safety": 5.9, "housing_affordability": 20.9, "insurance_affordability": 98.9, "resilience": 94.1, "social_resilience": 78.6, "stability": 34.2}, "axis_coverage": 6, "composite": 50.3, "county_fips": "42091", "county_name": "Montgomery County", "rank_national": 1590, "raw": {"annual_premium": 1100, "annual_property_tax": 5875.0, "effective_tax_rate": 0.0135, "fema_risk_score": 94.08208717785556, "home_value_2019": 316100.0, "home_value_2024": 436700.0, "home_value_cagr_5y": 6.68, "insurance_burden": 0.0097, "insurance_vs_tax_ratio": 0.19, "p2i": 3.834, "pop_change_pct_5y": 5.31}, "slug": "montgomery-county-pa", "state_abbr": "PA"}, {"axes": {"climate_safety": 30.1, "housing_affordability": 3.3, "insurance_affordability": 97.5, "resilience": 34.1, "social_resilience": 67.2, "stability": 0.6}, "axis_coverage": 6, "composite": 44.1, "county_fips": "51510", "county_name": "Alexandria city", "rank_national": 1983, "raw": {"annual_premium": 1300, "annual_property_tax": 7024.0, "effective_tax_rate": 0.0096, "fema_risk_score": 69.83773464842507, "home_value_2019": 572900.0, "home_value_2024": 735100.0, "home_value_cagr_5y": 5.11, "insurance_burden": 0.0109, "insurance_vs_tax_ratio": 0.19, "p2i": 6.142, "pop_change_pct_5y": -0.4}, "slug": "alexandria-city-va", "state_abbr": "VA"}, {"axes": {"climate_safety": 2.1, "housing_affordability": 2.9, "insurance_affordability": 99.3, "resilience": 69.7, "social_resilience": 64.8, "stability": 23.1}, "axis_coverage": 6, "composite": 41.6, "county_fips": "53061", "county_name": "Snohomish County", "rank_national": 2126, "raw": {"annual_premium": 1000, "annual_property_tax": 5364.0, "effective_tax_rate": 0.0077, "fema_risk_score": 97.9000954502068, "home_value_2019": 403000.0, "home_value_2024": 696000.0, "home_value_cagr_5y": 11.55, "insurance_burden": 0.009, "insurance_vs_tax_ratio": 0.19, "p2i": 6.256, "pop_change_pct_5y": 5.71}, "slug": "snohomish-county-wa", "state_abbr": "WA"}, {"axes": {"climate_safety": 80.1, "housing_affordability": 35.6, "insurance_affordability": 97.4, "resilience": 59.9, "social_resilience": 86.8, "stability": 92.4}, "axis_coverage": 6, "composite": 77.6, "county_fips": "50017", "county_name": "Orange County", "rank_national": 101, "raw": {"annual_premium": 900, "annual_property_tax": 4516.0, "effective_tax_rate": 0.0166, "fema_risk_score": 19.885459751829462, "home_value_2019": 192700.0, "home_value_2024": 271300.0, "home_value_cagr_5y": 7.08, "insurance_burden": 0.0109, "insurance_vs_tax_ratio": 0.2, "p2i": 3.299, "pop_change_pct_5y": 2.95}, "slug": "orange-county-vt", "state_abbr": "VT"}, {"axes": {"climate_safety": 81.1, "housing_affordability": 21.4, "insurance_affordability": 94.8, "resilience": 66.2, "social_resilience": 68.3, "stability": 44.8}, "axis_coverage": 6, "composite": 69.2, "county_fips": "50003", "county_name": "Bennington County", "rank_national": 404, "raw": {"annual_premium": 900, "annual_property_tax": 4580.0, "effective_tax_rate": 0.0164, "fema_risk_score": 18.899140948138722, "home_value_2019": 207600.0, "home_value_2024": 279900.0, "home_value_cagr_5y": 6.16, "insurance_burden": 0.0123, "insurance_vs_tax_ratio": 0.2, "p2i": 3.817, "pop_change_pct_5y": 4.26}, "slug": "bennington-county-vt", "state_abbr": "VT"}, {"axes": {"climate_safety": 74.4, "housing_affordability": 5.5, "insurance_affordability": 98.7, "resilience": 57.5, "social_resilience": 75.0, "stability": 28.2}, "axis_coverage": 6, "composite": 63.9, "county_fips": "51600", "county_name": "Fairfax city", "rank_national": 700, "raw": {"annual_premium": 1300, "annual_property_tax": 6515.0, "effective_tax_rate": 0.009, "fema_risk_score": 25.580655424753417, "home_value_2019": 560400.0, "home_value_2024": 722600.0, "home_value_cagr_5y": 5.22, "insurance_burden": 0.0098, "insurance_vs_tax_ratio": 0.2, "p2i": 5.46, "pop_change_pct_5y": 6.35}, "slug": "fairfax-city-va", "state_abbr": "VA"}, {"axes": {"climate_safety": 19.5, "housing_affordability": 18.2, "insurance_affordability": 99.1, "resilience": 81.6, "social_resilience": 86.3, "stability": 34.6}, "axis_coverage": 6, "composite": 53.6, "county_fips": "24027", "county_name": "Howard County", "rank_national": 1375, "raw": {"annual_premium": 1400, "annual_property_tax": 6987.0, "effective_tax_rate": 0.0117, "fema_risk_score": 80.40089086859689, "home_value_2019": 455700.0, "home_value_2024": 597900.0, "home_value_cagr_5y": 5.58, "insurance_burden": 0.0093, "insurance_vs_tax_ratio": 0.2, "p2i": 3.992, "pop_change_pct_5y": 5.48}, "slug": "howard-county-md", "state_abbr": "MD"}, {"axes": {"climate_safety": 5.0, "housing_affordability": 29.4, "insurance_affordability": 89.9, "resilience": 80.3, "social_resilience": 78.0, "stability": 42.0}, "axis_coverage": 6, "composite": 48.4, "county_fips": "17043", "county_name": "DuPage County", "rank_national": 1714, "raw": {"annual_premium": 1600, "annual_property_tax": 8007.0, "effective_tax_rate": 0.0205, "fema_risk_score": 94.94113903913458, "home_value_2019": 308500.0, "home_value_2024": 391400.0, "home_value_cagr_5y": 4.88, "insurance_burden": 0.0143, "insurance_vs_tax_ratio": 0.2, "p2i": 3.492, "pop_change_pct_5y": 0.1}, "slug": "dupage-county-il", "state_abbr": "IL"}, {"axes": {"climate_safety": 14.7, "housing_affordability": 18.2, "insurance_affordability": 81.6, "resilience": 71.1, "social_resilience": 33.8, "stability": 22.0}, "axis_coverage": 6, "composite": 40.2, "county_fips": "36071", "county_name": "Orange County", "rank_national": 2200, "raw": {"annual_premium": 1700, "annual_property_tax": 8494.0, "effective_tax_rate": 0.0219, "fema_risk_score": 85.20521794463887, "home_value_2019": 271200.0, "home_value_2024": 387900.0, "home_value_cagr_5y": 7.42, "insurance_burden": 0.0175, "insurance_vs_tax_ratio": 0.2, "p2i": 3.992, "pop_change_pct_5y": 6.98}, "slug": "orange-county-ny", "state_abbr": "NY"}, {"axes": {"climate_safety": 0.4, "housing_affordability": 1.9, "insurance_affordability": 97.3, "resilience": 75.1, "social_resilience": 52.6, "stability": 22.6}, "axis_coverage": 6, "composite": 39.8, "county_fips": "06013", "county_name": "Contra Costa County", "rank_national": 2230, "raw": {"annual_premium": 1400, "annual_property_tax": 7156.0, "effective_tax_rate": 0.0083, "fema_risk_score": 99.58638243716194, "home_value_2019": 625800.0, "home_value_2024": 866800.0, "home_value_cagr_5y": 6.73, "insurance_burden": 0.011, "insurance_vs_tax_ratio": 0.2, "p2i": 6.813, "pop_change_pct_5y": 1.99}, "slug": "contra-costa-county-ca", "state_abbr": "CA"}, {"axes": {"climate_safety": 72.8, "housing_affordability": 22.5, "insurance_affordability": 97.2, "resilience": 90.9, "social_resilience": 87.7, "stability": 66.1}, "axis_coverage": 6, "composite": 74.0, "county_fips": "50011", "county_name": "Franklin County", "rank_national": 199, "raw": {"annual_premium": 900, "annual_property_tax": 4332.0, "effective_tax_rate": 0.0141, "fema_risk_score": 27.107858733693924, "home_value_2019": 216200.0, "home_value_2024": 306700.0, "home_value_cagr_5y": 7.24, "insurance_burden": 0.0111, "insurance_vs_tax_ratio": 0.21, "p2i": 3.772, "pop_change_pct_5y": 3.1}, "slug": "franklin-county-vt", "state_abbr": "VT"}, {"axes": {"climate_safety": 26.3, "housing_affordability": 52.3, "insurance_affordability": 89.6, "resilience": 97.7, "social_resilience": 87.8, "stability": 94.6}, "axis_coverage": 6, "composite": 66.1, "county_fips": "17093", "county_name": "Kendall County", "rank_national": 558, "raw": {"annual_premium": 1600, "annual_property_tax": 7651.0, "effective_tax_rate": 0.0237, "fema_risk_score": 73.56029271396754, "home_value_2019": 235600.0, "home_value_2024": 322400.0, "home_value_cagr_5y": 6.47, "insurance_burden": 0.0143, "insurance_vs_tax_ratio": 0.21, "p2i": 2.889, "pop_change_pct_5y": 9.22}, "slug": "kendall-county-il", "state_abbr": "IL"}, {"axes": {"climate_safety": 21.7, "housing_affordability": 16.6, "insurance_affordability": 99.9, "resilience": 75.1, "social_resilience": 90.5, "stability": 69.3}, "axis_coverage": 6, "composite": 57.5, "county_fips": "51107", "county_name": "Loudoun County", "rank_national": 1119, "raw": {"annual_premium": 1300, "annual_property_tax": 6325.0, "effective_tax_rate": 0.0085, "fema_risk_score": 78.20553611199492, "home_value_2019": 508100.0, "home_value_2024": 743800.0, "home_value_cagr_5y": 7.92, "insurance_burden": 0.0072, "insurance_vs_tax_ratio": 0.21, "p2i": 4.092, "pop_change_pct_5y": 9.58}, "slug": "loudoun-county-va", "state_abbr": "VA"}, {"axes": {"climate_safety": 14.8, "housing_affordability": 10.3, "insurance_affordability": 98.1, "resilience": 98.9, "social_resilience": 82.1, "stability": 27.8}, "axis_coverage": 6, "composite": 51.4, "county_fips": "23005", "county_name": "Cumberland County", "rank_national": 1507, "raw": {"annual_premium": 1000, "annual_property_tax": 4707.0, "effective_tax_rate": 0.0104, "fema_risk_score": 85.1097677378301, "home_value_2019": 278100.0, "home_value_2024": 451200.0, "home_value_cagr_5y": 10.16, "insurance_burden": 0.0105, "insurance_vs_tax_ratio": 0.21, "p2i": 4.716, "pop_change_pct_5y": 5.65}, "slug": "cumberland-county-me", "state_abbr": "ME"}, {"axes": {"climate_safety": 31.4, "housing_affordability": 0.0, "insurance_affordability": 95.3, "resilience": 39.6, "social_resilience": 80.9, "stability": 5.4}, "axis_coverage": 6, "composite": 45.8, "county_fips": "56039", "county_name": "Teton County", "rank_national": 1888, "raw": {"annual_premium": 1500, "annual_property_tax": 7267.0, "effective_tax_rate": 0.0044, "fema_risk_score": 68.50143175310212, "home_value_2019": 866600.0, "home_value_2024": 1633900.0, "home_value_cagr_5y": 13.52, "insurance_burden": 0.0121, "insurance_vs_tax_ratio": 0.21, "p2i": 13.158, "pop_change_pct_5y": 0.5}, "slug": "teton-county-wy", "state_abbr": "WY"}, {"axes": {"climate_safety": null, "housing_affordability": 9.7, "insurance_affordability": 74.3, "resilience": null, "social_resilience": null, "stability": 15.6}, "axis_coverage": 3, "composite": 43.2, "county_fips": "09120", "county_name": "Greater Bridgeport Planning Region", "rank_national": 2028, "raw": {"annual_premium": 1800, "annual_property_tax": 8670.0, "effective_tax_rate": 0.0202, "fema_risk_score": null, "home_value_2019": null, "home_value_2024": 428800.0, "home_value_cagr_5y": null, "insurance_burden": 0.0201, "insurance_vs_tax_ratio": 0.21, "p2i": 4.782, "pop_change_pct_5y": null}, "slug": "greater-bridgeport-planning-region-ct", "state_abbr": "CT"}, {"axes": {"climate_safety": 1.3, "housing_affordability": 6.6, "insurance_affordability": 98.4, "resilience": 70.7, "social_resilience": 47.0, "stability": 14.4}, "axis_coverage": 6, "composite": 39.2, "county_fips": "53053", "county_name": "Pierce County", "rank_national": 2270, "raw": {"annual_premium": 1000, "annual_property_tax": 4770.0, "effective_tax_rate": 0.0091, "fema_risk_score": 98.72733057588292, "home_value_2019": 303200.0, "home_value_2024": 526600.0, "home_value_cagr_5y": 11.67, "insurance_burden": 0.01, "insurance_vs_tax_ratio": 0.21, "p2i": 5.289, "pop_change_pct_5y": 6.08}, "slug": "pierce-county-wa", "state_abbr": "WA"}, {"axes": {"climate_safety": 2.4, "housing_affordability": 0.4, "insurance_affordability": 94.2, "resilience": 72.2, "social_resilience": 38.6, "stability": 6.6}, "axis_coverage": 6, "composite": 36.1, "county_fips": "06087", "county_name": "Santa Cruz County", "rank_national": 2438, "raw": {"annual_premium": 1400, "annual_property_tax": 6538.0, "effective_tax_rate": 0.0064, "fema_risk_score": 97.61374482978047, "home_value_2019": 756600.0, "home_value_2024": 1027500.0, "home_value_cagr_5y": 6.31, "insurance_burden": 0.0126, "insurance_vs_tax_ratio": 0.21, "p2i": 9.249, "pop_change_pct_5y": -3.3}, "slug": "santa-cruz-county-ca", "state_abbr": "CA"}, {"axes": {"climate_safety": 77.1, "housing_affordability": 36.8, "insurance_affordability": 93.6, "resilience": 67.0, "social_resilience": 66.1, "stability": 75.8}, "axis_coverage": 6, "composite": 72.9, "county_fips": "50005", "county_name": "Caledonia County", "rank_national": 244, "raw": {"annual_premium": 900, "annual_property_tax": 4022.0, "effective_tax_rate": 0.0176, "fema_risk_score": 22.844416162901688, "home_value_2019": 169500.0, "home_value_2024": 227900.0, "home_value_cagr_5y": 6.1, "insurance_burden": 0.0129, "insurance_vs_tax_ratio": 0.22, "p2i": 3.257, "pop_change_pct_5y": 0.8}, "slug": "caledonia-county-vt", "state_abbr": "VT"}, {"axes": {"climate_safety": 50.2, "housing_affordability": 17.8, "insurance_affordability": 98.2, "resilience": 100.0, "social_resilience": 96.1, "stability": 41.1}, "axis_coverage": 6, "composite": 66.0, "county_fips": "55089", "county_name": "Ozaukee County", "rank_national": 570, "raw": {"annual_premium": 1000, "annual_property_tax": 4631.0, "effective_tax_rate": 0.0119, "fema_risk_score": 49.665924276169264, "home_value_2019": 282500.0, "home_value_2024": 390200.0, "home_value_cagr_5y": 6.67, "insurance_burden": 0.0103, "insurance_vs_tax_ratio": 0.22, "p2i": 4.023, "pop_change_pct_5y": 4.93}, "slug": "ozaukee-county-wi", "state_abbr": "WI"}, {"axes": {"climate_safety": 54.3, "housing_affordability": 34.1, "insurance_affordability": 93.1, "resilience": 74.0, "social_resilience": 67.6, "stability": 52.5}, "axis_coverage": 6, "composite": 64.1, "county_fips": "50021", "county_name": "Rutland County", "rank_national": 689, "raw": {"annual_premium": 900, "annual_property_tax": 4154.0, "effective_tax_rate": 0.0181, "fema_risk_score": 45.59338211899459, "home_value_2019": 177400.0, "home_value_2024": 229400.0, "home_value_cagr_5y": 5.28, "insurance_burden": 0.0131, "insurance_vs_tax_ratio": 0.22, "p2i": 3.343, "pop_change_pct_5y": 2.6}, "slug": "rutland-county-vt", "state_abbr": "VT"}, {"axes": {"climate_safety": 14.2, "housing_affordability": 49.7, "insurance_affordability": 86.9, "resilience": 87.0, "social_resilience": 88.5, "stability": 91.2}, "axis_coverage": 6, "composite": 60.1, "county_fips": "17111", "county_name": "McHenry County", "rank_national": 948, "raw": {"annual_premium": 1600, "annual_property_tax": 7274.0, "effective_tax_rate": 0.0236, "fema_risk_score": 85.71428571428571, "home_value_2019": 224500.0, "home_value_2024": 308100.0, "home_value_cagr_5y": 6.54, "insurance_burden": 0.0153, "insurance_vs_tax_ratio": 0.22, "p2i": 2.94, "pop_change_pct_5y": 1.58}, "slug": "mchenry-county-il", "state_abbr": "IL"}, {"axes": {"climate_safety": 30.9, "housing_affordability": 26.0, "insurance_affordability": 97.5, "resilience": 66.0, "social_resilience": 97.2, "stability": 51.9}, "axis_coverage": 6, "composite": 59.1, "county_fips": "55093", "county_name": "Pierce County", "rank_national": 1017, "raw": {"annual_premium": 1000, "annual_property_tax": 4551.0, "effective_tax_rate": 0.0136, "fema_risk_score": 68.94686605154311, "home_value_2019": 208700.0, "home_value_2024": 333700.0, "home_value_cagr_5y": 9.84, "insurance_burden": 0.0109, "insurance_vs_tax_ratio": 0.22, "p2i": 3.623, "pop_change_pct_5y": 1.45}, "slug": "pierce-county-wi", "state_abbr": "WI"}, {"axes": {"climate_safety": 6.5, "housing_affordability": 51.5, "insurance_affordability": 89.0, "resilience": 94.7, "social_resilience": 75.9, "stability": 91.3}, "axis_coverage": 6, "composite": 58.1, "county_fips": "17197", "county_name": "Will County", "rank_national": 1073, "raw": {"annual_premium": 1600, "annual_property_tax": 7173.0, "effective_tax_rate": 0.0224, "fema_risk_score": 93.47756920139993, "home_value_2019": 232000.0, "home_value_2024": 319600.0, "home_value_cagr_5y": 6.62, "insurance_burden": 0.0145, "insurance_vs_tax_ratio": 0.22, "p2i": 2.906, "pop_change_pct_5y": 1.76}, "slug": "will-county-il", "state_abbr": "IL"}, {"axes": {"climate_safety": 14.4, "housing_affordability": 22.8, "insurance_affordability": 99.0, "resilience": 98.3, "social_resilience": 96.4, "stability": 56.8}, "axis_coverage": 6, "composite": 57.6, "county_fips": "55133", "county_name": "Waukesha County", "rank_national": 1113, "raw": {"annual_premium": 1000, "annual_property_tax": 4554.0, "effective_tax_rate": 0.0114, "fema_risk_score": 85.55520203627108, "home_value_2019": 282300.0, "home_value_2024": 398200.0, "home_value_cagr_5y": 7.12, "insurance_burden": 0.0094, "insurance_vs_tax_ratio": 0.22, "p2i": 3.754, "pop_change_pct_5y": 2.82}, "slug": "waukesha-county-wi", "state_abbr": "WI"}, {"axes": {"climate_safety": 9.9, "housing_affordability": 40.7, "insurance_affordability": 86.3, "resilience": 70.0, "social_resilience": 50.6, "stability": 56.6}, "axis_coverage": 6, "composite": 48.4, "county_fips": "17089", "county_name": "Kane County", "rank_national": 1715, "raw": {"annual_premium": 1600, "annual_property_tax": 7382.0, "effective_tax_rate": 0.0226, "fema_risk_score": 90.0413617562838, "home_value_2019": 238300.0, "home_value_2024": 327000.0, "home_value_cagr_5y": 6.53, "insurance_burden": 0.0155, "insurance_vs_tax_ratio": 0.22, "p2i": 3.17, "pop_change_pct_5y": -2.66}, "slug": "kane-county-il", "state_abbr": "IL"}, {"axes": {"climate_safety": 22.9, "housing_affordability": 17.7, "insurance_affordability": 82.8, "resilience": 78.5, "social_resilience": 54.4, "stability": 25.7}, "axis_coverage": 6, "composite": 46.1, "county_fips": "36027", "county_name": "Dutchess County", "rank_national": 1868, "raw": {"annual_premium": 1700, "annual_property_tax": 7562.0, "effective_tax_rate": 0.0189, "fema_risk_score": 76.93286668787782, "home_value_2019": 282000.0, "home_value_2024": 400600.0, "home_value_cagr_5y": 7.27, "insurance_burden": 0.0171, "insurance_vs_tax_ratio": 0.22, "p2i": 4.027, "pop_change_pct_5y": 1.52}, "slug": "dutchess-county-ny", "state_abbr": "NY"}, {"axes": {"climate_safety": 5.1, "housing_affordability": 20.9, "insurance_affordability": 97.9, "resilience": 51.2, "social_resilience": 42.4, "stability": 12.9}, "axis_coverage": 6, "composite": 39.8, "county_fips": "02020", "county_name": "Anchorage Municipality", "rank_national": 2228, "raw": {"annual_premium": 1100, "annual_property_tax": 4982.0, "effective_tax_rate": 0.0126, "fema_risk_score": 94.8456888323258, "home_value_2019": 314800.0, "home_value_2024": 395900.0, "home_value_cagr_5y": 4.69, "insurance_burden": 0.0107, "insurance_vs_tax_ratio": 0.22, "p2i": 3.833, "pop_change_pct_5y": -1.55}, "slug": "anchorage-municipality-ak", "state_abbr": "AK"}, {"axes": {"climate_safety": 6.1, "housing_affordability": 1.7, "insurance_affordability": 94.9, "resilience": 71.6, "social_resilience": 42.6, "stability": 22.4}, "axis_coverage": 6, "composite": 39.5, "county_fips": "06069", "county_name": "San Benito County", "rank_national": 2251, "raw": {"annual_premium": 1400, "annual_property_tax": 6441.0, "effective_tax_rate": 0.0081, "fema_risk_score": 93.85937002863506, "home_value_2019": 551500.0, "home_value_2024": 793400.0, "home_value_cagr_5y": 7.54, "insurance_burden": 0.0122, "insurance_vs_tax_ratio": 0.22, "p2i": 6.936, "pop_change_pct_5y": 11.45}, "slug": "san-benito-county-ca", "state_abbr": "CA"}, {"axes": {"climate_safety": 0.2, "housing_affordability": 0.8, "insurance_affordability": 95.4, "resilience": 15.5, "social_resilience": 43.8, "stability": 4.2}, "axis_coverage": 6, "composite": 30.4, "county_fips": "06059", "county_name": "Orange County", "rank_national": 2738, "raw": {"annual_premium": 1400, "annual_property_tax": 6330.0, "effective_tax_rate": 0.0066, "fema_risk_score": 99.77728285077951, "home_value_2019": 679300.0, "home_value_2024": 962600.0, "home_value_cagr_5y": 7.22, "insurance_burden": 0.012, "insurance_vs_tax_ratio": 0.22, "p2i": 8.278, "pop_change_pct_5y": -0.07}, "slug": "orange-county-ca", "state_abbr": "CA"}, {"axes": {"climate_safety": 58.8, "housing_affordability": 12.0, "insurance_affordability": 93.1, "resilience": 93.8, "social_resilience": 84.6, "stability": 36.2}, "axis_coverage": 6, "composite": 64.2, "county_fips": "44001", "county_name": "Bristol County", "rank_national": 684, "raw": {"annual_premium": 1500, "annual_property_tax": 6648.0, "effective_tax_rate": 0.0129, "fema_risk_score": 41.07540566337894, "home_value_2019": 358100.0, "home_value_2024": 513800.0, "home_value_cagr_5y": 7.49, "insurance_burden": 0.0131, "insurance_vs_tax_ratio": 0.23, "p2i": 4.488, "pop_change_pct_5y": 3.54}, "slug": "bristol-county-ri", "state_abbr": "RI"}, {"axes": {"climate_safety": 40.5, "housing_affordability": 12.0, "insurance_affordability": 98.1, "resilience": 66.9, "social_resilience": 86.8, "stability": 92.8}, "axis_coverage": 6, "composite": 63.1, "county_fips": "33003", "county_name": "Carroll County", "rank_national": 752, "raw": {"annual_premium": 900, "annual_property_tax": 3848.0, "effective_tax_rate": 0.0099, "fema_risk_score": 59.33821189945911, "home_value_2019": 242800.0, "home_value_2024": 388900.0, "home_value_cagr_5y": 9.88, "insurance_burden": 0.0104, "insurance_vs_tax_ratio": 0.23, "p2i": 4.498, "pop_change_pct_5y": 7.62}, "slug": "carroll-county-nh", "state_abbr": "NH"}, {"axes": {"climate_safety": 23.8, "housing_affordability": 25.0, "insurance_affordability": 98.8, "resilience": 85.4, "social_resilience": 98.6, "stability": 71.2}, "axis_coverage": 6, "composite": 61.1, "county_fips": "55109", "county_name": "St. Croix County", "rank_national": 887, "raw": {"annual_premium": 1000, "annual_property_tax": 4420.0, "effective_tax_rate": 0.0117, "fema_risk_score": 76.10563156220171, "home_value_2019": 244500.0, "home_value_2024": 377700.0, "home_value_cagr_5y": 9.09, "insurance_burden": 0.0097, "insurance_vs_tax_ratio": 0.23, "p2i": 3.665, "pop_change_pct_5y": 8.23}, "slug": "st-croix-county-wi", "state_abbr": "WI"}, {"axes": {"climate_safety": 18.4, "housing_affordability": 30.6, "insurance_affordability": 94.7, "resilience": 81.4, "social_resilience": 64.8, "stability": 32.8}, "axis_coverage": 6, "composite": 51.7, "county_fips": "42095", "county_name": "Northampton County", "rank_national": 1494, "raw": {"annual_premium": 1100, "annual_property_tax": 4700.0, "effective_tax_rate": 0.0152, "fema_risk_score": 81.45084314349347, "home_value_2019": 219800.0, "home_value_2024": 308600.0, "home_value_cagr_5y": 7.02, "insurance_burden": 0.0123, "insurance_vs_tax_ratio": 0.23, "p2i": 3.46, "pop_change_pct_5y": 5.21}, "slug": "northampton-county-pa", "state_abbr": "PA"}, {"axes": {"climate_safety": 5.0, "housing_affordability": 9.9, "insurance_affordability": 92.9, "resilience": 95.3, "social_resilience": 58.3, "stability": 81.8}, "axis_coverage": 6, "composite": 49.8, "county_fips": "34009", "county_name": "Cape May County", "rank_national": 1618, "raw": {"annual_premium": 1200, "annual_property_tax": 5306.0, "effective_tax_rate": 0.0122, "fema_risk_score": 95.00477251034044, "home_value_2019": 300500.0, "home_value_2024": 434600.0, "home_value_cagr_5y": 7.66, "insurance_burden": 0.0132, "insurance_vs_tax_ratio": 0.23, "p2i": 4.769, "pop_change_pct_5y": 1.99}, "slug": "cape-may-county-nj", "state_abbr": "NJ"}, {"axes": {"climate_safety": 15.1, "housing_affordability": 15.3, "insurance_affordability": 89.0, "resilience": 94.6, "social_resilience": 74.3, "stability": 9.0}, "axis_coverage": 6, "composite": 46.9, "county_fips": "26161", "county_name": "Washtenaw County", "rank_national": 1810, "raw": {"annual_premium": 1300, "annual_property_tax": 5678.0, "effective_tax_rate": 0.0152, "fema_risk_score": 84.82341711740375, "home_value_2019": 263600.0, "home_value_2024": 374100.0, "home_value_cagr_5y": 7.25, "insurance_burden": 0.0146, "insurance_vs_tax_ratio": 0.23, "p2i": 4.195, "pop_change_pct_5y": 0.77}, "slug": "washtenaw-county-mi", "state_abbr": "MI"}, {"axes": {"climate_safety": 5.5, "housing_affordability": 6.5, "insurance_affordability": 98.9, "resilience": 76.9, "social_resilience": 69.2, "stability": 28.9}, "axis_coverage": 6, "composite": 44.9, "county_fips": "53035", "county_name": "Kitsap County", "rank_national": 1939, "raw": {"annual_premium": 1000, "annual_property_tax": 4279.0, "effective_tax_rate": 0.0077, "fema_risk_score": 94.52752147629653, "home_value_2019": 329900.0, "home_value_2024": 555100.0, "home_value_cagr_5y": 10.97, "insurance_burden": 0.0096, "insurance_vs_tax_ratio": 0.23, "p2i": 5.329, "pop_change_pct_5y": 4.51}, "slug": "kitsap-county-wa", "state_abbr": "WA"}, {"axes": {"climate_safety": 10.8, "housing_affordability": 3.4, "insurance_affordability": 97.0, "resilience": 77.1, "social_resilience": 45.2, "stability": 28.6}, "axis_coverage": 6, "composite": 43.1, "county_fips": "53057", "county_name": "Skagit County", "rank_national": 2035, "raw": {"annual_premium": 1000, "annual_property_tax": 4308.0, "effective_tax_rate": 0.0079, "fema_risk_score": 89.11867642379892, "home_value_2019": 306000.0, "home_value_2024": 545100.0, "home_value_cagr_5y": 12.24, "insurance_burden": 0.0112, "insurance_vs_tax_ratio": 0.23, "p2i": 6.107, "pop_change_pct_5y": 4.55}, "slug": "skagit-county-wa", "state_abbr": "WA"}, {"axes": {"climate_safety": 4.2, "housing_affordability": 6.2, "insurance_affordability": 98.3, "resilience": 59.8, "social_resilience": 60.8, "stability": 18.3}, "axis_coverage": 6, "composite": 40.7, "county_fips": "53011", "county_name": "Clark County", "rank_national": 2171, "raw": {"annual_premium": 1000, "annual_property_tax": 4290.0, "effective_tax_rate": 0.0082, "fema_risk_score": 95.83200763601654, "home_value_2019": 327000.0, "home_value_2024": 522900.0, "home_value_cagr_5y": 9.84, "insurance_burden": 0.0103, "insurance_vs_tax_ratio": 0.23, "p2i": 5.361, "pop_change_pct_5y": 9.24}, "slug": "clark-county-wa", "state_abbr": "WA"}, {"axes": {"climate_safety": 6.2, "housing_affordability": 27.2, "insurance_affordability": 86.3, "resilience": 98.9, "social_resilience": 16.1, "stability": 1.4}, "axis_coverage": 6, "composite": 39.2, "county_fips": "55079", "county_name": "Milwaukee County", "rank_national": 2271, "raw": {"annual_premium": 1000, "annual_property_tax": 4444.0, "effective_tax_rate": 0.0193, "fema_risk_score": 93.76391982182628, "home_value_2019": 158300.0, "home_value_2024": 230700.0, "home_value_cagr_5y": 7.82, "insurance_burden": 0.0155, "insurance_vs_tax_ratio": 0.23, "p2i": 3.58, "pop_change_pct_5y": -2.62}, "slug": "milwaukee-county-wi", "state_abbr": "WI"}];
+const top10 = top100.slice(0, 10);
+const bottom10 = bottom100.slice(0, 10);
 
-  const labels = top10.map(c => `${c.county_name}, ${c.state_abbr}`);
-  const insuranceData = top10.map(c => c.raw.annual_premium);
-  const taxData = top10.map(c => c.raw.annual_property_tax);
+// 1. Top 10 차트 그리기
+function renderChart(canvasId, data, color) {
+  const labels = data.map(c => `${c.county_name}, ${c.state_abbr}`);
+  const insuranceData = data.map(c => c.raw.annual_premium);
+  const taxData = data.map(c => c.raw.annual_property_tax);
 
-  const ctx = document.getElementById('taxChart').getContext('2d');
-  new Chart(ctx, {
+  new Chart(document.getElementById(canvasId).getContext('2d'), {
     type: 'bar',
     data: {
       labels: labels,
       datasets: [
-        {
-          label: 'Annual Insurance Premium ($)',
-          data: insuranceData,
-          backgroundColor: 'rgba(231, 76, 60, 0.8)', // 빨간색 계열
-          borderColor: 'rgba(231, 76, 60, 1)',
-          borderWidth: 1
-        },
-        {
-          label: 'Annual Property Tax ($)',
-          data: taxData,
-          backgroundColor: 'rgba(52, 152, 219, 0.8)', // 파란색 계열
-          borderColor: 'rgba(52, 152, 219, 1)',
-          borderWidth: 1
-        }
+        { label: 'Insurance', data: insuranceData, backgroundColor: color, borderWidth: 1 },
+        { label: 'Property Tax', data: taxData, backgroundColor: 'rgba(150, 150, 150, 0.5)', borderWidth: 1 }
       ]
     },
     options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      indexAxis: 'y', // 🆕 가로 막대 차트로 변경 (카운티 이름이 길어서)
-      plugins: {
-        legend: { position: 'top' },
-        tooltip: {
-          callbacks: {
-            label: function(context) {
-              let label = context.dataset.label || '';
-              if (label) label += ': ';
-              if (context.parsed.x !== null) {
-                label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(context.parsed.x);
-              }
-              return label;
-            }
-          }
-        }
-      },
-      scales: {
-        x: {
-          beginAtZero: true,
-          ticks: {
-            callback: function(value) { return '$' + value; }
-          }
-        }
-      }
+      responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+      plugins: { legend: { display: false } }, // 공간 절약을 위해 범례 숨김
+      scales: { x: { beginAtZero: true, ticks: { callback: v => '$' + v } } }
     }
   });
-});
+}
+
+renderChart('topChart', top10, 'rgba(231, 76, 60, 0.8)');
+renderChart('bottomChart', bottom10, 'rgba(52, 152, 219, 0.8)');
+
+// 2. 표 탭 전환 로직
+function showTable(type) {
+  const tbody = document.getElementById('tableBody');
+  const data = type === 'top' ? top100 : bottom100;
+  
+  // 버튼 스타일 변경
+  const btnTop = document.getElementById('btnTop');
+  const btnBottom = document.getElementById('btnBottom');
+  if (type === 'top') {
+    btnTop.style.background = '#c0392b'; btnTop.style.color = '#fff';
+    btnBottom.style.background = '#ddd'; btnBottom.style.color = '#333';
+  } else {
+    btnTop.style.background = '#ddd'; btnTop.style.color = '#333';
+    btnBottom.style.background = '#2980b9'; btnBottom.style.color = '#fff';
+  }
+
+  // 표 렌더링
+  let html = '';
+  data.forEach((c, i) => {
+    html += `<tr>
+      <td>${i + 1}</td>
+      <td><a href="/counties/${c.slug}.html">${c.county_name}, ${c.state_abbr}</a></td>
+      <td>$${Math.round(c.raw.annual_premium).toLocaleString()}</td>
+      <td>$${Math.round(c.raw.annual_property_tax).toLocaleString()}</td>
+      <td><strong style="color: ${type === 'top' ? '#c0392b' : '#2980b9'};">${c.raw.insurance_vs_tax_ratio}x</strong></td>
+    </tr>`;
+  });
+  tbody.innerHTML = html;
+}
+
+// 초기 표 렌더링 (Top 100)
+showTable('top');
 </script>
 
 </main>
