@@ -35,9 +35,29 @@
   <p>In many U.S. counties, rising insurance premiums now exceed property taxes. Explore the reversal.</p>
 </div>
 
+<!-- 🆕 인사이트 카드: 인구 이동 상관관계 분석 -->
 <div class="card" style="background: #f0f4f8; border-left: 5px solid #e67e22; margin-bottom: 20px;">
   <h2 style="margin-top: 0; color: #e67e22;">💡 The Hidden Cost Reversal</h2>
   <p>Traditionally, property taxes were the largest recurring cost of homeownership after the mortgage. However, climate risks and inflation have driven insurance premiums so high that in many counties, <strong>insurance now costs more than property taxes.</strong></p>
+  
+  <!-- 🆕 동적 인구 분석 텍스트 -->
+  <div style="background: #fff; padding: 15px; border-radius: 6px; margin-top: 15px; border: 1px solid #ddd;">
+    <h3 style="margin-top: 0; font-size: 1.1em;">📉 Impact on Population (Top 100 Counties)</h3>
+    <p style="margin-bottom: 0;">
+      Among the Top 100 counties where insurance exceeds property taxes, <strong>85 out of 100</strong> have experienced a <strong>population decline</strong> over the past 5 years. 
+      
+        This suggests that skyrocketing insurance costs may be a significant driver of out-migration in these high-risk areas.
+      
+    </p>
+  </div>
+</div>
+
+<!-- 🆕 가로 막대 차트 (Top 10) -->
+<div class="card" style="margin-bottom: 20px;">
+  <h2>Top 10 Counties: Insurance vs. Tax</h2>
+  <div style="position: relative; height: 400px; width: 100%;">
+    <canvas id="taxChart"></canvas>
+  </div>
 </div>
 
 <div class="card">
@@ -859,6 +879,71 @@
     </table>
   </div>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // 파이썬에서 넘겨준 Top 10 데이터 (Jinja2 tojson 필터)
+  const top10 = [{"axes": {"climate_safety": 67.8, "housing_affordability": 90.8, "insurance_affordability": 2.3, "resilience": 15.0, "social_resilience": 41.0, "stability": 57.7}, "axis_coverage": 6, "composite": 45.9, "county_fips": "22123", "county_name": "West Carroll Parish", "rank_national": 1877, "raw": {"annual_premium": 4500, "annual_property_tax": 199.0, "effective_tax_rate": 0.0021, "fema_risk_score": 32.13490295895641, "home_value_2019": 90300.0, "home_value_2024": 94400.0, "home_value_cagr_5y": 0.89, "insurance_burden": 0.0916, "insurance_vs_tax_ratio": 22.61, "p2i": 1.921, "pop_change_pct_5y": -14.28}, "slug": "west-carroll-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 69.1, "housing_affordability": 76.9, "insurance_affordability": 0.3, "resilience": 13.7, "social_resilience": 27.7, "stability": 47.6}, "axis_coverage": 6, "composite": 41.2, "county_fips": "22107", "county_name": "Tensas Parish", "rank_national": 2143, "raw": {"annual_premium": 4500, "annual_property_tax": 221.0, "effective_tax_rate": 0.0026, "fema_risk_score": 30.862233534839323, "home_value_2019": 66400.0, "home_value_2024": 86300.0, "home_value_cagr_5y": 5.38, "insurance_burden": 0.1229, "insurance_vs_tax_ratio": 20.36, "p2i": 2.357, "pop_change_pct_5y": -13.73}, "slug": "tensas-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 20.4, "housing_affordability": 42.7, "insurance_affordability": 0.5, "resilience": 45.4, "social_resilience": 7.2, "stability": 28.6}, "axis_coverage": 6, "composite": 20.8, "county_fips": "22009", "county_name": "Avoyelles Parish", "rank_national": 3046, "raw": {"annual_premium": 4500, "annual_property_tax": 249.0, "effective_tax_rate": 0.002, "fema_risk_score": 79.54183900731785, "home_value_2019": 104200.0, "home_value_2024": 122400.0, "home_value_cagr_5y": 3.27, "insurance_burden": 0.1144, "insurance_vs_tax_ratio": 18.07, "p2i": 3.113, "pop_change_pct_5y": -4.34}, "slug": "avoyelles-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 35.8, "housing_affordability": 81.3, "insurance_affordability": 1.7, "resilience": 30.8, "social_resilience": 27.6, "stability": 46.3}, "axis_coverage": 6, "composite": 33.8, "county_fips": "22003", "county_name": "Allen Parish", "rank_national": 2584, "raw": {"annual_premium": 4500, "annual_property_tax": 267.0, "effective_tax_rate": 0.0026, "fema_risk_score": 64.04708876869233, "home_value_2019": 97500.0, "home_value_2024": 104500.0, "home_value_cagr_5y": 1.4, "insurance_burden": 0.0968, "insurance_vs_tax_ratio": 16.85, "p2i": 2.249, "pop_change_pct_5y": -12.26}, "slug": "allen-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 61.6, "housing_affordability": 46.5, "insurance_affordability": 0.0, "resilience": 5.1, "social_resilience": 3.3, "stability": 5.5}, "axis_coverage": 6, "composite": 26.8, "county_fips": "22035", "county_name": "East Carroll Parish", "rank_national": 2887, "raw": {"annual_premium": 4500, "annual_property_tax": 277.0, "effective_tax_rate": 0.0028, "fema_risk_score": 38.27553293032135, "home_value_2019": 76800.0, "home_value_2024": 100500.0, "home_value_cagr_5y": 5.53, "insurance_burden": 0.135, "insurance_vs_tax_ratio": 16.25, "p2i": 3.014, "pop_change_pct_5y": -0.34}, "slug": "east-carroll-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 66.4, "housing_affordability": 54.5, "insurance_affordability": 0.1, "resilience": 17.1, "social_resilience": 5.7, "stability": 29.2}, "axis_coverage": 6, "composite": 33.3, "county_fips": "22013", "county_name": "Bienville Parish", "rank_national": 2610, "raw": {"annual_premium": 4500, "annual_property_tax": 301.0, "effective_tax_rate": 0.003, "fema_risk_score": 33.56665606108813, "home_value_2019": 75900.0, "home_value_2024": 99500.0, "home_value_cagr_5y": 5.56, "insurance_burden": 0.1285, "insurance_vs_tax_ratio": 14.95, "p2i": 2.842, "pop_change_pct_5y": -6.83}, "slug": "bienville-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 48.5, "housing_affordability": 61.2, "insurance_affordability": 0.1, "resilience": 24.3, "social_resilience": 0.2, "stability": 2.7}, "axis_coverage": 6, "composite": 26.5, "county_fips": "22065", "county_name": "Madison Parish", "rank_national": 2900, "raw": {"annual_premium": 4500, "annual_property_tax": 313.0, "effective_tax_rate": 0.0033, "fema_risk_score": 51.415844734330264, "home_value_2019": 78100.0, "home_value_2024": 96200.0, "home_value_cagr_5y": 4.26, "insurance_burden": 0.1269, "insurance_vs_tax_ratio": 14.38, "p2i": 2.713, "pop_change_pct_5y": -15.86}, "slug": "madison-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 77.8, "housing_affordability": 82.4, "insurance_affordability": 2.2, "resilience": 37.9, "social_resilience": 28.7, "stability": 33.2}, "axis_coverage": 6, "composite": 46.2, "county_fips": "22127", "county_name": "Winn Parish", "rank_national": 1857, "raw": {"annual_premium": 4500, "annual_property_tax": 325.0, "effective_tax_rate": 0.003, "fema_risk_score": 22.144447979637288, "home_value_2019": 77700.0, "home_value_2024": 108500.0, "home_value_cagr_5y": 6.91, "insurance_burden": 0.0921, "insurance_vs_tax_ratio": 13.85, "p2i": 2.22, "pop_change_pct_5y": -5.91}, "slug": "winn-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 68.2, "housing_affordability": 88.3, "insurance_affordability": 2.5, "resilience": 28.5, "social_resilience": 17.8, "stability": 69.5}, "axis_coverage": 6, "composite": 45.9, "county_fips": "22025", "county_name": "Catahoula Parish", "rank_national": 1876, "raw": {"annual_premium": 4500, "annual_property_tax": 325.0, "effective_tax_rate": 0.0032, "fema_risk_score": 31.784918867324212, "home_value_2019": 89000.0, "home_value_2024": 101800.0, "home_value_cagr_5y": 2.72, "insurance_burden": 0.0895, "insurance_vs_tax_ratio": 13.85, "p2i": 2.025, "pop_change_pct_5y": -12.11}, "slug": "catahoula-parish-la", "state_abbr": "LA"}, {"axes": {"climate_safety": 37.8, "housing_affordability": 42.5, "insurance_affordability": 11.4, "resilience": 24.6, "social_resilience": 24.9, "stability": 97.0}, "axis_coverage": 6, "composite": 35.2, "county_fips": "22037", "county_name": "East Feliciana Parish", "rank_national": 2487, "raw": {"annual_premium": 4500, "annual_property_tax": 339.0, "effective_tax_rate": 0.0015, "fema_risk_score": 62.07445116131085, "home_value_2019": 139300.0, "home_value_2024": 228100.0, "home_value_cagr_5y": 10.37, "insurance_burden": 0.0616, "insurance_vs_tax_ratio": 13.27, "p2i": 3.121, "pop_change_pct_5y": -0.52}, "slug": "east-feliciana-parish-la", "state_abbr": "LA"}];
+  
+  if (!top10 || top10.length === 0) return;
+
+  const labels = top10.map(c => `${c.county_name}, ${c.state_abbr}`);
+  const insuranceData = top10.map(c => c.raw.annual_premium);
+  const taxData = top10.map(c => c.raw.annual_property_tax);
+
+  const ctx = document.getElementById('taxChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: 'Annual Insurance Premium ($)',
+          data: insuranceData,
+          backgroundColor: 'rgba(231, 76, 60, 0.8)', // 빨간색 계열
+          borderColor: 'rgba(231, 76, 60, 1)',
+          borderWidth: 1
+        },
+        {
+          label: 'Annual Property Tax ($)',
+          data: taxData,
+          backgroundColor: 'rgba(52, 152, 219, 0.8)', // 파란색 계열
+          borderColor: 'rgba(52, 152, 219, 1)',
+          borderWidth: 1
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      indexAxis: 'y', // 🆕 가로 막대 차트로 변경 (카운티 이름이 길어서)
+      plugins: {
+        legend: { position: 'top' },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              let label = context.dataset.label || '';
+              if (label) label += ': ';
+              if (context.parsed.x !== null) {
+                label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(context.parsed.x);
+              }
+              return label;
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          beginAtZero: true,
+          ticks: {
+            callback: function(value) { return '$' + value; }
+          }
+        }
+      }
+    }
+  });
+});
+</script>
 
 </main>
 
