@@ -4,10 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ozaukee County, WI Insurance Risk & Climate Data | Insurance Data Hub</title>
-  <meta name="description" content="Insurance risk, climate safety, and housing affordability data for Ozaukee County, WI. Composite score: 66.2/100.">
+  <meta name="description" content="Insurance risk, climate safety, and housing affordability data for Ozaukee County, WI. Composite score: 66.0/100.">
   
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%231a3d5c'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='white' font-family='Arial,sans-serif' font-weight='bold'%3EI%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="/static/style.css">
+  <!-- 🆕 Chart.js 차트 라이브러리 추가 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
 <header class="site-header">
@@ -35,8 +37,8 @@
 
   <h1>Ozaukee County, WI</h1>
   <p class="lead" style="font-size:1.2em; margin-bottom:30px;">
-    Composite Insurance Risk Score: <strong style="color:var(--accent);">66.2 / 100</strong> 
-    <span style="font-size:0.85em; color:#666;">(National rank: #559)</span>
+    Composite Insurance Risk Score: <strong style="color:var(--accent);">66.0 / 100</strong> 
+    <span style="font-size:0.85em; color:#666;">(National rank: #570)</span>
   </p>
 
   <!-- 6축 점수 -->
@@ -62,11 +64,11 @@
         <div>
           <div style="display:flex; justify-content:space-between; margin-bottom:5px; font-size:0.95em;">
             <span style="font-weight:500;">Insurance Affordability</span>
-            <span style="font-weight:bold;">98.5</span>
+            <span style="font-weight:bold;">98.2</span>
           </div>
           <div style="background:#eee; height:8px; border-radius:4px; overflow:hidden;">
             
-            <div style="background:var(--primary); width:98.5%; height:100%;"></div>
+            <div style="background:var(--primary); width:98.2%; height:100%;"></div>
             
           </div>
         </div>
@@ -75,11 +77,11 @@
         <div>
           <div style="display:flex; justify-content:space-between; margin-bottom:5px; font-size:0.95em;">
             <span style="font-weight:500;">Housing Affordability</span>
-            <span style="font-weight:bold;">18.0</span>
+            <span style="font-weight:bold;">17.8</span>
           </div>
           <div style="background:#eee; height:8px; border-radius:4px; overflow:hidden;">
             
-            <div style="background:var(--primary); width:18.0%; height:100%;"></div>
+            <div style="background:var(--primary); width:17.8%; height:100%;"></div>
             
           </div>
         </div>
@@ -114,11 +116,11 @@
         <div>
           <div style="display:flex; justify-content:space-between; margin-bottom:5px; font-size:0.95em;">
             <span style="font-weight:500;">Housing Stability</span>
-            <span style="font-weight:bold;">42.0</span>
+            <span style="font-weight:bold;">41.1</span>
           </div>
           <div style="background:#eee; height:8px; border-radius:4px; overflow:hidden;">
             
-            <div style="background:var(--primary); width:42.0%; height:100%;"></div>
+            <div style="background:var(--primary); width:41.1%; height:100%;"></div>
             
           </div>
         </div>
@@ -141,7 +143,7 @@
         </tr>
         <tr>
           <td>Price-to-Income Ratio</td>
-          <td>3.81</td>
+          <td>4.02</td>
         </tr>
         <tr>
           <td>FEMA Risk Score (0-100)</td>
@@ -156,6 +158,95 @@
     Scores are percentile ranks across all valid U.S. counties (0-100).
   </p>
 </article>
+  <!-- 🆕 10년 시계열 차트 -->
+  <div class="card" style="margin-top: 20px;">
+    <h2>📈 10-Year Trend (2015-2024)</h2>
+    <p style="font-size:0.9em; color:#666;">Historical data from U.S. Census ACS 5-Year Estimates.</p>
+    <div style="position: relative; height: 400px; width: 100%;">
+      <canvas id="trendChart"></canvas>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const ctx = document.getElementById('trendChart').getContext('2d');
+      
+      // 파이썬에서 넘겨준 데이터 (Jinja2 tojson 필터 사용)
+      const years = ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"];
+      const homeValues = [245700.0, 248800.0, 262100.0, 273000.0, 282500.0, 292200.0, 305700.0, 344900.0, 368900.0, 390200.0];
+      const populations = [87273.0, 87625.0, 87817.0, 88284.0, 88597.0, 89179.0, 91029.0, 91745.0, 92345.0, 92966.0];
+
+      if (!ctx) return;
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: years,
+          datasets: [
+            {
+              label: 'Median Home Value ($)',
+              data: homeValues,
+              borderColor: '#1a3d5c',
+              backgroundColor: 'rgba(26, 61, 92, 0.1)',
+              yAxisID: 'y',
+              tension: 0.3,
+              fill: true
+            },
+            {
+              label: 'Population',
+              data: populations,
+              borderColor: '#e67e22',
+              backgroundColor: 'rgba(230, 126, 34, 0.1)',
+              yAxisID: 'y1',
+              tension: 0.3,
+              borderDash: [5, 5]
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  let label = context.dataset.label || '';
+                  if (label) label += ': ';
+                  if (context.parsed.y !== null) {
+                    if (context.dataset.yAxisID === 'y') {
+                      label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(context.parsed.y);
+                    } else {
+                      label += new Intl.NumberFormat('en-US').format(context.parsed.y);
+                    }
+                  }
+                  return label;
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              type: 'linear',
+              display: true,
+              position: 'left',
+              title: { display: true, text: 'Home Value ($)', color: '#1a3d5c' },
+              ticks: {
+                callback: function(value) { return '$' + (value / 1000).toFixed(0) + 'k'; }
+              }
+            },
+            y1: {
+              type: 'linear',
+              display: true,
+              position: 'right',
+              title: { display: true, text: 'Population', color: '#e67e22' },
+              grid: { drawOnChartArea: false } // 격자선 겹침 방지
+            }
+          }
+        }
+      });
+    });
+  </script>
 
 </main>
 
