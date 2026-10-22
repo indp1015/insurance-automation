@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Insurance vs. Property Tax: The Hidden Cost | Insurance Data Hub</title>
+  <meta name="description" content="Compare annual home insurance premiums to property taxes across U.S. counties. See where insurance costs surpass taxes.">
+  
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%231a3d5c'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='white' font-family='Arial,sans-serif' font-weight='bold'%3EI%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/static/style.css">
+  <!-- 🆕 Chart.js 차트 라이브러리 추가 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <div class="header-top">
+      <a href="/" class="logo">Insurance Data Hub</a>
+      <a href="https://dataindp.com" class="hub-btn">Go Data in DP ↗</a>
+    </div>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/correlations.html">Correlation Map</a> <!-- 🆕 추가 -->
+      <a href="/tax-vs-insurance.html">Insurance vs Tax</a> <!-- 🆕 -->
+      <a href="/rankings.html">Rankings</a>
+      <a href="/about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+
+<div class="hero">
+  <h1>Insurance vs. Property Tax</h1>
+  <p>In many U.S. counties, rising insurance premiums now exceed property taxes. Explore the reversal.</p>
+</div>
+
+<div class="card" style="background: #f0f4f8; border-left: 5px solid #e67e22; margin-bottom: 20px;">
+  <h2 style="margin-top: 0; color: #e67e22;">💡 The Hidden Cost Reversal</h2>
+  <p>Traditionally, property taxes were the largest recurring cost of homeownership after the mortgage. However, climate risks and inflation have driven insurance premiums so high that in many counties, <strong>insurance now costs more than property taxes.</strong></p>
+</div>
+
+<div class="card">
+  <h2>Top 100 Counties (Insurance > Property Tax)</h2>
+  <div style="overflow-x:auto;">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>County</th>
+          <th>Annual Insurance</th>
+          <th>Annual Property Tax</th>
+          <th>Insurance / Tax Ratio</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr>
+          <td>1</td>
+          <td><a href="/counties/west-carroll-parish-la.html">West Carroll Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$199</td>
+          <td><strong style="color: #c0392b;">22.61x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>2</td>
+          <td><a href="/counties/tensas-parish-la.html">Tensas Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$221</td>
+          <td><strong style="color: #c0392b;">20.36x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>3</td>
+          <td><a href="/counties/avoyelles-parish-la.html">Avoyelles Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$249</td>
+          <td><strong style="color: #c0392b;">18.07x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>4</td>
+          <td><a href="/counties/allen-parish-la.html">Allen Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$267</td>
+          <td><strong style="color: #c0392b;">16.85x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>5</td>
+          <td><a href="/counties/east-carroll-parish-la.html">East Carroll Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$277</td>
+          <td><strong style="color: #c0392b;">16.25x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>6</td>
+          <td><a href="/counties/bienville-parish-la.html">Bienville Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$301</td>
+          <td><strong style="color: #c0392b;">14.95x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>7</td>
+          <td><a href="/counties/madison-parish-la.html">Madison Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$313</td>
+          <td><strong style="color: #c0392b;">14.38x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>8</td>
+          <td><a href="/counties/winn-parish-la.html">Winn Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$325</td>
+          <td><strong style="color: #c0392b;">13.85x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>9</td>
+          <td><a href="/counties/catahoula-parish-la.html">Catahoula Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$325</td>
+          <td><strong style="color: #c0392b;">13.85x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>10</td>
+          <td><a href="/counties/east-feliciana-parish-la.html">East Feliciana Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$339</td>
+          <td><strong style="color: #c0392b;">13.27x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>11</td>
+          <td><a href="/counties/franklin-parish-la.html">Franklin Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$351</td>
+          <td><strong style="color: #c0392b;">12.82x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>12</td>
+          <td><a href="/counties/jackson-parish-la.html">Jackson Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$352</td>
+          <td><strong style="color: #c0392b;">12.78x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>13</td>
+          <td><a href="/counties/claiborne-parish-la.html">Claiborne Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$356</td>
+          <td><strong style="color: #c0392b;">12.64x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>14</td>
+          <td><a href="/counties/evangeline-parish-la.html">Evangeline Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$362</td>
+          <td><strong style="color: #c0392b;">12.43x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>15</td>
+          <td><a href="/counties/choctaw-county-al.html">Choctaw County, AL</a></td>
+          <td>$2,480</td>
+          <td>$207</td>
+          <td><strong style="color: #c0392b;">11.98x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>16</td>
+          <td><a href="/counties/concordia-parish-la.html">Concordia Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$384</td>
+          <td><strong style="color: #c0392b;">11.72x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>17</td>
+          <td><a href="/counties/richland-parish-la.html">Richland Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$401</td>
+          <td><strong style="color: #c0392b;">11.22x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>18</td>
+          <td><a href="/counties/st-landry-parish-la.html">St. Landry Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$411</td>
+          <td><strong style="color: #c0392b;">10.95x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>19</td>
+          <td><a href="/counties/webster-parish-la.html">Webster Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$412</td>
+          <td><strong style="color: #c0392b;">10.92x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>20</td>
+          <td><a href="/counties/caldwell-parish-la.html">Caldwell Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$415</td>
+          <td><strong style="color: #c0392b;">10.84x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>21</td>
+          <td><a href="/counties/mcmullen-county-tx.html">McMullen County, TX</a></td>
+          <td>$4,200</td>
+          <td>$400</td>
+          <td><strong style="color: #c0392b;">10.5x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>22</td>
+          <td><a href="/counties/jefferson-davis-parish-la.html">Jefferson Davis Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$442</td>
+          <td><strong style="color: #c0392b;">10.18x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>23</td>
+          <td><a href="/counties/oglala-lakota-county-sd.html">Oglala Lakota County, SD</a></td>
+          <td>$2,000</td>
+          <td>$199</td>
+          <td><strong style="color: #c0392b;">10.05x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>24</td>
+          <td><a href="/counties/holmes-county-fl.html">Holmes County, FL</a></td>
+          <td>$6,000</td>
+          <td>$600</td>
+          <td><strong style="color: #c0392b;">10.0x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>25</td>
+          <td><a href="/counties/jackson-county-fl.html">Jackson County, FL</a></td>
+          <td>$6,000</td>
+          <td>$609</td>
+          <td><strong style="color: #c0392b;">9.85x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>26</td>
+          <td><a href="/counties/st-helena-parish-la.html">St. Helena Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$469</td>
+          <td><strong style="color: #c0392b;">9.59x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>27</td>
+          <td><a href="/counties/acadia-parish-la.html">Acadia Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$483</td>
+          <td><strong style="color: #c0392b;">9.32x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>28</td>
+          <td><a href="/counties/sabine-parish-la.html">Sabine Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$484</td>
+          <td><strong style="color: #c0392b;">9.3x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>29</td>
+          <td><a href="/counties/lamar-county-al.html">Lamar County, AL</a></td>
+          <td>$2,480</td>
+          <td>$274</td>
+          <td><strong style="color: #c0392b;">9.05x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>30</td>
+          <td><a href="/counties/red-river-parish-la.html">Red River Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$506</td>
+          <td><strong style="color: #c0392b;">8.89x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>31</td>
+          <td><a href="/counties/washington-parish-la.html">Washington Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$507</td>
+          <td><strong style="color: #c0392b;">8.88x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>32</td>
+          <td><a href="/counties/cimarron-county-ok.html">Cimarron County, OK</a></td>
+          <td>$3,500</td>
+          <td>$395</td>
+          <td><strong style="color: #c0392b;">8.86x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>33</td>
+          <td><a href="/counties/perry-county-al.html">Perry County, AL</a></td>
+          <td>$2,480</td>
+          <td>$281</td>
+          <td><strong style="color: #c0392b;">8.83x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>34</td>
+          <td><a href="/counties/union-parish-la.html">Union Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$518</td>
+          <td><strong style="color: #c0392b;">8.69x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>35</td>
+          <td><a href="/counties/morehouse-parish-la.html">Morehouse Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$530</td>
+          <td><strong style="color: #c0392b;">8.49x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>36</td>
+          <td><a href="/counties/lasalle-parish-la.html">LaSalle Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$532</td>
+          <td><strong style="color: #c0392b;">8.46x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>37</td>
+          <td><a href="/counties/de-soto-parish-la.html">De Soto Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$540</td>
+          <td><strong style="color: #c0392b;">8.33x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>38</td>
+          <td><a href="/counties/bibb-county-al.html">Bibb County, AL</a></td>
+          <td>$2,480</td>
+          <td>$298</td>
+          <td><strong style="color: #c0392b;">8.32x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>39</td>
+          <td><a href="/counties/st-mary-parish-la.html">St. Mary Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$545</td>
+          <td><strong style="color: #c0392b;">8.26x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>40</td>
+          <td><a href="/counties/marion-county-al.html">Marion County, AL</a></td>
+          <td>$2,480</td>
+          <td>$301</td>
+          <td><strong style="color: #c0392b;">8.24x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>41</td>
+          <td><a href="/counties/calhoun-county-fl.html">Calhoun County, FL</a></td>
+          <td>$6,000</td>
+          <td>$734</td>
+          <td><strong style="color: #c0392b;">8.17x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>42</td>
+          <td><a href="/counties/assumption-parish-la.html">Assumption Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$552</td>
+          <td><strong style="color: #c0392b;">8.15x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>43</td>
+          <td><a href="/counties/iberville-parish-la.html">Iberville Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$556</td>
+          <td><strong style="color: #c0392b;">8.09x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>44</td>
+          <td><a href="/counties/taylor-county-fl.html">Taylor County, FL</a></td>
+          <td>$6,000</td>
+          <td>$750</td>
+          <td><strong style="color: #c0392b;">8.0x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>45</td>
+          <td><a href="/counties/pointe-coupee-parish-la.html">Pointe Coupee Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$565</td>
+          <td><strong style="color: #c0392b;">7.96x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>46</td>
+          <td><a href="/counties/coosa-county-al.html">Coosa County, AL</a></td>
+          <td>$2,480</td>
+          <td>$315</td>
+          <td><strong style="color: #c0392b;">7.87x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>47</td>
+          <td><a href="/counties/beauregard-parish-la.html">Beauregard Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$576</td>
+          <td><strong style="color: #c0392b;">7.81x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>48</td>
+          <td><a href="/counties/wilcox-county-al.html">Wilcox County, AL</a></td>
+          <td>$2,480</td>
+          <td>$319</td>
+          <td><strong style="color: #c0392b;">7.77x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>49</td>
+          <td><a href="/counties/jackson-county-co.html">Jackson County, CO</a></td>
+          <td>$3,200</td>
+          <td>$416</td>
+          <td><strong style="color: #c0392b;">7.69x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>50</td>
+          <td><a href="/counties/vermilion-parish-la.html">Vermilion Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$589</td>
+          <td><strong style="color: #c0392b;">7.64x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>51</td>
+          <td><a href="/counties/iberia-parish-la.html">Iberia Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$593</td>
+          <td><strong style="color: #c0392b;">7.59x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>52</td>
+          <td><a href="/counties/washington-county-fl.html">Washington County, FL</a></td>
+          <td>$6,000</td>
+          <td>$792</td>
+          <td><strong style="color: #c0392b;">7.58x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>53</td>
+          <td><a href="/counties/clay-county-al.html">Clay County, AL</a></td>
+          <td>$2,480</td>
+          <td>$331</td>
+          <td><strong style="color: #c0392b;">7.49x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>54</td>
+          <td><a href="/counties/conecuh-county-al.html">Conecuh County, AL</a></td>
+          <td>$2,480</td>
+          <td>$331</td>
+          <td><strong style="color: #c0392b;">7.49x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>55</td>
+          <td><a href="/counties/bullock-county-al.html">Bullock County, AL</a></td>
+          <td>$2,480</td>
+          <td>$332</td>
+          <td><strong style="color: #c0392b;">7.47x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>56</td>
+          <td><a href="/counties/dixie-county-fl.html">Dixie County, FL</a></td>
+          <td>$6,000</td>
+          <td>$813</td>
+          <td><strong style="color: #c0392b;">7.38x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>57</td>
+          <td><a href="/counties/lowndes-county-al.html">Lowndes County, AL</a></td>
+          <td>$2,480</td>
+          <td>$337</td>
+          <td><strong style="color: #c0392b;">7.36x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>58</td>
+          <td><a href="/counties/hamilton-county-fl.html">Hamilton County, FL</a></td>
+          <td>$6,000</td>
+          <td>$816</td>
+          <td><strong style="color: #c0392b;">7.35x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>59</td>
+          <td><a href="/counties/harding-county-nm.html">Harding County, NM</a></td>
+          <td>$2,200</td>
+          <td>$305</td>
+          <td><strong style="color: #c0392b;">7.21x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>60</td>
+          <td><a href="/counties/cochran-county-tx.html">Cochran County, TX</a></td>
+          <td>$4,200</td>
+          <td>$583</td>
+          <td><strong style="color: #c0392b;">7.2x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>61</td>
+          <td><a href="/counties/tillman-county-ok.html">Tillman County, OK</a></td>
+          <td>$3,500</td>
+          <td>$500</td>
+          <td><strong style="color: #c0392b;">7.0x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>62</td>
+          <td><a href="/counties/fayette-county-al.html">Fayette County, AL</a></td>
+          <td>$2,480</td>
+          <td>$355</td>
+          <td><strong style="color: #c0392b;">6.99x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>63</td>
+          <td><a href="/counties/walker-county-al.html">Walker County, AL</a></td>
+          <td>$2,480</td>
+          <td>$356</td>
+          <td><strong style="color: #c0392b;">6.97x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>64</td>
+          <td><a href="/counties/lafayette-county-fl.html">Lafayette County, FL</a></td>
+          <td>$6,000</td>
+          <td>$863</td>
+          <td><strong style="color: #c0392b;">6.95x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>65</td>
+          <td><a href="/counties/sumter-county-al.html">Sumter County, AL</a></td>
+          <td>$2,480</td>
+          <td>$359</td>
+          <td><strong style="color: #c0392b;">6.91x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>66</td>
+          <td><a href="/counties/lee-county-ar.html">Lee County, AR</a></td>
+          <td>$2,400</td>
+          <td>$349</td>
+          <td><strong style="color: #c0392b;">6.88x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>67</td>
+          <td><a href="/counties/butler-county-al.html">Butler County, AL</a></td>
+          <td>$2,480</td>
+          <td>$362</td>
+          <td><strong style="color: #c0392b;">6.85x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>68</td>
+          <td><a href="/counties/grant-county-ok.html">Grant County, OK</a></td>
+          <td>$3,500</td>
+          <td>$513</td>
+          <td><strong style="color: #c0392b;">6.82x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>69</td>
+          <td><a href="/counties/pickens-county-al.html">Pickens County, AL</a></td>
+          <td>$2,480</td>
+          <td>$364</td>
+          <td><strong style="color: #c0392b;">6.81x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>70</td>
+          <td><a href="/counties/washington-county-al.html">Washington County, AL</a></td>
+          <td>$2,480</td>
+          <td>$365</td>
+          <td><strong style="color: #c0392b;">6.79x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>71</td>
+          <td><a href="/counties/jefferson-county-ok.html">Jefferson County, OK</a></td>
+          <td>$3,500</td>
+          <td>$517</td>
+          <td><strong style="color: #c0392b;">6.77x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>72</td>
+          <td><a href="/counties/pushmataha-county-ok.html">Pushmataha County, OK</a></td>
+          <td>$3,500</td>
+          <td>$518</td>
+          <td><strong style="color: #c0392b;">6.76x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>73</td>
+          <td><a href="/counties/choctaw-county-ok.html">Choctaw County, OK</a></td>
+          <td>$3,500</td>
+          <td>$520</td>
+          <td><strong style="color: #c0392b;">6.73x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>74</td>
+          <td><a href="/counties/crenshaw-county-al.html">Crenshaw County, AL</a></td>
+          <td>$2,480</td>
+          <td>$369</td>
+          <td><strong style="color: #c0392b;">6.72x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>75</td>
+          <td><a href="/counties/mccurtain-county-ok.html">McCurtain County, OK</a></td>
+          <td>$3,500</td>
+          <td>$528</td>
+          <td><strong style="color: #c0392b;">6.63x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>76</td>
+          <td><a href="/counties/prowers-county-co.html">Prowers County, CO</a></td>
+          <td>$3,200</td>
+          <td>$487</td>
+          <td><strong style="color: #c0392b;">6.57x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>77</td>
+          <td><a href="/counties/winston-county-al.html">Winston County, AL</a></td>
+          <td>$2,480</td>
+          <td>$380</td>
+          <td><strong style="color: #c0392b;">6.53x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>78</td>
+          <td><a href="/counties/harmon-county-ok.html">Harmon County, OK</a></td>
+          <td>$3,500</td>
+          <td>$537</td>
+          <td><strong style="color: #c0392b;">6.52x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>79</td>
+          <td><a href="/counties/monroe-county-al.html">Monroe County, AL</a></td>
+          <td>$2,480</td>
+          <td>$381</td>
+          <td><strong style="color: #c0392b;">6.51x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>80</td>
+          <td><a href="/counties/amite-county-ms.html">Amite County, MS</a></td>
+          <td>$2,500</td>
+          <td>$386</td>
+          <td><strong style="color: #c0392b;">6.48x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>81</td>
+          <td><a href="/counties/gadsden-county-fl.html">Gadsden County, FL</a></td>
+          <td>$6,000</td>
+          <td>$927</td>
+          <td><strong style="color: #c0392b;">6.47x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>82</td>
+          <td><a href="/counties/greer-county-ok.html">Greer County, OK</a></td>
+          <td>$3,500</td>
+          <td>$545</td>
+          <td><strong style="color: #c0392b;">6.42x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>83</td>
+          <td><a href="/counties/dallas-county-al.html">Dallas County, AL</a></td>
+          <td>$2,480</td>
+          <td>$392</td>
+          <td><strong style="color: #c0392b;">6.33x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>84</td>
+          <td><a href="/counties/clarke-county-al.html">Clarke County, AL</a></td>
+          <td>$2,480</td>
+          <td>$396</td>
+          <td><strong style="color: #c0392b;">6.26x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>85</td>
+          <td><a href="/counties/kiowa-county-ok.html">Kiowa County, OK</a></td>
+          <td>$3,500</td>
+          <td>$560</td>
+          <td><strong style="color: #c0392b;">6.25x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>86</td>
+          <td><a href="/counties/okfuskee-county-ok.html">Okfuskee County, OK</a></td>
+          <td>$3,500</td>
+          <td>$560</td>
+          <td><strong style="color: #c0392b;">6.25x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>87</td>
+          <td><a href="/counties/covington-county-al.html">Covington County, AL</a></td>
+          <td>$2,480</td>
+          <td>$397</td>
+          <td><strong style="color: #c0392b;">6.25x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>88</td>
+          <td><a href="/counties/madison-county-fl.html">Madison County, FL</a></td>
+          <td>$6,000</td>
+          <td>$965</td>
+          <td><strong style="color: #c0392b;">6.22x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>89</td>
+          <td><a href="/counties/san-augustine-county-tx.html">San Augustine County, TX</a></td>
+          <td>$4,200</td>
+          <td>$676</td>
+          <td><strong style="color: #c0392b;">6.21x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>90</td>
+          <td><a href="/counties/st-martin-parish-la.html">St. Martin Parish, LA</a></td>
+          <td>$4,500</td>
+          <td>$725</td>
+          <td><strong style="color: #c0392b;">6.21x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>91</td>
+          <td><a href="/counties/claiborne-county-ms.html">Claiborne County, MS</a></td>
+          <td>$2,500</td>
+          <td>$403</td>
+          <td><strong style="color: #c0392b;">6.2x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>92</td>
+          <td><a href="/counties/bent-county-co.html">Bent County, CO</a></td>
+          <td>$3,200</td>
+          <td>$517</td>
+          <td><strong style="color: #c0392b;">6.19x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>93</td>
+          <td><a href="/counties/cottle-county-tx.html">Cottle County, TX</a></td>
+          <td>$4,200</td>
+          <td>$680</td>
+          <td><strong style="color: #c0392b;">6.18x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>94</td>
+          <td><a href="/counties/latimer-county-ok.html">Latimer County, OK</a></td>
+          <td>$3,500</td>
+          <td>$567</td>
+          <td><strong style="color: #c0392b;">6.17x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>95</td>
+          <td><a href="/counties/otero-county-co.html">Otero County, CO</a></td>
+          <td>$3,200</td>
+          <td>$520</td>
+          <td><strong style="color: #c0392b;">6.15x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>96</td>
+          <td><a href="/counties/adair-county-ok.html">Adair County, OK</a></td>
+          <td>$3,500</td>
+          <td>$569</td>
+          <td><strong style="color: #c0392b;">6.15x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>97</td>
+          <td><a href="/counties/crowley-county-co.html">Crowley County, CO</a></td>
+          <td>$3,200</td>
+          <td>$521</td>
+          <td><strong style="color: #c0392b;">6.14x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>98</td>
+          <td><a href="/counties/union-county-fl.html">Union County, FL</a></td>
+          <td>$6,000</td>
+          <td>$980</td>
+          <td><strong style="color: #c0392b;">6.12x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>99</td>
+          <td><a href="/counties/hale-county-al.html">Hale County, AL</a></td>
+          <td>$2,480</td>
+          <td>$406</td>
+          <td><strong style="color: #c0392b;">6.11x</strong></td>
+        </tr>
+        
+        <tr>
+          <td>100</td>
+          <td><a href="/counties/marengo-county-al.html">Marengo County, AL</a></td>
+          <td>$2,480</td>
+          <td>$409</td>
+          <td><strong style="color: #c0392b;">6.06x</strong></td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>&copy; 2026 Insurance Data Hub. All rights reserved.</p>
+    
+    <!-- 🆕 법적 고지 페이지 네비게이션 추가 -->
+    <p style="margin: 15px 0; font-size: 1em;">
+      <a href="/about.html" style="color: var(--primary); text-decoration: none; margin: 0 10px; font-weight: bold;">About</a> |
+      <a href="/privacy.html" style="color: var(--primary); text-decoration: none; margin: 0 10px; font-weight: bold;">Privacy Policy</a> |
+      <a href="/terms.html" style="color: var(--primary); text-decoration: none; margin: 0 10px; font-weight: bold;">Terms of Service</a> |
+      <a href="/contact.html" style="color: var(--primary); text-decoration: none; margin: 0 10px; font-weight: bold;">Contact Us</a>
+    </p>
+
+    <p class="disclaimer" style="font-size: 0.8em; color: #888; margin-top: 20px;">
+      Climate data: FEMA National Risk Index (Public Domain).<br>
+      Demographics: U.S. Census Bureau ACS 5-Year Estimates (CC0).<br>
+      Insurance premiums: Statewide averages cited from Triple-I / NAIC reports.
+    </p>
+  </div>
+</footer>
+</body>
+</html>
