@@ -163,7 +163,10 @@
   <!-- 🆕 10년 시계열 차트 -->
   <div class="card" style="margin-top: 20px;">
     <h2>📈 10-Year Trend (2015-2024)</h2>
-    <p style="font-size:0.9em; color:#666;">Historical data from U.S. Census ACS 5-Year Estimates.</p>
+        <p style="font-size:0.9em; color:#666;">
+      Historical data from U.S. Census ACS 5-Year Estimates.<br>
+      <span style="font-size:0.85em; color:#999;">*Note: Extreme statistical outliers in population data have been excluded to maintain chart scale accuracy.</span>
+    </p>
     <div style="position: relative; height: 400px; width: 100%;">
       <canvas id="trendChart"></canvas>
     </div>
@@ -222,11 +225,12 @@
             {
               label: 'Population',
               data: populations,
-              borderColor: '#e67e22', // 오렌지
+              borderColor: '#e67e22', 
               backgroundColor: 'rgba(230, 126, 34, 0.1)',
               yAxisID: 'y1',
               tension: 0.3,
-              borderDash: [5, 5]
+              borderDash: [5, 5],
+              spanGaps: true // 🆕 2020년 필터링된 데이터를 건너뛰고 선을 이어줌
             },
             // 🆕 전국 보험료 지수 데이터셋
             {
