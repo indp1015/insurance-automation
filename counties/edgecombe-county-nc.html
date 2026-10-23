@@ -193,113 +193,131 @@
       <em>*Note: Correlation does not imply causation. Analysis based on ACS 5-Year Estimates (2019-2024).</em>
     </p>
   </div>
-  <script>
+   <script>
     document.addEventListener("DOMContentLoaded", function() {
-      const ctx = document.getElementById('trendChart').getContext('2d');
-      
-      // 파이썬에서 넘겨준 데이터 (Jinja2 tojson 필터 사용)
-      const years = ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"];
-      const homeValues = [82200.0, 82200.0, 84000.0, 85200.0, 85700.0, 88500.0, 92900.0, 106200.0, 116800.0, 125100.0];
-      const populations = [55280.0, 54669.0, 54032.0, 53332.0, 52648.0, 52069.0, 49609.0, 49067.0, 48777.0, 48736.0];
-// 🆕 전국 보험료 지수
-      const premiumIndex = [100.0, 102.2, 102.7, 104.0, 105.6, 107.1, 108.5, 109.7, 114.4, 125.6];
-      // 🆕 집값 데이터 유무 확인
-      const hasHomeData = true;
+      const canvas = document.getElementById('trendChart');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
       if (!ctx) return;
 
-      new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: years,
-          datasets: [
-            {
-              label: 'Median Home Value ($)',
-              data: homeValues,
-              borderColor: '#1a3d5c',
-              backgroundColor: 'rgba(26, 61, 92, 0.1)',
-              yAxisID: 'y',
-              tension: 0.3,
-              fill: true,
-              borderDash: [],  // 🆕 부족 시 점선
-              pointRadius: 3,         // 🆕 부족 시 점 크게(적은 데이터 강조)
-            },
-            {
-              label: 'Population',
-              data: populations,
-              borderColor: '#e67e22', 
-              backgroundColor: 'rgba(230, 126, 34, 0.1)',
-              yAxisID: 'y1',
-              tension: 0.3,
-              borderDash: [5, 5],
-              spanGaps: true // 🆕 2020년 필터링된 데이터를 건너뛰고 선을 이어줌
-            },
-            // 🆕 전국 보험료 지수 데이터셋
-            {
-              label: 'National Premium Index (2015=100)',
-              data: premiumIndex,
-              borderColor: '#8e44ad', // 보라색
-              backgroundColor: 'transparent',
-              borderWidth: 2,
-              pointRadius: 0, // 점은 숨기고 선만 표시
-              yAxisID: 'y2',
-              tension: 0.3
-            }
-          ]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          interaction: { mode: 'index', intersect: false },
-          plugins: {
-            tooltip: {
-              callbacks: {
-                label: function(context) {
-                  let label = context.dataset.label || '';
-                  if (label) label += ': ';
-                  if (context.parsed.y !== null) {
-                    if (context.dataset.yAxisID === 'y') {
-                      label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(context.parsed.y);
-                    } else {
-                      label += new Intl.NumberFormat('en-US').format(context.parsed.y);
+      const years        = ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"];
+      const homeValues   = [82200.0, 82200.0, 84000.0, 85200.0, 85700.0, 88500.0, 92900.0, 106200.0, 116800.0, 125100.0];
+      const populations  = [55280.0, 54669.0, 54032.0, 53332.0, 52648.0, 52069.0, 49609.0, 49067.0, 48777.0, 48736.0];
+      const premiumIndex = [100.0, 102.2, 102.7, 104.0, 105.6, 107.1, 108.5, 109.7, 114.4, 125.6];
+      const hasHomeData  = true;
+
+      // ✅ 데이터셋 동적 조립 — null 데이터셋은 아예 전달하지 않음
+      const datasets = [];
+
+      if (hasHomeData) {
+        datasets.push({
+          label: 'Median Home Value ($)',
+          data: homeValues,
+          borderColor: '#1a3d5c',
+          backgroundColor: 'rgba(26, 61, 92, 0.1)',
+          yAxisID: 'y',
+          tension: 0.3,
+          fill: true
+        });
+      }
+
+      if (populations.some(v => v !== null)) {
+        datasets.push({
+          label: 'Population',
+          data: populations,
+          borderColor: '#e67e22',
+          backgroundColor: 'rgba(230, 126, 34, 0.1)',
+          yAxisID: 'y1',
+          tension: 0.3,
+          borderDash: [5, 5],
+          spanGaps: true
+        });
+      }
+
+      if (premiumIndex.some(v => v !== null)) {
+        datasets.push({
+          label: 'National Premium Index (2015=100)',
+          data: premiumIndex,
+          borderColor: '#8e44ad',
+          backgroundColor: 'transparent',
+          borderWidth: 2,
+          pointRadius: 0,
+          yAxisID: 'y2',
+          tension: 0.3
+        });
+      }
+
+      // ✅ 모든 데이터가 없으면 캔버스 대신 안내 메시지
+      if (datasets.length === 0) {
+        canvas.parentElement.innerHTML =
+          '<p style="text-align:center; color:#888; padding:80px 20px;">No time-series data available for this county.</p>';
+        return;
+      }
+
+      // ✅ 스케일도 조건부 조립
+      const scales = {};
+      if (hasHomeData) {
+        scales.y = {
+          type: 'linear',
+          display: true,
+          position: 'left',
+          title: { display: true, text: 'Home Value ($)', color: '#1a3d5c' },
+          ticks: {
+            callback: function(v) { return '$' + (v / 1000).toFixed(0) + 'k'; }
+          }
+        };
+      }
+      scales.y1 = {
+        type: 'linear',
+        display: true,
+        position: 'right',
+        title: { display: true, text: 'Population', color: '#e67e22' },
+        grid: { drawOnChartArea: false }
+      };
+      scales.y2 = {
+        type: 'linear',
+        display: true,
+        position: 'right',
+        title: { display: true, text: 'Premium Index', color: '#8e44ad' },
+        grid: { drawOnChartArea: false },
+        ticks: { color: '#8e44ad' }
+      };
+
+      // ✅ try/catch로 실패 시 콘솔에 원인 노출
+      try {
+        new Chart(ctx, {
+          type: 'line',
+          data: { labels: years, datasets: datasets },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: { mode: 'index', intersect: false },
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  label: function(context) {
+                    let label = context.dataset.label || '';
+                    if (label) label += ': ';
+                    if (context.parsed.y !== null) {
+                      if (context.dataset.yAxisID === 'y') {
+                        label += new Intl.NumberFormat('en-US', {
+                          style: 'currency', currency: 'USD', maximumFractionDigits: 0
+                        }).format(context.parsed.y);
+                      } else {
+                        label += new Intl.NumberFormat('en-US').format(context.parsed.y);
+                      }
                     }
+                    return label;
                   }
-                  return label;
                 }
               }
-            }
-          },
-          scales: {
-            y: {
-              type: 'linear',
-              display: hasHomeData, // 🆕 집값 데이터가 없으면 축을 숨김
-              position: 'left',
-              title: { display: true, text: 'Home Value ($)', color: '#1a3d5c' },
-              ticks: {
-                callback: function(value) { return '$' + (value / 1000).toFixed(0) + 'k'; }
-              }
             },
-            y1: {
-              type: 'linear',
-              display: true,
-              position: 'right',
-              title: { display: true, text: 'Population', color: '#e67e22' },
-              grid: { drawOnChartArea: false }
-            },
-            // 🆕 y2 축 (전국 보험료 지수)
-            y2: {
-              type: 'linear',
-              display: true,
-              position: 'right',
-              title: { display: true, text: 'Premium Index', color: '#8e44ad' },
-              grid: { drawOnChartArea: false },
-              ticks: {
-                color: '#8e44ad',
-                callback: function(value) { return value; }
-              }
-            }
+            scales: scales
           }
-        }
-      });
+        });
+      } catch (err) {
+        console.error('[trendChart] Chart.js rendering failed:', err);
+      }
     });
   </script>
 
