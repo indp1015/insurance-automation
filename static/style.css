@@ -193,3 +193,19 @@ nav a:hover {
     font-size: 1.2em;
   }
 }
+/* ==========================================
+   🆕 계산기 입력 폼 모바일 대응
+   ========================================== */
+.input-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+@media (max-width: 600px) {
+  .input-row {
+    grid-template-columns: 1fr; /* 모바일에서는 1열로 배치 */
+    gap: 10px;
+  }
+}
