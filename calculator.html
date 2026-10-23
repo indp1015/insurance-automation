@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Estimated Home Insurance & Property Tax Calculator | Insurance Data Hub</title>
-  <meta name="description" content="Calculate the estimated annual insurance premium and property tax for any U.S. county based on actual data.">
+  <title>True Cost of Homeownership Calculator | Insurance Data Hub</title>
+  <meta name="description" content="Calculate your total monthly housing cost, including mortgage, property tax, and insurance, based on actual county data.">
   
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%231a3d5c'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='white' font-family='Arial,sans-serif' font-weight='bold'%3EI%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="/static/style.css">
@@ -32,14 +32,14 @@
 <main class="container">
 
 <div class="hero">
-  <h1>Estimated Cost Calculator</h1>
-  <p>Discover the true cost of homeownership. Enter a home price and select a county to see the estimated annual insurance and property taxes.</p>
+  <h1>True Cost of Homeownership</h1>
+  <p>Don't just look at the listing price. See your full monthly payment (PITI) including real insurance and tax estimates.</p>
 </div>
 
-<div class="interactive-grid">
+<div class="interactive-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
   <!-- 입력 영역 -->
   <div class="card">
-    <h2>1. Enter Details</h2>
+    <h2>1. Financial Details</h2>
     
     <div style="margin-bottom: 15px;">
       <label style="font-weight: bold; display: block; margin-bottom: 5px;">Select County</label>
@@ -6310,56 +6310,97 @@
       </datalist>
     </div>
 
-    <div style="margin-bottom: 20px;">
-      <label style="font-weight: bold; display: block; margin-bottom: 5px;">Home Price ($)</label>
-      <input type="number" id="homePrice" value="400000" min="10000" step="10000"
-             style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 1em;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+      <div>
+        <label style="font-weight: bold; display: block; margin-bottom: 5px;">Home Price ($)</label>
+        <input type="number" id="homePrice" value="400000" min="10000" step="10000"
+               style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 1em;">
+      </div>
+      <div>
+        <label style="font-weight: bold; display: block; margin-bottom: 5px;">Down Payment (%)</label>
+        <input type="number" id="downPayment" value="20" min="0" max="100" step="1"
+               style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 1em;">
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
+      <div>
+        <label style="font-weight: bold; display: block; margin-bottom: 5px;">Interest Rate (%)</label>
+        <input type="number" id="interestRate" value="7.0" min="0.1" max="20" step="0.1"
+               style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 1em;">
+      </div>
+      <div>
+        <label style="font-weight: bold; display: block; margin-bottom: 5px;">Insurance Deductible</label>
+        <select id="deductible" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 1em; background: #fff;">
+          <option value="1000">$1,000</option>
+          <option value="2000">$2,000</option>
+          <option value="5000">$5,000 (Lower Premium)</option>
+        </select>
+      </div>
     </div>
 
     <button onclick="calculateCosts()" 
             style="width: 100%; padding: 12px; background: var(--accent); color: white; border: none; border-radius: 6px; font-size: 1.1em; font-weight: bold; cursor: pointer;">
-      Calculate Estimated Costs
+      Calculate Monthly Cost
     </button>
   </div>
 
   <!-- 결과 영역 -->
   <div class="card" id="resultCard" style="display: none; background: #f0f4f8; border-top: 5px solid var(--primary);">
-    <h2>2. Your Estimate</h2>
+    <h2>2. Monthly Breakdown</h2>
     
-    <div style="border-bottom: 1px dashed #ccc; padding-bottom: 10px; margin-bottom: 10px;">
+    <div style="border-bottom: 1px dashed #ccc; padding-bottom: 10px; margin-bottom: 15px;">
       <p style="margin: 0; color: #666; font-size: 0.9em;">County Selected</p>
       <h3 id="resCountyName" style="margin: 5px 0 0 0; color: var(--primary);">-</h3>
     </div>
 
-    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-      <span>Estimated Property Tax:</span>
+    <!-- 🆕 경고창 (보험료 > 재산세일 때) -->
+    <div id="warningBox" style="display: none; background: #fff3cd; color: #856404; padding: 10px; border-radius: 6px; margin-bottom: 15px; font-size: 0.9em; border-left: 4px solid #ffc107;">
+      ⚠️ <strong>Warning:</strong> Insurance costs are higher than property taxes in this county!
+    </div>
+
+    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+      <span>Mortgage (P&I):</span>
+      <strong id="resMortgage">$0</strong>
+    </div>
+    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+      <span>Property Tax:</span>
       <strong id="resTax" style="color: #2980b9;">$0</strong>
     </div>
     <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-      <span>Estimated Insurance Premium:</span>
+      <span>Home Insurance:</span>
       <strong id="resInsurance" style="color: #c0392b;">$0</strong>
     </div>
     
-    <div style="display: flex; justify-content: space-between; border-top: 2px solid #ccc; padding-top: 10px;">
-      <span style="font-size: 1.1em; font-weight: bold;">Total Annual Cost:</span>
-      <strong id="resTotal" style="font-size: 1.3em; color: var(--accent);">$0</strong>
+    <div style="display: flex; justify-content: space-between; border-top: 2px solid #ccc; padding-top: 10px; margin-bottom: 20px;">
+      <span style="font-size: 1.1em; font-weight: bold;">Total Monthly (PITI):</span>
+      <strong id="resTotal" style="font-size: 1.5em; color: var(--accent);">$0</strong>
+    </div>
+
+    <!-- 🆕 차트 시각화 -->
+    <div style="position: relative; height: 200px; width: 100%;">
+      <canvas id="costChart"></canvas>
     </div>
     
-    <p style="font-size: 0.75em; color: #888; margin-top: 20px;">
-      *Disclaimer: This is an estimate based on county averages. Actual insurance premiums vary by property age, construction, and carrier. Property tax is calculated using the county's effective tax rate.
+    <p style="font-size: 0.75em; color: #888; margin-top: 15px;">
+      *Estimates only. Actual insurance premiums vary by property characteristics and carrier. Taxes are based on county effective rates.
     </p>
   </div>
 </div>
 
 <script>
+let chartInstance = null;
+
 function calculateCosts() {
   const input = document.getElementById('countyInput').value;
   const homePrice = parseFloat(document.getElementById('homePrice').value) || 0;
+  const downPct = parseFloat(document.getElementById('downPayment').value) || 0;
+  const rate = parseFloat(document.getElementById('interestRate').value) || 0;
+  const deductible = parseFloat(document.getElementById('deductible').value) || 1000;
   
   const options = document.getElementById('countyList').options;
   let selectedOption = null;
   
-  // 입력한 값과 일치하는 카운티 찾기
   for (let i = 0; i < options.length; i++) {
     if (options[i].value === input) {
       selectedOption = options[i];
@@ -6372,26 +6413,78 @@ function calculateCosts() {
     return;
   }
 
+  // 데이터 추출
   let taxRate = parseFloat(selectedOption.getAttribute('data-tax')) || 0;
-  const premium = parseFloat(selectedOption.getAttribute('data-premium')) || 0;
+  let basePremium = parseFloat(selectedOption.getAttribute('data-premium')) || 0;
+  if (taxRate > 0.1) taxRate = taxRate / 100; // % -> 소수점 변환
 
-  // 🆕 세율이 0.1보다 크면 % 형태(예: 0.63)이므로 소수점(0.0063)으로 변환
-  if (taxRate > 0.1) {
-    taxRate = taxRate / 100;
+  // 🆕 보험료 자기부담금 할인 로직 (Deductible이 높을수록 보험료 낮아짐)
+  let premiumMultiplier = 1.0;
+  if (deductible === 2000) premiumMultiplier = 0.92;
+  if (deductible === 5000) premiumMultiplier = 0.82;
+  const annualPremium = basePremium * premiumMultiplier;
+
+  // 월별 계산
+  const loanAmount = homePrice * (1 - downPct / 100);
+  const monthlyRate = (rate / 100) / 12;
+  const numPayments = 30 * 12;
+  let pi = 0;
+  if (loanAmount > 0 && monthlyRate > 0) {
+    pi = loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) / (Math.pow(1 + monthlyRate, numPayments) - 1);
+  } else if (loanAmount > 0) {
+    pi = loanAmount / numPayments;
   }
 
-  // 계산
-  const estTax = homePrice * taxRate;
-  const estInsurance = premium; // 주택 가격과 무관하게 카운티 평균 보험료 적용
-  const total = estTax + estInsurance;
+  const annualTax = homePrice * taxRate;
+  const monthlyTax = annualTax / 12;
+  const monthlyIns = annualPremium / 12;
+  const totalMonthly = pi + monthlyTax + monthlyIns;
 
   // 결과 표시
   document.getElementById('resCountyName').textContent = input;
-  document.getElementById('resTax').textContent = '$' + Math.round(estTax).toLocaleString();
-  document.getElementById('resInsurance').textContent = '$' + Math.round(estInsurance).toLocaleString();
-  document.getElementById('resTotal').textContent = '$' + Math.round(total).toLocaleString();
+  document.getElementById('resMortgage').textContent = '$' + Math.round(pi).toLocaleString();
+  document.getElementById('resTax').textContent = '$' + Math.round(monthlyTax).toLocaleString();
+  document.getElementById('resInsurance').textContent = '$' + Math.round(monthlyIns).toLocaleString();
+  document.getElementById('resTotal').textContent = '$' + Math.round(totalMonthly).toLocaleString();
+  
+  // 🆕 경고창 표시
+  const warningBox = document.getElementById('warningBox');
+  if (annualPremium > annualTax) {
+    warningBox.style.display = 'block';
+  } else {
+    warningBox.style.display = 'none';
+  }
   
   document.getElementById('resultCard').style.display = 'block';
+
+  // 🆕 차트 렌더링 (Doughnut Chart)
+  if (chartInstance) chartInstance.destroy(); // 기존 차트 삭제
+  const ctx = document.getElementById('costChart').getContext('2d');
+  chartInstance = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Mortgage (P&I)', 'Property Tax', 'Insurance'],
+      datasets: [{
+        data: [Math.round(pi), Math.round(monthlyTax), Math.round(monthlyIns)],
+        backgroundColor: ['#1a3d5c', '#2980b9', '#c0392b'],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom' },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return context.label + ': $' + context.parsed.toLocaleString();
+            }
+          }
+        }
+      }
+    }
+  });
 }
 </script>
 
