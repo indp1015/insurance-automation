@@ -52,7 +52,9 @@
 </div>
 
 <!-- 🆕 2단 차트 영역 (Top 10 vs Bottom 10) -->
-<div class="interactive-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+<!-- 🆕 2단 차트 영역 (Top 10 vs Bottom 10) -->
+<!-- style 속성에서 grid-template-columns: 1fr 1fr 을 제거하여 모바일에서는 1열로 나오게 합니다 -->
+<div class="interactive-grid" style="margin-bottom: 20px;">
   
   <!-- Top 10 차트 -->
   <div class="card">
@@ -127,7 +129,16 @@ function renderChart(canvasId, data, color) {
     options: {
       responsive: true, maintainAspectRatio: false, indexAxis: 'y',
       plugins: { legend: { display: false } }, // 공간 절약을 위해 범례 숨김
-      scales: { x: { beginAtZero: true, ticks: { callback: v => '$' + v } } }
+            scales: { 
+        x: { 
+          beginAtZero: true, 
+          ticks: { 
+            callback: v => '$' + v,
+            autoSkip: true,      // 🆕 글씨가 겹치면 자동으로 생략
+            maxTicksLimit: 5     // 🆕 최대 5개까지만 표시
+          } 
+        } 
+      }
     }
   });
 }
