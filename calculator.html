@@ -6372,8 +6372,13 @@ function calculateCosts() {
     return;
   }
 
-  const taxRate = parseFloat(selectedOption.getAttribute('data-tax')) || 0;
+  let taxRate = parseFloat(selectedOption.getAttribute('data-tax')) || 0;
   const premium = parseFloat(selectedOption.getAttribute('data-premium')) || 0;
+
+  // 🆕 세율이 0.1보다 크면 % 형태(예: 0.63)이므로 소수점(0.0063)으로 변환
+  if (taxRate > 0.1) {
+    taxRate = taxRate / 100;
+  }
 
   // 계산
   const estTax = homePrice * taxRate;
