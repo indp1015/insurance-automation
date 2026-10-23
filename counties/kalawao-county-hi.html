@@ -160,10 +160,20 @@
   <!-- 🆕 10년 시계열 차트 -->
   <div class="card" style="margin-top: 20px;">
     <h2>📈 10-Year Trend (2015-2024)</h2>
-        <p style="font-size:0.9em; color:#666;">
-      Historical data from U.S. Census ACS 5-Year Estimates.<br>
-      <span style="font-size:0.85em; color:#999;">*Note: Extreme statistical outliers in population data have been excluded to maintain chart scale accuracy.</span>
+    <p style="font-size:0.9em; color:#666;">
+      Historical data from U.S. Census ACS 5-Year Estimates.
     </p>
+    
+    <p style="font-size:0.85em; color:#856404; background:#fff3cd; padding:8px 10px; border-radius:4px; border-left:3px solid #ffc107;">
+      ⚠️ <strong>No home value data available</strong> for this county in ACS 5-Year Estimates (typically suppressed for very small populations).
+    </p>
+    
+    
+    <p style="font-size:0.85em; color:#666;">
+      <em>*Population outlier(s) removed for chart scale accuracy (1 year(s)).</em>
+    </p>
+    
+    
     <div style="position: relative; height: 400px; width: 100%;">
       <canvas id="trendChart"></canvas>
     </div>
@@ -183,9 +193,9 @@
       
     </p>
     <p style="font-size: 0.85em; color: #666; margin-top: 10px;">
-          
+    
     <p style="font-size: 0.85em; color: #856404; background: #fff3cd; padding: 8px 10px; border-radius: 4px; margin-top: 10px; border-left: 3px solid #ffc107;">
-      ⚠️ <strong>Data Reliability Notice:</strong> This county has a very small population (67.0), so ACS 5-year estimates can show large year-to-year swings. Use with caution.
+      ⚠️ <strong>Data Reliability Notice:</strong> This county has a very small population (67.0), so ACS 5-year estimates can show large year-to-year swings <strong>including apparent population declines that may not reflect true migration</strong>. Use with caution.
     </p>
     
       <em>*Note: Correlation does not imply causation. Analysis based on ACS 5-Year Estimates (2019-2024).</em>
@@ -211,13 +221,15 @@
           labels: years,
           datasets: [
             {
-              label: 'Median Home Value ($)',
+              label: 'Median Home Value ($)' (partial),
               data: homeValues,
-              borderColor: '#1a3d5c', // 네이비
+              borderColor: '#1a3d5c',
               backgroundColor: 'rgba(26, 61, 92, 0.1)',
               yAxisID: 'y',
               tension: 0.3,
-              fill: true
+              fill: true,
+              borderDash: [6, 4],  // 🆕 부족 시 점선
+              pointRadius: 5,         // 🆕 부족 시 점 크게(적은 데이터 강조)
             },
             {
               label: 'Population',
