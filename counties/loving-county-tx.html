@@ -185,6 +185,11 @@
       
     </p>
     <p style="font-size: 0.85em; color: #666; margin-top: 10px;">
+          
+    <p style="font-size: 0.85em; color: #856404; background: #fff3cd; padding: 8px 10px; border-radius: 4px; margin-top: 10px; border-left: 3px solid #ffc107;">
+      ⚠️ <strong>Data Reliability Notice:</strong> This county has a very small population (33.0), so ACS 5-year estimates can show large year-to-year swings. Use with caution.
+    </p>
+    
       <em>*Note: Correlation does not imply causation. Analysis based on ACS 5-Year Estimates (2019-2024).</em>
     </p>
   </div>
@@ -194,12 +199,12 @@
       
       // 파이썬에서 넘겨준 데이터 (Jinja2 tojson 필터 사용)
       const years = ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"];
-      const homeValues = [92500.0, null, null, null, null, null, null, 218800.0, null, null];
+      const homeValues = [null, null, null, null, null, null, null, null, null, null];
       const populations = [117.0, 76.0, 74.0, 102.0, 98.0, 117.0, 83.0, 96.0, 54.0, 33.0];
 // 🆕 전국 보험료 지수
       const premiumIndex = [100.0, 102.2, 102.7, 104.0, 105.6, 107.1, 108.5, 109.7, 114.4, 125.6];
       // 🆕 집값 데이터 유무 확인
-      const hasHomeData = true;
+      const hasHomeData = false;
       if (!ctx) return;
 
       new Chart(ctx, {
