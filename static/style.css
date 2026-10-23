@@ -213,9 +213,23 @@ nav a:hover {
    🆕 계산기 입력 폼 반응형 레이아웃
    ========================================== */
 .input-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* PC 화면: 2열 배치 */
-  gap: 15px;
+  display: flex;
+  gap: 24px; /* 🆕 간격을 24px로 넓혀서 답답함 해소 */
+  margin-bottom: 20px;
+}
+
+/* 각 입력창 컨테이너가 동일한 비율로 나뉘도록 설정 */
+.input-row > div {
+  flex: 1;
+  min-width: 0; /* 텍스트가 길어져도 영역을 넘지 않도록 방지 */
+}
+
+/* 모바일 화면(600px 이하)에서는 세로로 1열 배치 */
+@media (max-width: 600px) {
+  .input-row {
+    flex-direction: column;
+    gap: 15px;
+  }
 }
 
 /* 모바일 화면(600px 이하)에서는 1열로 배치 */
