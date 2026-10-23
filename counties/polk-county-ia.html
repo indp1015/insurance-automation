@@ -171,16 +171,15 @@
   <!-- 🆕 Layer 3: 자동 분석 내러티브 (Causal Chain) -->
   <div class="card" style="background: #f0f4f8; border-left: 5px solid var(--primary); margin-top: 20px;">
     <h3>💡 Market Analysis</h3>
-        <p style="font-size: 1.05em; line-height: 1.7;">
+    <p style="font-size: 1.05em; line-height: 1.7;">
       
-        Over the past 5 years, 
         
-          home values in <strong>Polk County</strong> have grown at an average annual rate of <strong>7.82%</strong>.
+          Over the past 5 years, home values in <strong>Polk County</strong> have grown at an average annual rate of <strong>7.82%</strong>.
         
         
         
           During the same period, 
-          the population has 
+          The population has 
           
             <strong style="color: #27ae60;">increased by 4.91%</strong>, suggesting strong demand and resilience.
           
@@ -201,7 +200,8 @@
       const populations = [452369.0, 459159.0, 467235.0, 474274.0, 479612.0, 485418.0, 488871.0, 493378.0, 497441.0, 503175.0];
 // 🆕 전국 보험료 지수
       const premiumIndex = [100.0, 102.2, 102.7, 104.0, 105.6, 107.1, 108.5, 109.7, 114.4, 125.6];
-
+      // 🆕 집값 데이터 유무 확인
+      const hasHomeData = true;
       if (!ctx) return;
 
       new Chart(ctx, {
@@ -265,7 +265,7 @@
           scales: {
             y: {
               type: 'linear',
-              display: true,
+              display: hasHomeData, // 🆕 집값 데이터가 없으면 축을 숨김
               position: 'left',
               title: { display: true, text: 'Home Value ($)', color: '#1a3d5c' },
               ticks: {

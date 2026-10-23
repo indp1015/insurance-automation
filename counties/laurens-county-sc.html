@@ -171,16 +171,15 @@
   <!-- 🆕 Layer 3: 자동 분석 내러티브 (Causal Chain) -->
   <div class="card" style="background: #f0f4f8; border-left: 5px solid var(--primary); margin-top: 20px;">
     <h3>💡 Market Analysis</h3>
-        <p style="font-size: 1.05em; line-height: 1.7;">
+    <p style="font-size: 1.05em; line-height: 1.7;">
       
-        Over the past 5 years, 
         
-          home values in <strong>Laurens County</strong> have grown at an average annual rate of <strong>11.01%</strong>.
+          Over the past 5 years, home values in <strong>Laurens County</strong> have grown at an average annual rate of <strong>11.01%</strong>.
         
         
         
           During the same period, 
-          the population has 
+          The population has 
           
             <strong style="color: #27ae60;">increased by 2.72%</strong>, suggesting strong demand and resilience.
           
@@ -201,7 +200,8 @@
       const populations = [66389.0, 66442.0, 66508.0, 66710.0, 66846.0, 66990.0, 67148.0, 67456.0, 67904.0, 68666.0];
 // 🆕 전국 보험료 지수
       const premiumIndex = [100.0, 102.2, 102.7, 104.0, 105.6, 107.1, 108.5, 109.7, 114.4, 125.6];
-
+      // 🆕 집값 데이터 유무 확인
+      const hasHomeData = true;
       if (!ctx) return;
 
       new Chart(ctx, {
@@ -265,7 +265,7 @@
           scales: {
             y: {
               type: 'linear',
-              display: true,
+              display: hasHomeData, // 🆕 집값 데이터가 없으면 축을 숨김
               position: 'left',
               title: { display: true, text: 'Home Value ($)', color: '#1a3d5c' },
               ticks: {

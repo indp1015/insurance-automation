@@ -171,16 +171,15 @@
   <!-- 🆕 Layer 3: 자동 분석 내러티브 (Causal Chain) -->
   <div class="card" style="background: #f0f4f8; border-left: 5px solid var(--primary); margin-top: 20px;">
     <h3>💡 Market Analysis</h3>
-        <p style="font-size: 1.05em; line-height: 1.7;">
+    <p style="font-size: 1.05em; line-height: 1.7;">
       
-        Over the past 5 years, 
         
-          home values in <strong>Washington County</strong> have grown at an average annual rate of <strong>8.84%</strong>.
+          Over the past 5 years, home values in <strong>Washington County</strong> have grown at an average annual rate of <strong>8.84%</strong>.
         
         
         
           During the same period, 
-          the population has 
+          The population has 
           
             <strong style="color: #27ae60;">increased by 6.62%</strong>, suggesting strong demand and resilience.
           
@@ -201,7 +200,8 @@
       const populations = [125317.0, 126044.0, 126437.0, 127055.0, 127805.0, 128874.0, 132067.0, 133282.0, 134693.0, 136261.0];
 // 🆕 전국 보험료 지수
       const premiumIndex = [100.0, 102.2, 102.7, 104.0, 105.6, 107.1, 108.5, 109.7, 114.4, 125.6];
-
+      // 🆕 집값 데이터 유무 확인
+      const hasHomeData = true;
       if (!ctx) return;
 
       new Chart(ctx, {
@@ -265,7 +265,7 @@
           scales: {
             y: {
               type: 'linear',
-              display: true,
+              display: hasHomeData, // 🆕 집값 데이터가 없으면 축을 숨김
               position: 'left',
               title: { display: true, text: 'Home Value ($)', color: '#1a3d5c' },
               ticks: {

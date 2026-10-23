@@ -169,16 +169,15 @@
   <!-- 🆕 Layer 3: 자동 분석 내러티브 (Causal Chain) -->
   <div class="card" style="background: #f0f4f8; border-left: 5px solid var(--primary); margin-top: 20px;">
     <h3>💡 Market Analysis</h3>
-        <p style="font-size: 1.05em; line-height: 1.7;">
+    <p style="font-size: 1.05em; line-height: 1.7;">
       
-        Over the past 5 years, 
         
-          home value data is not available.
+          Over the past 5 years, home value data is not available for this county.
         
         
         
           
-          the population has 
+          The population has 
           
             <strong style="color: #c0392b;">decreased by 74.47%</strong>. 
             This combination may indicate housing affordability pressures or climate-related out-migration.
@@ -197,10 +196,11 @@
       // 파이썬에서 넘겨준 데이터 (Jinja2 tojson 필터 사용)
       const years = ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"];
       const homeValues = [null, null, 21300.0, 31400.0, 24400.0, null, null, null, null, null];
-      const populations = [565.0, 558.0, 564.0, 595.0, 568.0, 391.0, 169.0, 116.0, 52.0, 145.0];
+      const populations = [565.0, 558.0, 564.0, 595.0, 568.0, 391.0, 169.0, 116.0, null, 145.0];
 // 🆕 전국 보험료 지수
       const premiumIndex = [100.0, 102.2, 102.7, 104.0, 105.6, 107.1, 108.5, 109.7, 114.4, 125.6];
-
+      // 🆕 집값 데이터 유무 확인
+      const hasHomeData = true;
       if (!ctx) return;
 
       new Chart(ctx, {
@@ -264,7 +264,7 @@
           scales: {
             y: {
               type: 'linear',
-              display: true,
+              display: hasHomeData, // 🆕 집값 데이터가 없으면 축을 숨김
               position: 'left',
               title: { display: true, text: 'Home Value ($)', color: '#1a3d5c' },
               ticks: {

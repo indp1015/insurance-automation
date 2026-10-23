@@ -171,16 +171,15 @@
   <!-- 🆕 Layer 3: 자동 분석 내러티브 (Causal Chain) -->
   <div class="card" style="background: #f0f4f8; border-left: 5px solid var(--primary); margin-top: 20px;">
     <h3>💡 Market Analysis</h3>
-        <p style="font-size: 1.05em; line-height: 1.7;">
+    <p style="font-size: 1.05em; line-height: 1.7;">
       
-        Over the past 5 years, 
         
-          home values in <strong>Saguache County</strong> have grown at an average annual rate of <strong>6.84%</strong>.
+          Over the past 5 years, home values in <strong>Saguache County</strong> have grown at an average annual rate of <strong>6.84%</strong>.
         
         
         
           During the same period, 
-          the population has 
+          The population has 
           
             <strong style="color: #c0392b;">decreased by 0.18%</strong>. 
             This combination may indicate housing affordability pressures or climate-related out-migration.
@@ -202,7 +201,8 @@
       const populations = [6238.0, 6255.0, 6338.0, 6468.0, 6592.0, 6730.0, 6369.0, 6454.0, 6511.0, 6580.0];
 // 🆕 전국 보험료 지수
       const premiumIndex = [100.0, 102.2, 102.7, 104.0, 105.6, 107.1, 108.5, 109.7, 114.4, 125.6];
-
+      // 🆕 집값 데이터 유무 확인
+      const hasHomeData = true;
       if (!ctx) return;
 
       new Chart(ctx, {
@@ -266,7 +266,7 @@
           scales: {
             y: {
               type: 'linear',
-              display: true,
+              display: hasHomeData, // 🆕 집값 데이터가 없으면 축을 숨김
               position: 'left',
               title: { display: true, text: 'Home Value ($)', color: '#1a3d5c' },
               ticks: {
