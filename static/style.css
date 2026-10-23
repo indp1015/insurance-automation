@@ -22,7 +22,7 @@ body {
   padding: 0 20px;
 }
 
-/* Header */
+/* ===== Header ===== */
 .site-header {
   background: #fff;
   border-bottom: 1px solid var(--border);
@@ -59,7 +59,7 @@ nav a:hover {
   color: var(--primary);
 }
 
-/* Cards & Layout */
+/* ===== Cards & Layout ===== */
 .hero {
   text-align: center;
   margin-bottom: 40px;
@@ -82,7 +82,7 @@ nav a:hover {
   margin-bottom: 20px;
 }
 
-/* Tables */
+/* ===== Tables ===== */
 .data-table {
   width: 100%;
   border-collapse: collapse;
@@ -109,7 +109,7 @@ nav a:hover {
   text-decoration: underline;
 }
 
-/* Score Badges */
+/* ===== Score Badges ===== */
 .score-badge {
   display: inline-block;
   padding: 4px 8px;
@@ -119,10 +119,10 @@ nav a:hover {
   font-size: 0.85em;
 }
 .score-high { background: #27ae60; }
-.score-mid { background: #f39c12; }
-.score-low { background: #c0392b; }
+.score-mid  { background: #f39c12; }
+.score-low  { background: #c0392b; }
 
-/* Footer */
+/* ===== Footer ===== */
 .site-footer {
   text-align: center;
   margin-top: 60px;
@@ -136,14 +136,12 @@ nav a:hover {
   font-size: 0.9em;
   line-height: 1.5;
 }
+
 /* ==========================================
-   🆕 모바일 화면 최적화 (Mobile Responsive)
+   모바일 화면 최적화 (Mobile Responsive)
    ========================================== */
 @media (max-width: 768px) {
-  /* 1. 상단 네비게이션 바 정리 */
-  .site-header .container {
-    padding: 10px 15px;
-  }
+  .site-header .container { padding: 10px 15px; }
   .header-top {
     flex-direction: column;
     gap: 10px;
@@ -164,84 +162,66 @@ nav a:hover {
     margin: 0;
   }
 
-  /* 2. 표(Table) 레이아웃 개선 (스크롤 및 글자 크기) */
-  .data-table {
-    font-size: 0.8em; /* 글자 크기 축소 */
-  }
-  .data-table th, .data-table td {
-    padding: 8px 6px; /* 여백 축소 */
-    white-space: nowrap; /* 글자 강제 줄바꿈 방지 */
-  }
-  
-  /* 표를 감싸는 div가 가로 스크롤을 지원하도록 설정 */
-  .card > div[style*="overflow-x:auto"] {
-    -webkit-overflow-scrolling: touch;
+  .data-table { font-size: 0.8em; }
+  .data-table th,
+  .data-table td {
+    padding: 8px 6px;
+    white-space: nowrap;
   }
 
-  /* 3. 인사이트 카드 및 차트 영역 여백 조정 */
-  .hero h1 {
-    font-size: 1.6em;
-  }
-  .interactive-grid {
-    display: flex;
-    flex-direction: column; /* 차트를 세로로 1열 배치 */
-  }
-  .card {
-    padding: 15px;
-  }
-  .card h2 {
-    font-size: 1.2em;
-  }
-}
-/* ==========================================
-   🆕 계산기 입력 폼 모바일 대응
-   ========================================== */
-.input-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-bottom: 15px;
+  .hero h1 { font-size: 1.6em; }
+  .interactive-grid { display: flex; flex-direction: column; }
+  .card { padding: 15px; }
+  .card h2 { font-size: 1.2em; }
 }
 
-@media (max-width: 600px) {
-  .input-row {
-    grid-template-columns: 1fr; /* 모바일에서는 1열로 배치 */
-    gap: 10px;
-  }
-}
 /* ==========================================
-   🆕 계산기 입력 폼 반응형 레이아웃
+   ✅ 계산기 입력 폼 (통합 정의)
+   - 기존 파일의 중복 .input-row 정의 4개를 여기 1개로 통합
+   - flex + min-width:0 + box-sizing 으로 모바일 겹침/라인 어긋남 원천 차단
    ========================================== */
 .input-row {
   display: flex;
-  gap: 24px; /* 🆕 간격을 24px로 넓혀서 답답함 해소 */
+  flex-wrap: wrap;
+  gap: 24px;
   margin-bottom: 20px;
 }
 
-/* 각 입력창 컨테이너가 동일한 비율로 나뉘도록 설정 */
-.input-row > div {
-  flex: 1;
-  min-width: 0; /* 텍스트가 길어져도 영역을 넘지 않도록 방지 */
+/* 각 입력 그룹이 동일 비율을 갖고, 콘텐츠가 넘칠 때 축소되도록 */
+.input-row > * {
+  flex: 1 1 0;
+  min-width: 0;          /* flex 자식의 min-width:auto 기본값 차단 */
 }
 
-/* 모바일 화면(600px 이하)에서는 세로로 1열 배치 */
+/* 입력창 자체가 부모 폭을 넘지 않도록 통일 */
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="search"],
+select,
+textarea {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1em;
+  font-family: inherit;
+}
+select { background: #fff; }
+
+/* 라벨은 일관되게 블록 + 하단 여백 */
+.input-row label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* 모바일(≤600px): 1열 스택 */
 @media (max-width: 600px) {
   .input-row {
     flex-direction: column;
     gap: 15px;
   }
-}
-
-/* 모바일 화면(600px 이하)에서는 1열로 배치 */
-@media (max-width: 600px) {
-  .input-row {
-    grid-template-columns: 1fr;
-  }
-}
-/* 🆕 모든 입력창(input, select)의 크기 계산 방식을 통일 */
-input[type="text"], 
-input[type="number"], 
-select {
-  box-sizing: border-box;
-  width: 100%;
 }
