@@ -136,3 +136,60 @@ nav a:hover {
   font-size: 0.9em;
   line-height: 1.5;
 }
+/* ==========================================
+   🆕 모바일 화면 최적화 (Mobile Responsive)
+   ========================================== */
+@media (max-width: 768px) {
+  /* 1. 상단 네비게이션 바 정리 */
+  .site-header .container {
+    padding: 10px 15px;
+  }
+  .header-top {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  nav a {
+    font-size: 0.85em;
+    padding: 4px 8px;
+    background: #f0f4f8;
+    border-radius: 4px;
+    margin: 0;
+  }
+
+  /* 2. 표(Table) 레이아웃 개선 (스크롤 및 글자 크기) */
+  .data-table {
+    font-size: 0.8em; /* 글자 크기 축소 */
+  }
+  .data-table th, .data-table td {
+    padding: 8px 6px; /* 여백 축소 */
+    white-space: nowrap; /* 글자 강제 줄바꿈 방지 */
+  }
+  
+  /* 표를 감싸는 div가 가로 스크롤을 지원하도록 설정 */
+  .card > div[style*="overflow-x:auto"] {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* 3. 인사이트 카드 및 차트 영역 여백 조정 */
+  .hero h1 {
+    font-size: 1.6em;
+  }
+  .interactive-grid {
+    display: flex;
+    flex-direction: column; /* 차트를 세로로 1열 배치 */
+  }
+  .card {
+    padding: 15px;
+  }
+  .card h2 {
+    font-size: 1.2em;
+  }
+}
