@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Insurance Rate Filing Tracker (Texas) | Insurance Data Hub</title>
+  <meta name="description" content="Track recent homeowners insurance rate filings submitted to the Texas Department of Insurance. See which carriers requested the largest rate increases — public data, updated monthly.">
+  
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%231a3d5c'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='white' font-family='Arial,sans-serif' font-weight='bold'%3EI%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/static/style.css">
+  <!-- AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2850461542641038" crossorigin="anonymous"></script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RPS0MR3SX5"></script>
+  <!-- 🆕 Chart.js 차트 라이브러리 추가 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <div class="header-top">
+      <a href="/" class="logo">Insurance Data Hub</a>
+      <a href="https://dataindp.com" class="hub-btn">Go Data in DP ↗</a>
+    </div>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/calculator.html">Calculator</a> <!-- 🆕 추가 -->
+      <a href="/correlations.html">Correlation Map</a> <!-- 🆕 추가 -->
+      <a href="/tax-vs-insurance.html">Insurance vs Tax</a> <!-- 🆕 -->
+      <a href="/rankings.html">Rankings</a>
+      <a href="/rate-filings.html">Rate Filings</a>
+      <a href="/underinsurance/index.html">Insurance Guide</a>
+      <a href="/about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+
+<div class="hero">
+  <h1>🏛️ Home Insurance Rate Filing Tracker</h1>
+  <p>Every rate change must be filed with state regulators. Here are the most recent Homeowners filings submitted to the Texas Department of Insurance.</p>
+</div>
+
+<!-- ====== 데이터 출처 카드 (라이선스/면책) ====== -->
+<div class="card" style="background: #f0f4f8; border-left: 5px solid var(--primary);">
+  <h2 style="margin-top: 0; color: var(--primary);">📋 About This Data</h2>
+  <p style="margin-bottom: 10px;">
+    <strong>Source:</strong> Texas Department of Insurance (TDI) —
+    <a href="https://data.texas.gov/d/iubg-btfs" target="_blank" rel="noopener" style="color: var(--primary);">public open data portal</a>
+    (Public Domain). Data reflects filings <strong>submitted</strong> to TDI, not necessarily approved.
+  </p>
+  <p style="margin-bottom: 10px; font-size: 0.9em; color: #666;">
+    <strong>Range:</strong> 2024-01-01 ~ present ·
+    <strong>Parsed:</strong> 405 filings ·
+    <strong>Updated:</strong> 2026-10-24
+  </p>
+  <p style="margin-bottom: 0; font-size: 0.85em; color: #856404; background: #fff3cd; padding: 10px; border-radius: 4px; border-left: 3px solid #ffc107;">
+    ⚠️ <strong>Filings may be pending.</strong> Status "Pending" means the filing is under regulatory review.
+    Actual approved rates may differ from the requested change. This page is for informational purposes only
+    and does not constitute insurance advice.
+  </p>
+</div>
+
+<!-- ====== 요약 통계 ====== -->
+
+<div class="card">
+  <h2>📊 Snapshot</h2>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px;">
+    <div style="text-align:center; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+      <div style="font-size: 1.8em; font-weight: bold; color: #c0392b;">+60.0%</div>
+      <div style="font-size: 0.85em; color: #666;">Largest requested increase</div>
+    </div>
+    <div style="text-align:center; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+      <div style="font-size: 1.8em; font-weight: bold; color: var(--primary);">152</div>
+      <div style="font-size: 0.85em; color: #666;">Filings ≥ 10% increase</div>
+    </div>
+    <div style="text-align:center; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+      <div style="font-size: 1.8em; font-weight: bold; color: var(--primary);">53</div>
+      <div style="font-size: 0.85em; color: #666;">Filings ≥ 20% increase</div>
+    </div>
+    <div style="text-align:center; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+      <div style="font-size: 1.8em; font-weight: bold; color: #27ae60;">405</div>
+      <div style="font-size: 0.85em; color: #666;">Total filings parsed</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ====== Top Increases ====== -->
+<div class="card">
+  <h2 style="color: #c0392b;">🔥 Largest Requested Increases</h2>
+  <p style="font-size: 0.9em; color: #666;">Carriers requesting the highest rate increases for Homeowners policies.</p>
+  
+  <div style="overflow-x: auto;">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Company</th>
+          <th>Product</th>
+          <th>Change</th>
+          <th>Effective</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr>
+          <td>1</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">VAULT RECIPROCAL EXCHANGE</td>
+          <td style="font-size: 0.85em; color: #666;">Homeowners</td>
+          <td><strong style="color: #c0392b;">+60.0%</strong></td>
+          <td style="font-size: 0.85em;">2024-12-05</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>2</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">HOMEOWNERS OF AMERICA INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Texas Condominium Program</td>
+          <td><strong style="color: #c0392b;">+59.8%</strong></td>
+          <td style="font-size: 0.85em;">2025-06-01</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>3</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">TOWER HILL PRIME INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Manufactured Home</td>
+          <td><strong style="color: #c0392b;">+49.9%</strong></td>
+          <td style="font-size: 0.85em;">2024-11-28</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>4</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">GERMANIA PROPERTY & CASUALTY INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Homeowners</td>
+          <td><strong style="color: #c0392b;">+48.7%</strong></td>
+          <td style="font-size: 0.85em;">2024-07-08</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>5</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">TOWER HILL PRIME INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Homeowners Builder</td>
+          <td><strong style="color: #c0392b;">+41.5%</strong></td>
+          <td style="font-size: 0.85em;">2024-12-30</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>6</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">KEMPER INDEPENDENCE INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Prime Home</td>
+          <td><strong style="color: #c0392b;">+39.3%</strong></td>
+          <td style="font-size: 0.85em;">2024-09-29</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>7</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">ONE ALLIANCE NORTH AMERICA INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Homeowners</td>
+          <td><strong style="color: #c0392b;">+37.8%</strong></td>
+          <td style="font-size: 0.85em;">2024-09-01</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>8</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">HOMEOWNERS OF AMERICA INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Texas Tenant Program</td>
+          <td><strong style="color: #c0392b;">+36.7%</strong></td>
+          <td style="font-size: 0.85em;">2026-01-01</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>9</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">PRAETORIAN INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Homeowners PIC</td>
+          <td><strong style="color: #c0392b;">+34.4%</strong></td>
+          <td style="font-size: 0.85em;">2025-07-15</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>10</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">MARKEL AMERICAN INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">CoverTree Manufactured Home</td>
+          <td><strong style="color: #c0392b;">+34.2%</strong></td>
+          <td style="font-size: 0.85em;">2025-05-10</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>11</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">HOMESITE INDEMNITY COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Homeowners</td>
+          <td><strong style="color: #c0392b;">+33.0%</strong></td>
+          <td style="font-size: 0.85em;">2024-04-09</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>12</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">AMERICAN MODERN PROPERTY AND CASUALTY INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Manufactured Home Program</td>
+          <td><strong style="color: #c0392b;">+30.8%</strong></td>
+          <td style="font-size: 0.85em;">2024-09-09</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>13</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">INDEPENDENT MUTUAL FIRE INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Mobile Homeowners</td>
+          <td><strong style="color: #c0392b;">+30.0%</strong></td>
+          <td style="font-size: 0.85em;">2025-01-01</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>14</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">CONSUMERS COUNTY MUTUAL INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">MDP</td>
+          <td><strong style="color: #c0392b;">+30.0%</strong></td>
+          <td style="font-size: 0.85em;">2024-11-07</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>15</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">BERKLEY INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Rate/Rule Revision</td>
+          <td><strong style="color: #c0392b;">+29.9%</strong></td>
+          <td style="font-size: 0.85em;">2025-04-16</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>16</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">AIG PROPERTY CASUALTY COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">AIG Private Client Group Homeowners Program</td>
+          <td><strong style="color: #c0392b;">+29.9%</strong></td>
+          <td style="font-size: 0.85em;">2024-12-01</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>17</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">TEXAS FARM BUREAU UNDERWRITERS</td>
+          <td style="font-size: 0.85em; color: #666;">DP_20250922_Rates_TFBU</td>
+          <td><strong style="color: #c0392b;">+29.8%</strong></td>
+          <td style="font-size: 0.85em;">2026-01-05</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>18</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">HARTFORD LLOYD'S INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">TX Home PLIC 84 - LLOYD</td>
+          <td><strong style="color: #c0392b;">+29.7%</strong></td>
+          <td style="font-size: 0.85em;">2024-07-04</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>19</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">TOWER HILL PRIME INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Homeowners</td>
+          <td><strong style="color: #c0392b;">+29.3%</strong></td>
+          <td style="font-size: 0.85em;">2024-11-28</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>20</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">ASI LLOYDS</td>
+          <td style="font-size: 0.85em; color: #666;">Homeowners</td>
+          <td><strong style="color: #c0392b;">+28.0%</strong></td>
+          <td style="font-size: 0.85em;">2024-10-30</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>21</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">ELEVATE RECIPROCAL EXCHANGE</td>
+          <td style="font-size: 0.85em; color: #666;">SURE/ERE.TX.HO.RR.UPD. EFF6.4.24</td>
+          <td><strong style="color: #c0392b;">+25.7%</strong></td>
+          <td style="font-size: 0.85em;">2024-08-01</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>22</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">MID-CENTURY INSURANCE COMPANY OF TEXAS</td>
+          <td style="font-size: 0.85em; color: #666;">LHO (Renter - Condo), NGHO, FSPH, SPRC, and FLEX</td>
+          <td><strong style="color: #c0392b;">+25.6%</strong></td>
+          <td style="font-size: 0.85em;">2024-01-05</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>23</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">TRAVELERS COMMERCIAL INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Quantum Home 2.0, Quantum Home</td>
+          <td><strong style="color: #c0392b;">+25.3%</strong></td>
+          <td style="font-size: 0.85em;">2025-08-02</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>24</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">TRAVELERS HOME AND MARINE INSURANCE COMPANY, THE</td>
+          <td style="font-size: 0.85em; color: #666;">Quantum Home 2.0, Quantum Home</td>
+          <td><strong style="color: #c0392b;">+24.9%</strong></td>
+          <td style="font-size: 0.85em;">2025-08-02</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>25</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">BRANCH INSURANCE EXCHANGE</td>
+          <td style="font-size: 0.85em; color: #666;">BIX TX HO</td>
+          <td><strong style="color: #c0392b;">+24.9%</strong></td>
+          <td style="font-size: 0.85em;">2024-08-15</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>26</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">TRAVELERS PERSONAL INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Quantum Home 2.0, Quantum Home</td>
+          <td><strong style="color: #c0392b;">+24.8%</strong></td>
+          <td style="font-size: 0.85em;">2025-08-02</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>27</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">ASI LLOYDS</td>
+          <td style="font-size: 0.85em; color: #666;">DP 3</td>
+          <td><strong style="color: #c0392b;">+24.1%</strong></td>
+          <td style="font-size: 0.85em;">2025-02-11</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>28</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">KEMPER INDEPENDENCE INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">TX Prime KIIC HO</td>
+          <td><strong style="color: #c0392b;">+23.6%</strong></td>
+          <td style="font-size: 0.85em;">2024-03-17</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>29</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">SURECHOICE UNDERWRITERS RECIPROCAL EXCHANGE</td>
+          <td style="font-size: 0.85em; color: #666;">SURE/ERE.TX.HO.RR.UPD. EFF6.4.24</td>
+          <td><strong style="color: #c0392b;">+23.0%</strong></td>
+          <td style="font-size: 0.85em;">2024-08-01</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>30</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">UNITRIN SAFEGUARD INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">TX HO USIC 20240324</td>
+          <td><strong style="color: #c0392b;">+22.7%</strong></td>
+          <td style="font-size: 0.85em;">2024-03-24</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>31</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">TEXAS FARMERS INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">LHO (Renter - Condo), NGHO, FSPH, SPRC, and FLEX</td>
+          <td><strong style="color: #c0392b;">+22.7%</strong></td>
+          <td style="font-size: 0.85em;">2024-01-05</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>32</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">COLUMBIA LLOYDS INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">FireDwelling EC</td>
+          <td><strong style="color: #c0392b;">+22.5%</strong></td>
+          <td style="font-size: 0.85em;">2024-09-01</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>33</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">AMERICAN ECONOMY INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Homeowners</td>
+          <td><strong style="color: #c0392b;">+22.1%</strong></td>
+          <td style="font-size: 0.85em;">2024-12-27</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>34</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">WESTERN MUTUAL INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Homeowners</td>
+          <td><strong style="color: #c0392b;">+21.7%</strong></td>
+          <td style="font-size: 0.85em;">2024-07-01</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>35</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">RESIDENCE MUTUAL INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Homeowners</td>
+          <td><strong style="color: #c0392b;">+21.7%</strong></td>
+          <td style="font-size: 0.85em;">2024-07-01</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>36</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">WESTERN MUTUAL INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Homeowners</td>
+          <td><strong style="color: #c0392b;">+21.7%</strong></td>
+          <td style="font-size: 0.85em;">2024-07-01</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>37</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">RESIDENCE MUTUAL INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Homeowners</td>
+          <td><strong style="color: #c0392b;">+21.7%</strong></td>
+          <td style="font-size: 0.85em;">2024-07-01</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>38</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">WESTERN MUTUAL INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Homeowners</td>
+          <td><strong style="color: #c0392b;">+21.7%</strong></td>
+          <td style="font-size: 0.85em;">2024-04-01</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>39</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">RESIDENCE MUTUAL INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Homeowners</td>
+          <td><strong style="color: #c0392b;">+21.7%</strong></td>
+          <td style="font-size: 0.85em;">2024-04-01</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>40</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">AMERICAN MODERN PROPERTY AND CASUALTY INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Homeowners Flex</td>
+          <td><strong style="color: #c0392b;">+21.6%</strong></td>
+          <td style="font-size: 0.85em;">2024-10-21</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>41</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">TEXAS FAIR PLAN ASSOCIATION</td>
+          <td style="font-size: 0.85em; color: #666;">TFPA 2025 Rate Filing - TDP</td>
+          <td><strong style="color: #c0392b;">+21.4%</strong></td>
+          <td style="font-size: 0.85em;">2025-08-01</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>42</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">AMERICAN MODERN PROPERTY AND CASUALTY INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Homeowners Flex</td>
+          <td><strong style="color: #c0392b;">+21.3%</strong></td>
+          <td style="font-size: 0.85em;">2024-11-04</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>43</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">SAFEPORT INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Homeowners Program - Revision</td>
+          <td><strong style="color: #c0392b;">+20.6%</strong></td>
+          <td style="font-size: 0.85em;">2024-08-01</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>44</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">LEMONADE INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Homeowners</td>
+          <td><strong style="color: #c0392b;">+20.3%</strong></td>
+          <td style="font-size: 0.85em;">2024-12-22</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>45</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">MERCURY INSURANCE COMPANY OF TEXAS</td>
+          <td style="font-size: 0.85em; color: #666;">TX HO RL27 RR</td>
+          <td><strong style="color: #c0392b;">+20.1%</strong></td>
+          <td style="font-size: 0.85em;">2024-11-01</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>46</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">HORACE MANN INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">TX Home Rate/Rule 10-15-24</td>
+          <td><strong style="color: #c0392b;">+20.1%</strong></td>
+          <td style="font-size: 0.85em;">2024-10-15</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>47</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">TEACHERS INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">TX Home Rate/Rule 10-15-24</td>
+          <td><strong style="color: #c0392b;">+20.1%</strong></td>
+          <td style="font-size: 0.85em;">2024-10-15</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>48</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">AMERICAN SUMMIT INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Atlas/AmericanSummit Homeowners</td>
+          <td><strong style="color: #c0392b;">+20.0%</strong></td>
+          <td style="font-size: 0.85em;">2025-10-01</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>49</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">AMERICAN SUMMIT INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Atlas/American Summit Dwelling Fire Program</td>
+          <td><strong style="color: #c0392b;">+20.0%</strong></td>
+          <td style="font-size: 0.85em;">2025-10-01</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>50</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">CYPRESS PROPERTY & CASUALTY INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">CPC TX EG Rate Segmentation</td>
+          <td><strong style="color: #c0392b;">+20.0%</strong></td>
+          <td style="font-size: 0.85em;">2025-04-01</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+  
+</div>
+
+<!-- ====== Top Decreases ====== -->
+
+<div class="card">
+  <h2 style="color: #27ae60;">📉 Requested Decreases</h2>
+  <p style="font-size: 0.9em; color: #666;">Carriers requesting rate decreases for Homeowners policies.</p>
+  <div style="overflow-x: auto;">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Company</th>
+          <th>Product</th>
+          <th>Change</th>
+          <th>Effective</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr>
+          <td>1</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">VAULT RECIPROCAL EXCHANGE</td>
+          <td style="font-size: 0.85em; color: #666;">VRE Homeowners</td>
+          <td><strong style="color: #27ae60;">-29.7%</strong></td>
+          <td style="font-size: 0.85em;">2026-05-07</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>2</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">TEXAS FAIR PLAN ASSOCIATION</td>
+          <td style="font-size: 0.85em; color: #666;">TFPA 2026 Rate Filing - Tenant</td>
+          <td><strong style="color: #27ae60;">-25.0%</strong></td>
+          <td style="font-size: 0.85em;">2026-09-01</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>3</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">CENTAURI SPECIALTY INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Texas HO3 Program Rate Adjustment</td>
+          <td><strong style="color: #27ae60;">-17.0%</strong></td>
+          <td style="font-size: 0.85em;">2026-11-01</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>4</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">TOWER HILL PRIME INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Manufactured Home</td>
+          <td><strong style="color: #27ae60;">-16.9%</strong></td>
+          <td style="font-size: 0.85em;">2026-12-23</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>5</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">HOMEBOUND INSURANCE EXCHANGE</td>
+          <td style="font-size: 0.85em; color: #666;">Manufactured Home</td>
+          <td><strong style="color: #27ae60;">-14.0%</strong></td>
+          <td style="font-size: 0.85em;">2026-05-06</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>6</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">WOODLANDS INSURANCE COMPANY, THE</td>
+          <td style="font-size: 0.85em; color: #666;">Rate, Rule and Underwriting Guideline Changes Effective January 1, 2026</td>
+          <td><strong style="color: #27ae60;">-12.7%</strong></td>
+          <td style="font-size: 0.85em;">2026-01-01</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>7</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">IMPERIAL FIRE AND CASUALTY INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">TX IFAC C360 HO Rate Updates</td>
+          <td><strong style="color: #27ae60;">-11.8%</strong></td>
+          <td style="font-size: 0.85em;">2026-06-04</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>8</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">HORACE MANN INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">TX Renters Rate/Rule 12-01-24</td>
+          <td><strong style="color: #27ae60;">-10.9%</strong></td>
+          <td style="font-size: 0.85em;">2024-12-01</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>9</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">HOMEBOUND INSURANCE EXCHANGE</td>
+          <td style="font-size: 0.85em; color: #666;">Manufactured Home</td>
+          <td><strong style="color: #27ae60;">-10.5%</strong></td>
+          <td style="font-size: 0.85em;">2026-08-06</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>10</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">TEACHERS INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">TX Renters Rate/Rule 12-01-24</td>
+          <td><strong style="color: #27ae60;">-10.3%</strong></td>
+          <td style="font-size: 0.85em;">2024-12-01</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>11</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">INCLINE NATIONAL INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">2026-09 Texas Homeowners Rate Filing</td>
+          <td><strong style="color: #27ae60;">-10.0%</strong></td>
+          <td style="font-size: 0.85em;">2026-09-25</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>12</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">SAFEPOINT INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">TX Advantage HO3</td>
+          <td><strong style="color: #27ae60;">-10.0%</strong></td>
+          <td style="font-size: 0.85em;">2026-09-01</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>13</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">SAFEPORT INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">HO Rate</td>
+          <td><strong style="color: #27ae60;">-10.0%</strong></td>
+          <td style="font-size: 0.85em;">2026-07-16</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>14</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">BENCHMARK INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">BIC Swyfft TX HO3</td>
+          <td><strong style="color: #27ae60;">-10.0%</strong></td>
+          <td style="font-size: 0.85em;">2025-12-13</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>15</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">BUILDER RECIPROCAL INSURANCE EXCHANGE</td>
+          <td style="font-size: 0.85em; color: #666;">Homeowners</td>
+          <td><strong style="color: #27ae60;">-10.0%</strong></td>
+          <td style="font-size: 0.85em;">2025-07-20</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>16</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">HOMEBOUND INSURANCE EXCHANGE</td>
+          <td style="font-size: 0.85em; color: #666;">Homeowners</td>
+          <td><strong style="color: #27ae60;">-9.5%</strong></td>
+          <td style="font-size: 0.85em;">2026-08-06</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>17</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">PORCH INSURANCE RECIPROCAL EXCHANGE</td>
+          <td style="font-size: 0.85em; color: #666;">Texas Homeowners Program</td>
+          <td><strong style="color: #27ae60;">-9.5%</strong></td>
+          <td style="font-size: 0.85em;">2026-07-11</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>18</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">TOWER HILL PRIME INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Homeowners</td>
+          <td><strong style="color: #27ae60;">-9.2%</strong></td>
+          <td style="font-size: 0.85em;">2026-12-24</td>
+          <td>
+            
+              <span class="score-badge score-mid">Pending</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>19</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">BENCHMARK INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">BIC Swyfft TX HO3</td>
+          <td><strong style="color: #27ae60;">-9.0%</strong></td>
+          <td style="font-size: 0.85em;">2026-09-15</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>20</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">ARBOR RECIPROCAL EXCHANGE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Texas Homeowners Program</td>
+          <td><strong style="color: #27ae60;">-8.9%</strong></td>
+          <td style="font-size: 0.85em;">2026-07-15</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>21</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">ALLIED TRUST INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">TXHO3_RF_12_3_25</td>
+          <td><strong style="color: #27ae60;">-8.9%</strong></td>
+          <td style="font-size: 0.85em;">2026-02-02</td>
+          <td>
+            
+              <span class="score-badge score-mid">Pending</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>22</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">CYPRESS PROPERTY & CASUALTY INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">CPC TX EG Annual Rate Change</td>
+          <td><strong style="color: #27ae60;">-8.5%</strong></td>
+          <td style="font-size: 0.85em;">2026-10-14</td>
+          <td>
+            
+              <span class="score-badge score-mid">Pending</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>23</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">INSURORS INDEMNITY COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Atlas/Insurors Statewide HO Program</td>
+          <td><strong style="color: #27ae60;">-8.5%</strong></td>
+          <td style="font-size: 0.85em;">2026-11-01</td>
+          <td>
+            
+              <span class="score-badge score-mid">Pending</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>24</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">HOMEOWNERS OF AMERICA INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Texas Homeowners Program</td>
+          <td><strong style="color: #27ae60;">-7.8%</strong></td>
+          <td style="font-size: 0.85em;">2025-10-15</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>25</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">HOMEOWNERS OF AMERICA INSURANCE COMPANY</td>
+          <td style="font-size: 0.85em; color: #666;">Texas Homeowners Program</td>
+          <td><strong style="color: #27ae60;">-7.6%</strong></td>
+          <td style="font-size: 0.85em;">2025-10-15</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>26</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">TEXAS FAIR PLAN ASSOCIATION</td>
+          <td style="font-size: 0.85em; color: #666;">TFPA 2026 Rate Filing - Condo</td>
+          <td><strong style="color: #27ae60;">-7.5%</strong></td>
+          <td style="font-size: 0.85em;">2026-09-01</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>27</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">ELEVATE RECIPROCAL EXCHANGE</td>
+          <td style="font-size: 0.85em; color: #666;">SURE/ERE.TX.HO.RATE.UPD. EFF01.16.25</td>
+          <td><strong style="color: #27ae60;">-7.4%</strong></td>
+          <td style="font-size: 0.85em;">2025-03-01</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>28</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">SURECHOICE UNDERWRITERS RECIPROCAL EXCHANGE</td>
+          <td style="font-size: 0.85em; color: #666;">SURE/ERE.TX.HO.RATE.UPD. EFF01.16.25</td>
+          <td><strong style="color: #27ae60;">-7.4%</strong></td>
+          <td style="font-size: 0.85em;">2025-03-01</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>29</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">WOODLANDS INSURANCE COMPANY, THE</td>
+          <td style="font-size: 0.85em; color: #666;">Homeowners</td>
+          <td><strong style="color: #27ae60;">-7.2%</strong></td>
+          <td style="font-size: 0.85em;">2026-11-15</td>
+          <td>
+            
+              <span class="score-badge score-mid">Pending</span>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td>30</td>
+          <td style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">AUROS RECIPROCAL INSURANCE EXCHANGE</td>
+          <td style="font-size: 0.85em; color: #666;">HO Rate</td>
+          <td><strong style="color: #27ae60;">-7.0%</strong></td>
+          <td style="font-size: 0.85em;">2026-10-01</td>
+          <td>
+            
+              <span class="score-badge" style="background: #95a5a6;">Closed</span>
+            
+          </td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- ====== 해설 (편집 콘텐츠) ====== -->
+<div class="card" style="background: #f0f4f8; border-left: 5px solid var(--accent);">
+  <h2>💡 Why Rate Filings Matter</h2>
+  <p>
+    Unlike most consumer products, <strong>home insurance rates must be filed with state regulators before they change</strong>.
+    This creates an unusual transparency window: you can see what a carrier requested weeks or months before your renewal arrives.
+  </p>
+  <p>
+    For independent analysis of national rate trends, see
+    <a href="https://boringrate.com/rate-filings/" target="_blank" rel="noopener" style="color: var(--primary); font-weight: 600;">BoringRate's rate filings tracker</a>
+    — an independent research site that parses SERFF-approved filings across states.
+  </p>
+  <p style="margin-bottom: 0;">
+    <strong>What this tracker doesn't cover:</strong> Only Texas filings are shown here.
+    Other states (CA, FL, LA, NY) publish filings through their own regulators or SERFF.
+  </p>
+</div>
+
+<!-- ====== 교차 링크 ====== -->
+<div class="card">
+  <h2>🔗 Related Tools</h2>
+  <ul style="line-height: 2; padding-left: 20px;">
+    <li><a href="/calculator.html" style="color: var(--primary); font-weight: 600;">→ Calculate your PITI with real county premiums</a></li>
+    <li><a href="/tax-vs-insurance.html" style="color: var(--primary); font-weight: 600;">→ Compare insurance burden vs property tax by county</a></li>
+    <li><a href="/underinsurance/index.html" style="color: var(--primary); font-weight: 600;">→ 6 risks standard HO-3 policies don't cover</a></li>
+    <li><a href="/rankings.html" style="color: var(--primary); font-weight: 600;">→ Browse all U.S. counties by insurance risk</a></li>
+  </ul>
+</div>
+
+<!-- ====== Attribution Footer ====== -->
+<p style="font-size: 0.8em; color: #999; margin-top: 30px; line-height: 1.6;">
+  <strong>Data Attribution:</strong>
+  Source: Texas Department of Insurance, "Home and Auto Rate Filings," accessed via
+  <a href="https://data.texas.gov/d/iubg-btfs" target="_blank" rel="noopener" style="color: #999;">data.texas.gov</a>
+  (Public Domain). Data is provided as-is without warranty of completeness or accuracy.
+  Filings shown may be pending regulatory review; final approved rates may differ from requested changes.
+  This page is not affiliated with TDI. Editorial citation:
+  <a href="https://boringrate.com/rate-filings/" target="_blank" rel="noopener" style="color: #999;">BoringRate</a>
+  (independent research; no content reproduced).
+</p>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>&copy; 2026 Insurance Data Hub. All rights reserved.</p>
+    
+    <!-- 🆕 법적 고지 페이지 네비게이션 추가 -->
+    <p style="margin: 15px 0; font-size: 1em;">
+      <a href="/about.html" style="color: var(--primary); text-decoration: none; margin: 0 10px; font-weight: bold;">About</a> |
+      <a href="/privacy.html" style="color: var(--primary); text-decoration: none; margin: 0 10px; font-weight: bold;">Privacy Policy</a> |
+      <a href="/terms.html" style="color: var(--primary); text-decoration: none; margin: 0 10px; font-weight: bold;">Terms of Service</a> |
+      <a href="/contact.html" style="color: var(--primary); text-decoration: none; margin: 0 10px; font-weight: bold;">Contact Us</a>
+    </p>
+
+    <p class="disclaimer" style="font-size: 0.8em; color: #888; margin-top: 20px;">
+      Climate data: FEMA National Risk Index (Public Domain).<br>
+      Demographics: U.S. Census Bureau ACS 5-Year Estimates (CC0).<br>
+      Insurance premiums: HearthMap / NBER WP 32579 (CC BY 4.0). Fallback: Triple-I / NAIC.
+    </p>
+  </div>
+</footer>
+</body>
+</html>
