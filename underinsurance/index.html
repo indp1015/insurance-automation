@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Underinsurance Guide — When Standard Home Insurance Isn't Enough | Insurance Data Hub</title>
+  <meta name="description" content="The 6 risks that standard HO-3 home insurance policies don't fully cover — flood, earthquake, wildfire, hurricane, tornado, and landslide — and where they hit hardest in the U.S.">
+  
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%231a3d5c'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='white' font-family='Arial,sans-serif' font-weight='bold'%3EI%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/static/style.css">
+  <!-- 🆕 Chart.js 차트 라이브러리 추가 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <div class="header-top">
+      <a href="/" class="logo">Insurance Data Hub</a>
+      <a href="https://dataindp.com" class="hub-btn">Go Data in DP ↗</a>
+    </div>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/calculator.html">Calculator</a> <!-- 🆕 추가 -->
+      <a href="/correlations.html">Correlation Map</a> <!-- 🆕 추가 -->
+      <a href="/tax-vs-insurance.html">Insurance vs Tax</a> <!-- 🆕 -->
+      <a href="/rankings.html">Rankings</a>
+      <a href="/underinsurance/index.html">Insurance Guide</a>
+      <a href="/about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+
+<div class="hero">
+  <h1>When Standard Home Insurance Isn't Enough</h1>
+  <p>The 6 risks that HO-3 policies don't fully cover — and where they hit hardest in the U.S.</p>
+</div>
+
+<div class="card">
+  <h2>📊 The Underinsurance Gap at a Glance</h2>
+  <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:15px; margin-top:20px;">
+    <div style="text-align:center; padding:20px; background:#f0f4f8; border-radius:8px;">
+      <div style="font-size:2em; font-weight:bold; color:var(--primary);">3,144</div>
+      <div style="font-size:0.85em; color:#666;">Counties analyzed</div>
+    </div>
+    <div style="text-align:center; padding:20px; background:#f0f4f8; border-radius:8px;">
+      <div style="font-size:2em; font-weight:bold; color:var(--accent);">939</div>
+      <div style="font-size:0.85em; color:#666;">High climate risk (score &lt; 30)</div>
+    </div>
+    <div style="text-align:center; padding:20px; background:#f0f4f8; border-radius:8px;">
+      <div style="font-size:2em; font-weight:bold; color:var(--primary);">6</div>
+      <div style="font-size:0.85em; color:#666;">Non-standard risks</div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>🎯 The 6 Non-Standard Risks</h2>
+  <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:15px; margin-top:20px;">
+    
+    <a href="/underinsurance/flood.html"
+       style="display:block; padding:20px; background:#fff; border:1px solid var(--border); border-radius:8px; text-decoration:none; color:inherit;">
+      <div style="font-size:2em; margin-bottom:8px;">🌊</div>
+      <h3 style="color:var(--primary); margin:0 0 8px 0; font-size:1.1em;">Flood Insurance Gap</h3>
+      <p style="font-size:0.9em; color:#555; margin:0 0 12px 0;">Standard policies exclude all flood damage. Separate NFIP or private policy required.</p>
+      <span style="font-size:0.85em; color:var(--accent); font-weight:600;">10 high-risk counties →</span>
+    </a>
+    
+    <a href="/underinsurance/earthquake.html"
+       style="display:block; padding:20px; background:#fff; border:1px solid var(--border); border-radius:8px; text-decoration:none; color:inherit;">
+      <div style="font-size:2em; margin-bottom:8px;">🏚️</div>
+      <h3 style="color:var(--primary); margin:0 0 8px 0; font-size:1.1em;">Earthquake Insurance Gap</h3>
+      <p style="font-size:0.9em; color:#555; margin:0 0 12px 0;">Earth movement is excluded. Separate earthquake policy required.</p>
+      <span style="font-size:0.85em; color:var(--accent); font-weight:600;">10 high-risk counties →</span>
+    </a>
+    
+    <a href="/underinsurance/wildfire.html"
+       style="display:block; padding:20px; background:#fff; border:1px solid var(--border); border-radius:8px; text-decoration:none; color:inherit;">
+      <div style="font-size:2em; margin-bottom:8px;">🔥</div>
+      <h3 style="color:var(--primary); margin:0 0 8px 0; font-size:1.1em;">Wildfire Insurance Gap</h3>
+      <p style="font-size:0.9em; color:#555; margin:0 0 12px 0;">Covered — but availability is collapsing in high-risk zones.</p>
+      <span style="font-size:0.85em; color:var(--accent); font-weight:600;">10 high-risk counties →</span>
+    </a>
+    
+    <a href="/underinsurance/hurricane.html"
+       style="display:block; padding:20px; background:#fff; border:1px solid var(--border); border-radius:8px; text-decoration:none; color:inherit;">
+      <div style="font-size:2em; margin-bottom:8px;">🌀</div>
+      <h3 style="color:var(--primary); margin:0 0 8px 0; font-size:1.1em;">Hurricane Wind Insurance Gap</h3>
+      <p style="font-size:0.9em; color:#555; margin:0 0 12px 0;">Named-storm wind deductibles can reach 5% of home value.</p>
+      <span style="font-size:0.85em; color:var(--accent); font-weight:600;">10 high-risk counties →</span>
+    </a>
+    
+    <a href="/underinsurance/tornado.html"
+       style="display:block; padding:20px; background:#fff; border:1px solid var(--border); border-radius:8px; text-decoration:none; color:inherit;">
+      <div style="font-size:2em; margin-bottom:8px;">🌪️</div>
+      <h3 style="color:var(--primary); margin:0 0 8px 0; font-size:1.1em;">Tornado & Hail Insurance Gap</h3>
+      <p style="font-size:0.9em; color:#555; margin:0 0 12px 0;">Wind is covered, but hail deductibles and cosmetic exclusions can bite.</p>
+      <span style="font-size:0.85em; color:var(--accent); font-weight:600;">10 high-risk counties →</span>
+    </a>
+    
+    <a href="/underinsurance/landslide.html"
+       style="display:block; padding:20px; background:#fff; border:1px solid var(--border); border-radius:8px; text-decoration:none; color:inherit;">
+      <div style="font-size:2em; margin-bottom:8px;">⛰️</div>
+      <h3 style="color:var(--primary); margin:0 0 8px 0; font-size:1.1em;">Landslide & Earth Movement Gap</h3>
+      <p style="font-size:0.9em; color:#555; margin:0 0 12px 0;">Landslide is excluded as 'earth movement'. DIC or stand-alone coverage required.</p>
+      <span style="font-size:0.85em; color:var(--accent); font-weight:600;">10 high-risk counties →</span>
+    </a>
+    
+  </div>
+</div>
+
+<div class="card" style="background:#f0f4f8; border-left:5px solid var(--primary);">
+  <h2>💡 Why This Matters</h2>
+  <p>
+    Most homeowners assume their insurance covers "everything." But standard <strong>HO-3 policies
+    exclude flood, earthquake, and landslide</strong> entirely, and treat <strong>hurricane wind and
+    tornado damage with percentage deductibles</strong> that can reach 5% of your home's value.
+  </p>
+  <p style="margin-bottom:0;">
+    When a disaster strikes, homeowners discover the gap after the fact. This guide shows you where
+    the risks are highest and what coverage actually protects you.
+  </p>
+</div>
+
+<div class="card">
+  <h2>🔗 Continue Your Research</h2>
+  <ul style="line-height:2; padding-left:20px;">
+    <li><a href="/calculator.html" style="color:var(--primary); font-weight:600;">→ Calculate your full PITI with real county premiums</a></li>
+    <li><a href="/tax-vs-insurance.html" style="color:var(--primary); font-weight:600;">→ Compare insurance burden vs property tax</a></li>
+    <li><a href="/rankings.html" style="color:var(--primary); font-weight:600;">→ Browse all 3,144 counties by risk score</a></li>
+    <li><a href="/correlations.html" style="color:var(--primary); font-weight:600;">→ Explore correlations between climate risk and housing costs</a></li>
+  </ul>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>&copy; 2026 Insurance Data Hub. All rights reserved.</p>
+    
+    <!-- 🆕 법적 고지 페이지 네비게이션 추가 -->
+    <p style="margin: 15px 0; font-size: 1em;">
+      <a href="/about.html" style="color: var(--primary); text-decoration: none; margin: 0 10px; font-weight: bold;">About</a> |
+      <a href="/privacy.html" style="color: var(--primary); text-decoration: none; margin: 0 10px; font-weight: bold;">Privacy Policy</a> |
+      <a href="/terms.html" style="color: var(--primary); text-decoration: none; margin: 0 10px; font-weight: bold;">Terms of Service</a> |
+      <a href="/contact.html" style="color: var(--primary); text-decoration: none; margin: 0 10px; font-weight: bold;">Contact Us</a>
+    </p>
+
+    <p class="disclaimer" style="font-size: 0.8em; color: #888; margin-top: 20px;">
+      Climate data: FEMA National Risk Index (Public Domain).<br>
+      Demographics: U.S. Census Bureau ACS 5-Year Estimates (CC0).<br>
+      Insurance premiums: HearthMap / NBER WP 32579 (CC BY 4.0). Fallback: Triple-I / NAIC.
+    </p>
+  </div>
+</footer>
+</body>
+</html>
