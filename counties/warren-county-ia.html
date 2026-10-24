@@ -193,6 +193,26 @@
       <em>*Note: Correlation does not imply causation. Analysis based on ACS 5-Year Estimates (2019-2024).</em>
     </p>
   </div>
+    <!-- 🆕 Plan Your Move: 크로스사이트 링크 -->
+  <div class="card" style="background: #f0f4f8; border-left: 5px solid var(--accent); margin-top: 20px;">
+    <h3>🏠 Plan Your Move</h3>
+    <p style="font-size: 0.95em; color: #555; margin-bottom: 15px;">
+      Continue your research with detailed cost calculators for <strong>Warren County, IA</strong>.
+    </p>
+    <a href="https://mortgage.dataindp.com/calculator.html?state=IA&county=19181&price=269600"
+       target="_blank" rel="noopener"
+       style="display: block; margin-bottom: 10px; padding: 14px 16px; background: #fff; color: var(--primary); font-weight: 600; text-decoration: none; border-radius: 6px; border: 1px solid var(--border);">
+      🏦 Calculate monthly mortgage payment →
+    </a>
+    <a href="https://propertytax.dataindp.com/calculator.html?state=IA&county=19181&price=269600"
+       target="_blank" rel="noopener"
+       style="display: block; padding: 14px 16px; background: #fff; color: var(--primary); font-weight: 600; text-decoration: none; border-radius: 6px; border: 1px solid var(--border);">
+      🏛️ Calculate annual property tax →
+    </a>
+    <p style="font-size: 0.8em; color: #888; margin-top: 12px; margin-bottom: 0;">
+      Pre-filled with this county's FIPS code (19181) and most recent median home value ($269,600).
+    </p>
+  </div>
    <script>
     document.addEventListener("DOMContentLoaded", function() {
       const canvas = document.getElementById('trendChart');
@@ -283,16 +303,56 @@
         ticks: { color: '#8e44ad' }
       };
 
+      // 🆕 Layer 1: 이벤트 마커 플러그인 (팬데믹·금리 급등 등 주요 변곡점)
+      const eventMarkerPlugin = {
+        id: 'eventMarkers',
+        afterDatasetsDraw(chart, args, opts) {
+          const events = (opts && opts.events) || [];
+          if (!events.length) return;
+          const xScale = chart.scales.x;
+          const chartArea = chart.chartArea;
+          const c2 = chart.ctx;
+          events.forEach(ev => {
+            const idx = chart.data.labels.indexOf(ev.year);
+            if (idx === -1) return;
+            const x = xScale.getPixelForTick(idx);
+            c2.save();
+            // 점선
+            c2.beginPath();
+            c2.setLineDash([4, 4]);
+            c2.strokeStyle = ev.color || 'rgba(220, 53, 69, 0.5)';
+            c2.lineWidth = 1;
+            c2.moveTo(x, chartArea.top);
+            c2.lineTo(x, chartArea.bottom);
+            c2.stroke();
+            // 라벨
+            c2.fillStyle = ev.color || 'rgba(220, 53, 69, 0.9)';
+            c2.font = 'bold 10px -apple-system, sans-serif';
+            c2.textAlign = 'center';
+            c2.fillText(ev.label, x, chartArea.top - 4);
+            c2.restore();
+          });
+        }
+      };
+
       // ✅ try/catch로 실패 시 콘솔에 원인 노출
       try {
         new Chart(ctx, {
           type: 'line',
           data: { labels: years, datasets: datasets },
+          plugins: [eventMarkerPlugin],   // 🆕 인라인 플러그인 등록
           options: {
             responsive: true,
             maintainAspectRatio: false,
+            layout: { padding: { top: 20 } },   // 🆕 마커 라벨 공간
             interaction: { mode: 'index', intersect: false },
             plugins: {
+              eventMarkers: {   // 🆕 마커 옵션
+                events: [
+                  { year: '2020', label: 'COVID-19', color: 'rgba(220, 53, 69, 0.6)' },
+                  { year: '2022', label: 'Rate Hikes', color: 'rgba(108, 117, 125, 0.7)' }
+                ]
+              },
               tooltip: {
                 callbacks: {
                   label: function(context) {
