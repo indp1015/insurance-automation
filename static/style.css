@@ -225,3 +225,29 @@ select { background: #fff; }
     gap: 15px;
   }
 }
+/* 🆕 Underinsurance 체크리스트 */
+.risk-check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 4px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.15s;
+  line-height: 1.5;
+}
+.risk-check-item:hover {
+  background: #f8f9fa;
+}
+.risk-check-box {
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  cursor: pointer;
+  flex-shrink: 0;
+  accent-color: var(--primary);
+}
+.risk-check-item input:checked + span {
+  color: #1a3d5c;
+  font-weight: 500;
+}

@@ -78,19 +78,35 @@
 <div class="card">
   <h2>✅ Do You Need Additional Coverage?</h2>
   <p>Check each item that applies to your home:</p>
-  <ul style="line-height:2.2; list-style:none; padding-left:0; margin-bottom:15px;">
+  <div id="riskChecklist" style="margin-bottom:15px;">
     
-    <li>☐ I live in CA, WA, OR, AK, HI, NV, or UT</li>
+    <label class="risk-check-item">
+      <input type="checkbox" class="risk-check-box" data-risk="earthquake">
+      <span>I live in CA, WA, OR, AK, HI, NV, or UT</span>
+    </label>
     
-    <li>☐ My home is on a fault line or in a liquefaction zone</li>
+    <label class="risk-check-item">
+      <input type="checkbox" class="risk-check-box" data-risk="earthquake">
+      <span>My home is on a fault line or in a liquefaction zone</span>
+    </label>
     
-    <li>☐ My home was built before 1980 (pre-modern codes)</li>
+    <label class="risk-check-item">
+      <input type="checkbox" class="risk-check-box" data-risk="earthquake">
+      <span>My home was built before 1980 (pre-modern codes)</span>
+    </label>
     
-    <li>☐ I have unreinforced masonry or a raised foundation</li>
+    <label class="risk-check-item">
+      <input type="checkbox" class="risk-check-box" data-risk="earthquake">
+      <span>I have unreinforced masonry or a raised foundation</span>
+    </label>
     
-    <li>☐ A major earthquake has occurred within 100 miles in the past 50 years</li>
+    <label class="risk-check-item">
+      <input type="checkbox" class="risk-check-box" data-risk="earthquake">
+      <span>A major earthquake has occurred within 100 miles in the past 50 years</span>
+    </label>
     
-  </ul>
+  </div>
+  <div id="checklistFeedback" style="display:none; padding:12px 16px; border-radius:6px; margin-bottom:15px; font-weight:600;"></div>
   <p style="font-size:0.9em; color:#666; margin-bottom:0; padding-top:10px; border-top:1px dashed #ccc;">
     <em>If you checked 2 or more, contact your insurance agent about supplemental coverage.</em>
   </p>
@@ -334,6 +350,30 @@
   are for educational purposes only. Consult a licensed insurance professional before
   making coverage decisions.</em>
 </p>
+<script>
+(function() {
+  const boxes = document.querySelectorAll('.risk-check-box');
+  const feedback = document.getElementById('checklistFeedback');
+  if (!boxes.length || !feedback) return;
+
+  function updateFeedback() {
+    const checked = document.querySelectorAll('.risk-check-box:checked').length;
+    if (checked === 0) { feedback.style.display = 'none'; return; }
+    feedback.style.display = 'block';
+    if (checked >= 2) {
+      feedback.style.background = '#fff3cd';
+      feedback.style.color = '#856404';
+      feedback.innerHTML = '⚠️ You checked ' + checked + ' risk factors. This suggests elevated exposure — talk to a licensed insurance professional about supplemental coverage.';
+    } else {
+      feedback.style.background = '#f0f4f8';
+      feedback.style.color = '#1a3d5c';
+      feedback.innerHTML = '✅ You checked ' + checked + ' risk factor. Monitor annually — climate risk changes over time.';
+    }
+  }
+
+  boxes.forEach(b => b.addEventListener('change', updateFeedback));
+})();
+</script>
 
 </main>
 
