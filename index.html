@@ -42,24 +42,37 @@
   <p>Explore county-level climate hazards, insurance affordability, and housing resilience across 3,100+ U.S. counties.</p>
 </div>
 
-<!-- 🆕 검색 및 위치 기능 추가 (태양광 사이트 스타일) -->
+<!-- 🆕 검색 및 위치 기능 (콤보박스 포함) -->
 <div class="card" style="margin-bottom: 20px; background: #f8f9fa;">
   <h2 style="font-size: 1.2em; margin-top: 0; color: var(--primary);">🔍 Find Insurance Risk for Your Area</h2>
-  <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
-    <input type="text" id="searchInput" placeholder="Enter ZIP, county, or state (e.g., 90210, Los Angeles, CA)" 
-           style="flex: 1; padding: 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 1em; min-width: 250px;">
+  
+  <style>
+    .search-container { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; position: relative; }
+    .search-wrapper { flex: 1; min-width: 250px; position: relative; }
+    .search-wrapper input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 1em; box-sizing: border-box; }
+    .suggestions-box { position: absolute; top: 100%; left: 0; right: 0; background: #fff; border: 1px solid #ccc; border-top: none; border-radius: 0 0 4px 4px; max-height: 250px; overflow-y: auto; z-index: 1000; display: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    .suggestion-item { padding: 10px 12px; cursor: pointer; border-bottom: 1px solid #eee; font-size: 0.95em; color: #333; }
+    .suggestion-item:hover { background: #f0f4f8; }
+    .suggestion-item strong { color: var(--primary); }
+  </style>
+
+  <div class="search-container">
+    <div class="search-wrapper">
+      <input type="text" id="searchInput" placeholder="Enter ZIP, county, or state (e.g., 90210, Los Angeles, CA)" autocomplete="off">
+      <div id="suggestionsBox" class="suggestions-box"></div>
+    </div>
     <button id="searchBtn" style="background: var(--accent); color: white; border: none; padding: 12px 24px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 1em;">
       Find
     </button>
   </div>
+  
   <div style="margin-top: 10px; font-size: 0.9em; color: #555; display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
     <span id="locationBtn" style="cursor: pointer; color: var(--primary); font-weight: bold; text-decoration: underline;">
       📍 Use my location
     </span>
     <span style="color: #ccc;">|</span>
-    <span>Popular: <a href="/counties/los-angeles-california.html" style="color: var(--primary);">Los Angeles</a>, 
-          <a href="/counties/harris-texas.html" style="color: var(--primary);">Harris</a>, 
-          <a href="/counties/miami-dade-florida.html" style="color: var(--primary);">Miami-Dade</a></span>
+    <!-- 동적 인기 카운티 링크 (JS로 채워짐) -->
+    <span id="popularLinks">Popular: Loading...</span>
   </div>
   <div id="searchError" style="color: #c0392b; margin-top: 10px; font-size: 0.9em; display: none;"></div>
 </div>
@@ -200,38 +213,140 @@
   </p>
 </div>
 
-<!-- 🆕 검색 및 위치 기능을 위한 스크립트 -->
+<!-- 🆕 검색, 인기 링크, 위치 기능을 위한 통합 스크립트 -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     const searchInput = document.getElementById('searchInput');
     const searchBtn = document.getElementById('searchBtn');
     const locationBtn = document.getElementById('locationBtn');
     const searchError = document.getElementById('searchError');
+    const suggestionsBox = document.getElementById('suggestionsBox');
+    const popularLinks = document.getElementById('popularLinks');
 
-    // 1. 검색 기능 (텍스트 기반 검색 -> 해당 카운티 페이지로 리다이렉트)
-    // 실제 구현 시 counties_metadata.json을 fetch하여 검색 로직을 구현해야 합니다.
-    // 여기서는 간단히 입력값을 슬러그로 변환하여 이동하는 예시를 제공합니다.
+    let allCounties = [];
+    let isDataLoaded = false;
+
+    // 1. 카운티 메타데이터 로드
+    fetch("/static/counties_metadata.json")
+        .then(res => res.json())
+        .then(data => {
+            if (data && data.counties) {
+                allCounties = Object.values(data.counties);
+                isDataLoaded = true;
+                
+                // 인기 카운티 링크 동적 생성 (LA, Harris, Miami-Dade)
+                const targets = [
+                    { name: "Los Angeles", state: "CA" },
+                    { name: "Harris", state: "TX" },
+                    { name: "Miami-Dade", state: "FL" }
+                ];
+                let linksHtml = "Popular: ";
+                let foundCount = 0;
+                
+                targets.forEach(t => {
+                    const match = allCounties.find(c => 
+                        c.name.toLowerCase().includes(t.name.toLowerCase()) && c.state === t.state
+                    );
+                    if (match) {
+                        foundCount++;
+                        linksHtml += `<a href="${match.url}" style="color: var(--primary);">${match.name}</a>`;
+                        if (foundCount < targets.length) linksHtml += ", ";
+                    }
+                });
+                popularLinks.innerHTML = linksHtml;
+            }
+        })
+        .catch(err => {
+            console.error("Error loading county data:", err);
+            popularLinks.innerHTML = "Popular: Data unavailable";
+        });
+
+    // 2. 자동완성(콤보박스) 기능
+    searchInput.addEventListener('input', function() {
+        const query = this.value.toLowerCase().trim();
+        suggestionsBox.innerHTML = '';
+        
+        if (query.length < 1) {
+            suggestionsBox.style.display = 'none';
+            return;
+        }
+
+        if (!isDataLoaded) return;
+
+        // 이름이나 주(State)로 검색
+        const matches = allCounties.filter(c => 
+            c.name.toLowerCase().includes(query) || 
+            `${c.name}, ${c.state}`.toLowerCase().includes(query)
+        ).slice(0, 10); // 최대 10개
+
+        if (matches.length > 0) {
+            matches.forEach(match => {
+                const div = document.createElement('div');
+                div.className = 'suggestion-item';
+                div.innerHTML = `<strong>${match.name}</strong>, ${match.state}`;
+                div.onclick = () => {
+                    window.location.href = match.url; // JSON에 있는 정확한 URL 사용
+                };
+                suggestionsBox.appendChild(div);
+            });
+            suggestionsBox.style.display = 'block';
+        } else {
+            suggestionsBox.style.display = 'none';
+        }
+    });
+
+    // 외부 클릭 시 콤보박스 닫기
+    document.addEventListener('click', function(e) {
+        if (e.target !== searchInput && !suggestionsBox.contains(e.target)) {
+            suggestionsBox.style.display = 'none';
+        }
+    });
+
+    // 3. Find 버튼 클릭 (엔터키 포함)
     searchBtn.addEventListener('click', function() {
-        const query = searchInput.value.trim().toLowerCase();
+        const query = searchInput.value.toLowerCase().trim();
         if (!query) {
             searchError.textContent = "Please enter a location.";
             searchError.style.display = 'block';
             return;
         }
 
-        searchError.style.display = 'none';
-        // 간단한 검색 로직: "Los Angeles, CA" -> "los-angeles-california"
-        // 실제로는 백엔드나 JSON 데이터를 활용해 정확한 매핑이 필요합니다.
-        // 여기서는 예시로 입력값을 기반으로 URL을 생성합니다.
-        let slug = query.replace(/,/g, '').replace(/\s+/g, '-');
+        if (!isDataLoaded) {
+            searchError.textContent = "Data is still loading...";
+            searchError.style.display = 'block';
+            return;
+        }
+
+        // 정확히 일치하는 카운티 찾기
+        let match = allCounties.find(c => 
+            c.name.toLowerCase() === query || 
+            `${c.name}, ${c.state}`.toLowerCase() === query
+        );
         
-        // 주(State) 이름을 약자로 변환하는 로직이 필요하다면 추가해야 합니다.
-        // 예: california -> ca (생략)
-        
-        window.location.href = "/counties/" + slug + ".html";
+        // 없으면 부분 일치하는 첫 번째 카운티
+        if (!match) {
+            match = allCounties.find(c => 
+                c.name.toLowerCase().includes(query) || 
+                `${c.name}, ${c.state}`.toLowerCase().includes(query)
+            );
+        }
+
+        if (match) {
+            window.location.href = match.url;
+        } else {
+            searchError.textContent = "Location not found. Please try a different search.";
+            searchError.style.display = 'block';
+        }
     });
 
-    // 2. Use my location 기능 (브라우저 Geolocation API 사용)
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            searchBtn.click();
+        }
+    });
+
+    // 4. Use my location (Geolocation API)
     locationBtn.addEventListener('click', function() {
         if (!navigator.geolocation) {
             searchError.textContent = "Geolocation is not supported by your browser.";
@@ -246,8 +361,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 const lat = position.coords.latitude;
                 const lon = position.coords.longitude;
                 
-                // 여기서는 간단히 Nominatim API를 사용해 역지오코딩(Reverse Geocoding)을 수행합니다.
-                // 실제 운영 환경에서는 자체 DB를 사용하거나 더 안정적인 API를 권장합니다.
                 fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10&addressdetails=1`)
                     .then(response => response.json())
                     .then(data => {
@@ -256,15 +369,29 @@ document.addEventListener("DOMContentLoaded", function() {
                             const county = data.address.county || data.address.city || '';
                             const state = data.address.state || '';
                             
-                            // 카운티 이름과 주 이름을 기반으로 슬러그 생성
-                            let slug = (county + " " + state).toLowerCase().replace(/,/g, '').replace(/\s+/g, '-');
+                            // "County" 단어 제거
+                            const cleanCounty = county.replace(/ County$/i, '').trim();
                             
-                            // 주의: 'Los Angeles County' -> 'los-angeles-county-california' 등
-                            // 실제 데이터 구조에 맞게 조정 필요. 
-                            // 여기서는 예시로 이동합니다.
-                            alert(`Found: ${county}, ${state}. Redirecting...`);
-                            // 실제 URL 매핑이 필요합니다.
-                            window.location.href = "/counties/" + slug + ".html"; 
+                            if (!cleanCounty) {
+                                searchError.textContent = "Could not determine your county.";
+                                searchError.style.display = 'block';
+                                return;
+                            }
+
+                            const match = allCounties.find(c => 
+                                c.name.toLowerCase() === cleanCounty.toLowerCase() && 
+                                (c.state.toLowerCase() === state.toLowerCase() || state.includes(c.state))
+                            ) || allCounties.find(c => c.name.toLowerCase() === cleanCounty.toLowerCase());
+
+                            if (match) {
+                                window.location.href = match.url;
+                            } else {
+                                // 못 찾으면 검색창에 입력
+                                searchInput.value = `${cleanCounty}, ${state}`;
+                                searchError.textContent = `Found ${cleanCounty}, ${state}. Press "Find" to search.`;
+                                searchError.style.color = '#28a745';
+                                searchError.style.display = 'block';
+                            }
                         } else {
                             searchError.textContent = "Could not determine your location.";
                             searchError.style.display = 'block';
@@ -278,20 +405,7 @@ document.addEventListener("DOMContentLoaded", function() {
             },
             function(error) {
                 locationBtn.textContent = "📍 Use my location";
-                switch(error.code) {
-                    case error.PERMISSION_DENIED:
-                        searchError.textContent = "User denied the request for Geolocation.";
-                        break;
-                    case error.POSITION_UNAVAILABLE:
-                        searchError.textContent = "Location information is unavailable.";
-                        break;
-                    case error.TIMEOUT:
-                        searchError.textContent = "The request to get user location timed out.";
-                        break;
-                    default:
-                        searchError.textContent = "An unknown error occurred.";
-                        break;
-                }
+                searchError.textContent = "Location access denied or unavailable.";
                 searchError.style.display = 'block';
             }
         );
