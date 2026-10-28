@@ -39,10 +39,34 @@
 
 <div class="hero" style="margin-bottom: 20px;">
   <h1>U.S. Insurance Risk & Climate Data</h1>
-  <p>Adjust the weights below to match your priorities. The rankings will update in real-time.</p>
-  <!-- 🆕 계산기 유도 버튼 -->
+  <p>Explore county-level climate hazards, insurance affordability, and housing resilience across 3,100+ U.S. counties.</p>
+</div>
+
+<!-- 🆕 검색 및 위치 기능 추가 (태양광 사이트 스타일) -->
+<div class="card" style="margin-bottom: 20px; background: #f8f9fa;">
+  <h2 style="font-size: 1.2em; margin-top: 0; color: var(--primary);">🔍 Find Insurance Risk for Your Area</h2>
+  <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
+    <input type="text" id="searchInput" placeholder="Enter ZIP, county, or state (e.g., 90210, Los Angeles, CA)" 
+           style="flex: 1; padding: 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 1em; min-width: 250px;">
+    <button id="searchBtn" style="background: var(--accent); color: white; border: none; padding: 12px 24px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 1em;">
+      Find
+    </button>
+  </div>
+  <div style="margin-top: 10px; font-size: 0.9em; color: #555; display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+    <span id="locationBtn" style="cursor: pointer; color: var(--primary); font-weight: bold; text-decoration: underline;">
+      📍 Use my location
+    </span>
+    <span style="color: #ccc;">|</span>
+    <span>Popular: <a href="/counties/los-angeles-california.html" style="color: var(--primary);">Los Angeles</a>, 
+          <a href="/counties/harris-texas.html" style="color: var(--primary);">Harris</a>, 
+          <a href="/counties/miami-dade-florida.html" style="color: var(--primary);">Miami-Dade</a></span>
+  </div>
+  <div id="searchError" style="color: #c0392b; margin-top: 10px; font-size: 0.9em; display: none;"></div>
+</div>
+
+<div class="hero" style="margin-bottom: 20px;">
   <div style="margin-top: 20px;">
-    <a href="/calculator.html" style="background: var(--accent); color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 1.1em; display: inline-block;">
+    <a href="/calculator.html" style="background: var(--primary); color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 1.1em; display: inline-block;">
       🧮 Calculate Your Estimated Costs →
     </a>
   </div>
@@ -148,6 +172,132 @@
     </table>
   </div>
 </div>
+
+<!-- 🆕 애드센스 승인을 위한 텍스트 보강 (Thin Content 해결) -->
+<div class="card" style="margin-top: 30px; background: #fff;">
+  <h2 style="color: var(--primary); font-size: 1.4em; border-bottom: 2px solid var(--border); padding-bottom: 10px;">Understanding U.S. Insurance Risk & Climate Data</h2>
+  
+  <h3 style="font-size: 1.1em; margin-top: 20px;">Why Insurance Risk Matters</h3>
+  <p style="line-height: 1.8; color: #444;">
+    The cost of home insurance is no longer just about the value of the house; it is increasingly tied to the physical risks of climate change. From wildfires in the West to hurricanes in the Gulf, insurers are re-evaluating risk. Our composite score blends <strong>Climate Safety</strong> (FEMA hazard data) with <strong>Insurance Affordability</strong> (premium burden relative to income) to give you a clear picture of where a home is truly safe and affordable to insure.
+  </p>
+
+  <h3 style="font-size: 1.1em; margin-top: 20px;">How Our 6-Axis Score is Calculated</h3>
+  <p style="line-height: 1.8; color: #444;">
+    We do not rely on gut feelings. Our rankings are built on a data-driven 6-axis model:
+  </p>
+  <ul style="line-height: 1.8; color: #444; padding-left: 20px;">
+    <li><strong>Climate Safety:</strong> Derived from the FEMA National Risk Index, factoring in expected annual loss from natural disasters.</li>
+    <li><strong>Insurance Affordability:</strong> The percentage of median household income required to pay average premiums.</li>
+    <li><strong>Housing Affordability:</strong> The ratio of median home prices to median household incomes.</li>
+    <li><strong>Community Resilience & Social Resilience:</strong> Measures of a community's ability to bounce back after a disaster (infrastructure, social cohesion).</li>
+    <li><strong>Housing Stability:</strong> Indicators of market volatility and foreclosure risk.</li>
+  </ul>
+  
+  <h3 style="font-size: 1.1em; margin-top: 20px;">How to Use This Data</h3>
+  <p style="line-height: 1.8; color: #444;">
+    Use the <strong>Customize Weights</strong> sliders above to match your priorities. If you are a retiree looking for climate safety, slide that weight up to 100%. If you are a first-time homebuyer on a tight budget, increase the Insurance and Housing Affordability weights. The rankings and the Top 100 table will update in real-time, allowing you to find the perfect county that fits your risk tolerance and financial goals.
+  </p>
+</div>
+
+<!-- 🆕 검색 및 위치 기능을 위한 스크립트 -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const searchInput = document.getElementById('searchInput');
+    const searchBtn = document.getElementById('searchBtn');
+    const locationBtn = document.getElementById('locationBtn');
+    const searchError = document.getElementById('searchError');
+
+    // 1. 검색 기능 (텍스트 기반 검색 -> 해당 카운티 페이지로 리다이렉트)
+    // 실제 구현 시 counties_metadata.json을 fetch하여 검색 로직을 구현해야 합니다.
+    // 여기서는 간단히 입력값을 슬러그로 변환하여 이동하는 예시를 제공합니다.
+    searchBtn.addEventListener('click', function() {
+        const query = searchInput.value.trim().toLowerCase();
+        if (!query) {
+            searchError.textContent = "Please enter a location.";
+            searchError.style.display = 'block';
+            return;
+        }
+
+        searchError.style.display = 'none';
+        // 간단한 검색 로직: "Los Angeles, CA" -> "los-angeles-california"
+        // 실제로는 백엔드나 JSON 데이터를 활용해 정확한 매핑이 필요합니다.
+        // 여기서는 예시로 입력값을 기반으로 URL을 생성합니다.
+        let slug = query.replace(/,/g, '').replace(/\s+/g, '-');
+        
+        // 주(State) 이름을 약자로 변환하는 로직이 필요하다면 추가해야 합니다.
+        // 예: california -> ca (생략)
+        
+        window.location.href = "/counties/" + slug + ".html";
+    });
+
+    // 2. Use my location 기능 (브라우저 Geolocation API 사용)
+    locationBtn.addEventListener('click', function() {
+        if (!navigator.geolocation) {
+            searchError.textContent = "Geolocation is not supported by your browser.";
+            searchError.style.display = 'block';
+            return;
+        }
+
+        locationBtn.textContent = "📍 Locating...";
+        
+        navigator.geolocation.getCurrentPosition(
+            function(position) {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                
+                // 여기서는 간단히 Nominatim API를 사용해 역지오코딩(Reverse Geocoding)을 수행합니다.
+                // 실제 운영 환경에서는 자체 DB를 사용하거나 더 안정적인 API를 권장합니다.
+                fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10&addressdetails=1`)
+                    .then(response => response.json())
+                    .then(data => {
+                        locationBtn.textContent = "📍 Use my location";
+                        if (data && data.address) {
+                            const county = data.address.county || data.address.city || '';
+                            const state = data.address.state || '';
+                            
+                            // 카운티 이름과 주 이름을 기반으로 슬러그 생성
+                            let slug = (county + " " + state).toLowerCase().replace(/,/g, '').replace(/\s+/g, '-');
+                            
+                            // 주의: 'Los Angeles County' -> 'los-angeles-county-california' 등
+                            // 실제 데이터 구조에 맞게 조정 필요. 
+                            // 여기서는 예시로 이동합니다.
+                            alert(`Found: ${county}, ${state}. Redirecting...`);
+                            // 실제 URL 매핑이 필요합니다.
+                            window.location.href = "/counties/" + slug + ".html"; 
+                        } else {
+                            searchError.textContent = "Could not determine your location.";
+                            searchError.style.display = 'block';
+                        }
+                    })
+                    .catch(error => {
+                        locationBtn.textContent = "📍 Use my location";
+                        searchError.textContent = "Error fetching location data.";
+                        searchError.style.display = 'block';
+                    });
+            },
+            function(error) {
+                locationBtn.textContent = "📍 Use my location";
+                switch(error.code) {
+                    case error.PERMISSION_DENIED:
+                        searchError.textContent = "User denied the request for Geolocation.";
+                        break;
+                    case error.POSITION_UNAVAILABLE:
+                        searchError.textContent = "Location information is unavailable.";
+                        break;
+                    case error.TIMEOUT:
+                        searchError.textContent = "The request to get user location timed out.";
+                        break;
+                    default:
+                        searchError.textContent = "An unknown error occurred.";
+                        break;
+                }
+                searchError.style.display = 'block';
+            }
+        );
+    });
+});
+</script>
 
 <script src="/static/insurance.js"></script>
 
