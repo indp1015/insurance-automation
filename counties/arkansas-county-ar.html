@@ -52,6 +52,51 @@
 
   <!-- 🆕 AI 인사이트 섹션 (수정: ai_insight_text 사용 + 단락 분리 + 서명) -->
   
+  <div class="card" style="background: #f8fbff; border-left: 5px solid var(--primary); margin-bottom: 20px;">
+    <h3>📊 Local Insurance Market Analysis</h3>
+    <div style="font-size: 1.05em; line-height: 1.8; color: #333;">
+      
+        
+        <p>1.  **Analyze the Request:**
+    *   **Role:** Senior real estate and insurance risk analyst.
+    *   **Topic:** Analysis for Arkansas County, AR.
+    *   **Data provided:**
+        *   Composite Risk Score: 0/100 (Higher = Better) -> Wait, 0 is higher? That's weird. Usually, lower is better, but the prompt says "Higher = Better". So a score of 0 means it's perfect or zero risk? Let's look at Climate Safety Score: 37.7/100. If Higher = Better, then 37.7 is low safety. But Composite Risk Score is 0. This seems contradictory. Let me re-read: "Composite Risk Score: 0/100 (Higher = Better)". Okay, so 0 is the best possible score. "Climate Safety Score: 37.7/100" - if Higher = Better, 37.7 is poor safety. "Insurance Affordability Score: 15.2/100" - very poor affordability. "Housing Affordability Score: 66.5/100" - okay affordability. "Community Resilience Score: 49.4/100" - moderate. "Average Annual Insurance Premium: $2,389". "FEMA Risk Score: 62.1.../100 (Higher = More Risk)".
+        *   *Correction on FEMA Risk Score*: The prompt explicitly states "(Higher = More Risk)". So a FEMA risk score of ~62 means high risk.
+        *   *Correction on Composite Risk Score*: "(Higher = Better)" means 0 is best, but wait, if it's 0, that's no risk at all? Or maybe it's just a metric where 0 is safe. I will treat 0 as excellent on that specific metric, but the other scores tell the real story. Actually, I should probably just focus on the FEMA and Climate scores since they directly address physical risk, and the prompt asks specifically about "FEMA risk score and climate safety score reflect the actual physical risks".
+    *   **Content Requirements:**
+        1.  Insurance & Climate Reality: FEMA risk (~62) + Climate Safety (37.7) = high physical risk. Premium ($2,389) is likely driven by this.
+        2.  Affordability & Cost Burden: Insurance affordability (15.2) = very low. Premium relative to income? Price-to-Income ratio is 2.60. So $2,389 premium is a massive burden compared to local incomes (implied by P/I 2.60, meaning housing costs are 2.6x income, so insurance is roughly equal to or greater than half a year's income). Housing affordability (66.5) is decent for housing, but insurance makes up the difference.
+        3.  Resilience & Stability: Community resilience (49.4) = moderate. Area can recover, but not quickly or easily from major disasters.
+        4.  Bottom Line: Practical summary for prospective buyer/resident.
+    *   **Style Requirements:**
+        *   280-320 words.
+        *   Critical/human expert tone. No AI clichés ("delve", "testament", "landscape", "moreover", "it's important to note", "in conclusion").
+        *   Varied sentence lengths. Conversational yet professional.
+        *   Third-person perspective.
+        *   No bullet points. 2-3 cohesive paragraphs.
+        *   Integrate numbers naturally. Do NOT say "Based on the data provided".
+        *   Begin directly with the analysis.
+    *   **Legal/Compliance Constraints:**
+        *   No predictions (focus on historical/current).
+        *   No financial advice (don't advise to buy/rent/invest).
+        *   No absolute certainty ("guarantee", "definitely", "will"). Use "likely", "may", "could".
+        *   Professional distance (analytical/educational, not sales-oriented).</p>
+        
+      
+        
+        <p>2.  **Drafting - Paragraph 1: Insurance & Climate Reality**
+    *   Focus on FEMA (62.1) and Climate Safety (37.7).
+    *   Connect to the $2,389 premium.
+    *   *Drafting thought:* Arkansas County faces a substantial FEMA</p>
+        
+      
+    </div>
+    <p style="font-size: 0.8em; color: #888; margin-top: 15px; padding-top: 10px; border-top: 1px solid #eee;">
+      <em>Analysis prepared by the Data in DP Research Team. Based on FEMA NRI, HearthMap, and Census ACS data.</em>
+    </p>
+  </div>
+  
 
   <!-- 6축 점수 -->
   <div class="card">
